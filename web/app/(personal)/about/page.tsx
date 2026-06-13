@@ -19,7 +19,7 @@ export default function AboutPage() {
       </div>
 
       <p className="max-w-xl text-[1.05rem] leading-relaxed">
-        I&apos;m a backend engineer who loves shipping systems that actually get used — from hospital
+        I&apos;m a backend engineer who loves shipping systems that actually get used, from hospital
         imaging pipelines to satellite data platforms to ride-sharing APIs used by millions.
       </p>
       <p className="mt-4 max-w-xl text-claude-muted">
@@ -45,7 +45,7 @@ export default function AboutPage() {
       <div className="mt-6 rounded-[20px] border border-playful-border bg-playful-surface p-6">
         <h2 className="font-serif text-lg font-semibold">Beyond the resume</h2>
         <p className="mt-2 text-claude-muted">
-          This is where the personal side lives — what you&apos;re reading, what you&apos;re learning,
+          This is where the personal side lives: what you&apos;re reading, what you&apos;re learning,
           what you care about outside of sprint planning. We&apos;ll fill this in together.
         </p>
       </div>

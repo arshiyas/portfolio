@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { projects, type ProjectType } from "@/lib/content";
 
@@ -31,15 +32,13 @@ export function ProjectGrid() {
       <div className="grid gap-4 sm:grid-cols-2">
         {filtered.map((project) => {
           const isPersonal = project.type === "personal";
+          const href = project.caseStudy ? `/projects/${project.slug}` : "/projects";
+          const className = isPersonal
+            ? "group block rounded-[18px] border border-playful-border bg-[#fffdfb] p-5 transition hover:border-playful-purple"
+            : "group block rounded-[18px] border border-claude-border bg-claude-surface p-5 transition hover:border-claude-accent";
+
           return (
-            <article
-              key={project.slug}
-              className={
-                isPersonal
-                  ? "rounded-[18px] border border-playful-border bg-[#fffdfb] p-5 transition hover:border-playful-purple"
-                  : "rounded-[18px] border border-claude-border bg-claude-surface p-5 transition hover:border-claude-accent"
-              }
-            >
+            <Link key={project.slug} href={href} className={className}>
               <p
                 className={
                   isPersonal
@@ -52,8 +51,8 @@ export function ProjectGrid() {
               <h3
                 className={
                   isPersonal
-                    ? "mt-2 font-sans text-base font-semibold"
-                    : "mt-2 font-serif text-base font-semibold"
+                    ? "mt-2 font-sans text-base font-semibold group-hover:text-playful-purple"
+                    : "mt-2 font-serif text-base font-semibold group-hover:text-claude-accent"
                 }
               >
                 {project.title}
@@ -73,7 +72,10 @@ export function ProjectGrid() {
                   </span>
                 ))}
               </div>
-            </article>
+              {project.caseStudy && (
+                <p className="mt-4 text-xs font-medium text-claude-accent">Read case study →</p>
+              )}
+            </Link>
           );
         })}
       </div>

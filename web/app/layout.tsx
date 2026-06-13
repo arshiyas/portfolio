@@ -21,11 +21,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Arshiya Sayyed — Backend Engineer",
-    template: "%s — Arshiya Sayyed",
+    default: "Arshiya Sayyed | Backend Engineer",
+    template: "%s | Arshiya Sayyed",
   },
   description:
-    "Backend engineer at Lyft. Python, TypeScript, AWS — APIs and distributed systems across healthcare, geospatial, and mobility.",
+    "Backend engineer at Lyft. Python, TypeScript, AWS: APIs and distributed systems across healthcare, geospatial, and mobility.",
 };
 
 export default function RootLayout({

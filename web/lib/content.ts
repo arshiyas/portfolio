@@ -1,5 +1,39 @@
 export type ProjectType = "work" | "personal";
 
+export type ProjectStat = {
+  value: string;
+  label: string;
+};
+
+export type ProjectMediaPlaceholder = {
+  id: string;
+  caption: string;
+};
+
+export type ProjectContributionItem = {
+  title: string;
+  description: string;
+};
+
+export type ProjectContribution = {
+  intro: string;
+  items: ProjectContributionItem[];
+  media?: ProjectMediaPlaceholder[];
+};
+
+export type ProjectCaseStudy = {
+  overview: string;
+  problem: string;
+  approach: string;
+  features: string[];
+  stats: ProjectStat[];
+  myContribution: ProjectContribution;
+  source: {
+    label: string;
+    url: string;
+  };
+};
+
 export type Project = {
   slug: string;
   type: ProjectType;
@@ -7,6 +41,7 @@ export type Project = {
   title: string;
   description: string;
   tags: string[];
+  caseStudy?: ProjectCaseStudy;
 };
 
 export type ExperienceRole = {
@@ -30,69 +65,91 @@ export type WritingPost = {
 export const site = {
   name: "Arshiya Sayyed",
   location: "Toronto",
-  tagline: "Backend engineer @ Lyft",
+  eyebrow: "Backend engineer · Toronto",
+  tagline: "Software Engineer IV",
   lede:
-    "I design and ship backend systems in Python and TypeScript — APIs, distributed services, and AWS infrastructure across healthcare, geospatial, and mobility.",
+    "I build backend systems that hold up in production: APIs, data pipelines, and AWS infrastructure. At Lyft, I work on Silver, teens, and international expansion.",
   links: {
     linkedin: "https://www.linkedin.com/in/arshiyasayyed/",
     github: "https://github.com/ArshiyaSayyed",
   },
-  stats: [
-    { value: "6.1M", label: "Downstream events · Multibook launch" },
-    { value: "+75%", label: "Search speed · SkyWatch API optimization" },
-    { value: "+40%", label: "Sales lift · Enterprise org platform" },
+  social: [
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" },
+    { label: "GitHub", href: "https://github.com/ArshiyaSayyed" },
   ],
-  stack: ["Lyft", "Python", "TypeScript", "AWS", "PostgreSQL", "DynamoDB"],
+  heroButtons: [
+    { label: "View projects", href: "/projects", primary: true },
+    { label: "About me", href: "/about", primary: false },
+  ],
+  stats: [
+    {
+      value: "86%",
+      label: "Lyft Silver",
+      detail: "Older adults who use the app themselves once familiar (USC study)",
+    },
+    {
+      value: "TBD",
+      label: "Teens",
+      detail: "Teen ride experience, metric coming soon",
+    },
+    {
+      value: "TBD",
+      label: "International expansion",
+      detail: "Scaling ride-share to new markets, metric coming soon",
+    },
+  ],
+  stack: ["Python", "TypeScript", "AWS", "PostgreSQL", "DynamoDB"],
+  featuredProjectSlugs: ["lyft-silver", "lyft-teens", "lyft-international"],
 };
 
 export const experience: ExperienceRole[] = [
   {
     id: "lyft-se4",
-    period: "2024 — present",
+    period: "2024 to present",
     company: "Lyft",
     location: "Toronto",
     title: "Software Engineer IV",
     bullets: [
-      "Built backend services for Lyft Silver — ride-sharing infrastructure for seniors",
-      "Designed and shipped Multibook APIs, improving ride booking efficiency at scale",
-      "Systems powering 6.1M downstream events within 3 weeks of launch",
+      "Redesigned the Silver app home screen with larger buttons and simpler messaging for senior riders",
+      "Built invite flows across internal messaging systems for new and older user types",
+      "Shipped a backend-driven senior discount homecard to onboard first-time senior riders",
     ],
-    code: "POST /api/v1/multibook/book\n→ 200 OK · p99 latency: 42ms · Python · TypeScript · AWS Lambda",
+    code: "POST /api/v1/invites · homecard placement · Silver home\n→ Python · TypeScript · AWS",
   },
   {
     id: "skywatch-se2",
-    period: "2022 — 2024",
+    period: "2022 to 2024",
     company: "SkyWatch",
     location: "Ontario",
     title: "Software Engineer II",
     bullets: [
-      "Led enterprise org management API — platform used by Azure, Al Jazeera, local gov (+40% sales)",
-      "Optimized geospatial search backend — 75% faster queries via REST API redesign",
+      "Led enterprise org management API, the platform used by Azure, Al Jazeera, local gov (+40% sales)",
+      "Optimized geospatial search backend for 75% faster queries via REST API redesign",
       "Stack: Python, PostgreSQL (RDS), DynamoDB, Lambda, API Gateway, GitHub Actions CI/CD",
     ],
     code: "GET /api/v2/search?q=...&bbox=...\n→ 200 OK · avg response: 180ms → 45ms after optimization",
   },
   {
     id: "ge-senior-software-engineer",
-    period: "Apr — Jul 2022",
+    period: "Apr to Jul 2022",
     company: "GE Healthcare",
     location: "Bangalore",
     title: "Senior Software Engineer",
     bullets: [
-      "Designed and implemented data pipelines in production — extended existing flows and built new ones for the business",
+      "Designed and implemented data pipelines in production, extending existing flows and building new ones for the business",
       "Participated in Technical Design Reviews (TDRs) and architecture design reviews",
     ],
     code: "device.metrics → ETL pipeline → analytics store\n→ Python · AWS · pipeline design & TDR reviews",
   },
   {
     id: "ge-software-engineer",
-    period: "2019 — 2022",
+    period: "2019 to 2022",
     company: "GE Healthcare",
     location: "Bangalore",
     title: "Software Engineer",
     bullets: [
       "Wrote and deployed Python and Java services on AWS for production healthcare workloads",
-      "Owned system design — requirements, UML diagrams (sequence, class, deployment), and Confluence API docs",
+      "Owned system design: requirements, UML diagrams (sequence, class, deployment), and Confluence API docs",
       "Extended microservices with new functionality and optimized existing workflows",
       "Wrote test cases in pytest and JUnit; debugged and fixed defects across the stack",
     ],
@@ -100,7 +157,7 @@ export const experience: ExperienceRole[] = [
   },
   {
     id: "ge-edison-engineer",
-    period: "2017 — 2019",
+    period: "2017 to 2019",
     company: "GE Healthcare",
     location: "Bangalore",
     title: "Edison Engineer",
@@ -115,11 +172,79 @@ export const experience: ExperienceRole[] = [
 
 export const projects: Project[] = [
   {
-    slug: "multibook-lyft",
+    slug: "lyft-silver",
     type: "work",
-    category: "Work · Backend",
-    title: "Multibook API @ Lyft",
-    description: "Ride booking service powering efficient multi-ride scheduling at scale.",
+    category: "Work · Lyft",
+    title: "Lyft Silver",
+    description:
+      "Backend for senior ride-sharing: home screen redesign, invite flows, and a discount homecard to onboard first-time senior riders.",
+    tags: ["Python", "TypeScript", "AWS", "Mobility"],
+    caseStudy: {
+      overview:
+        "Lyft Silver is a product designed specifically for older riders, an AARP-endorsed alternative that helps seniors keep their independence without getting behind the wheel. Launched nationwide in early 2025, it reimagines the ride experience around accessibility, confidence, and autonomy.",
+      problem:
+        "Older adults use rideshare far less than younger riders. Research showed a technology gap: unfamiliar interfaces, fear of doing the wrong thing, and reliance on caregivers. They are 55% more likely to have rides requested by someone else, with 15% of platform riders acting as caregivers for older adults.",
+      approach:
+        "The team's hypothesis: given the right tools, seniors can build confidence and use the app independently. Design and engineering focused on reducing cognitive load, adding human support when needed, and matching rides with vehicles that are physically easier to enter.",
+      features: [
+        "Simplified home screen with two primary actions (ride now and schedule later) plus 1.4× larger text for readability",
+        "Live \"Get Help\" support connecting riders to agents daily from 8am–9pm ET",
+        "Mandatory pickup and dropoff confirmation before a ride is dispatched",
+        "Reduced ride modes to Standard and Extra Comfort to avoid choice overload",
+        "Preferred vehicle matching that deprioritizes high step-height cars (e.g. pickup trucks) based on field research with seniors",
+      ],
+      stats: [
+        { value: "86%", label: "Self-serve adoption once familiar with the app (USC study)" },
+        { value: "55%", label: "More likely to have rides booked by someone else vs. younger riders" },
+        { value: "57%", label: "Higher no-show rate among older riders before product improvements" },
+        { value: "2×", label: "More likely to cancel when matched with a pickup truck" },
+      ],
+      myContribution: {
+        intro:
+          "I worked on the backend and product systems that power the Silver experience, from the redesigned home screen to growth mechanics that bring new senior riders onto the platform.",
+        items: [
+          {
+            title: "Silver home screen redesign",
+            description:
+              "Redesigned the Silver app home screen with larger primary buttons and simpler messaging, reducing cognitive load so older riders can book with confidence.",
+          },
+          {
+            title: "Invite flows for new and senior users",
+            description:
+              "Built the mechanism for sending invites to new and older users, integrating across internal messaging systems and handling new user types end-to-end on the backend.",
+          },
+          {
+            title: "Senior growth homecard",
+            description:
+              "Led a comms initiative to onboard more seniors onto Lyft, shipping a backend-driven homecard placement offering first-ride discounts to first-time senior users, prompting them to book.",
+          },
+        ],
+        media: [
+          { id: "silver-home", caption: "Silver home screen redesign" },
+          { id: "invite-flow", caption: "Invite flow for new and senior users" },
+          { id: "senior-homecard", caption: "Senior discount homecard placement" },
+        ],
+      },
+      source: {
+        label: "Under the Hood: Lyft Silver, Lyft Blog",
+        url: "https://www.lyft.com/blog/posts/under-the-hood-lyft-silver",
+      },
+    },
+  },
+  {
+    slug: "lyft-teens",
+    type: "work",
+    category: "Work · Lyft",
+    title: "Teens @ Lyft",
+    description: "Backend for the teen ride experience: safety, scheduling, and scale.",
+    tags: ["Python", "TypeScript", "AWS"],
+  },
+  {
+    slug: "lyft-international",
+    type: "work",
+    category: "Work · Lyft",
+    title: "International Expansion",
+    description: "Infrastructure and APIs to bring ride-sharing to new markets.",
     tags: ["Python", "TypeScript", "AWS"],
   },
   {
@@ -144,7 +269,7 @@ export const projects: Project[] = [
     category: "Work · Backend",
     title: "Healthcare Microservices @ GE",
     description:
-      "Python and Java services on AWS — system design, microservice extensions, and pytest/JUnit test coverage.",
+      "Python and Java services on AWS: system design, microservice extensions, and pytest/JUnit test coverage.",
     tags: ["Python", "Java", "AWS", "Microservices"],
   },
   {
@@ -169,17 +294,17 @@ export const projects: Project[] = [
     type: "personal",
     category: "Personal",
     title: "GitHub Experiments",
-    description: "Pull from your repos — tools, scripts, and creative backend builds.",
+    description: "Pull from your repos: tools, scripts, and creative backend builds.",
     tags: ["Open source", "Python"],
   },
 ];
 
 export const writingPosts: WritingPost[] = [
   {
-    slug: "multibook-apis",
-    title: "How we shipped Multibook APIs in 3 weeks",
+    slug: "lyft-silver-backend",
+    title: "Building backend for Lyft Silver",
     category: "Engineering",
-    date: "Mar 2025",
+    date: "Draft",
     status: "Draft",
   },
   {
@@ -204,3 +329,17 @@ export const navLinks = [
   { href: "/writing", label: "Writing" },
   { href: "/about", label: "About" },
 ] as const;
+
+export function getFeaturedProjects(): Project[] {
+  return site.featuredProjectSlugs
+    .map((slug) => projects.find((p) => p.slug === slug))
+    .filter((p): p is Project => p !== undefined);
+}
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug);
+}
+
+export function getProjectsWithCaseStudies(): Project[] {
+  return projects.filter((p) => p.caseStudy !== undefined);
+}

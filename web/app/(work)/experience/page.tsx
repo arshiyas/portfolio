@@ -15,7 +15,7 @@ export default function ExperiencePage() {
         Experience
       </h1>
       <p className="mt-3 mb-10 max-w-lg text-claude-muted">
-        Backend systems across ride-sharing, geospatial platforms, and healthcare — with a focus on
+        Backend systems across ride-sharing, geospatial platforms, and healthcare, with a focus on
         APIs, reliability, and measurable impact.
       </p>
       <ExperienceTimeline />

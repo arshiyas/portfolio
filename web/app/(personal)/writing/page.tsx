@@ -15,7 +15,7 @@ export default function WritingPage() {
         Writing
       </h1>
       <p className="mt-3 mb-8 max-w-lg text-claude-muted">
-        Engineering deep-dives and career reflections — coming soon, layout ready.
+        Engineering deep-dives and career reflections. Coming soon, layout ready.
       </p>
 
       <div className="mb-8 flex gap-2">

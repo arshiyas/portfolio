@@ -1,0 +1,18 @@
+---
+description: Writing style - never use em dashes
+alwaysApply: true
+---
+
+# No Em Dashes
+
+Never use em dashes (`—`) anywhere in this project: copy, content, code, comments, docs, or commit messages. Do not reintroduce them.
+
+Use clearer punctuation instead, chosen to fit the sentence:
+
+- Colon for lead-ins or lists: `production: APIs, pipelines, and infrastructure`
+- Comma for asides: `older riders, an AARP-endorsed alternative`
+- Parentheses for parentheticals: `two actions (ride now and schedule later)`
+- `to` for ranges: `2022 to 2024`
+- Period to split into two sentences when it reads better
+
+Avoid en dashes (`–`) as a substitute too. Prefer plain words and standard punctuation.
