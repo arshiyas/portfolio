@@ -1,0 +1,21 @@
+# dependencies & build
+web/node_modules/
+web/.next/
+web/out/
+web/.vercel/
+
+# env
+.env
+.env*.local
+web/.env*
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+
+# brainstorm sessions (local tooling)
+.superpowers/
+
+# temp files
+.tmp-*

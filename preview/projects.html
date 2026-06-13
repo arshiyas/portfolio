@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Arshiya Sayyed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Lora:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body class="theme-work">
+    <div class="preview-banner">Work zone — Claude-inspired theme</div>
+
+    <header class="site-header">
+      <a href="index.html" class="logo">Arshiya Sayyed</a>
+      <nav class="nav">
+        <a href="experience.html">Work</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="writing.html">Writing</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+
+    <main class="page container">
+      <p class="section-label">Selected work</p>
+      <h1 class="page-title">Projects</h1>
+      <p class="page-subtitle">
+        Backend case studies from production systems, plus space for personal experiments.
+      </p>
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="work">Work</button>
+        <button class="filter-tab" data-filter="personal">Personal</button>
+      </div>
+
+      <div class="project-grid">
+        <a href="#" class="project-card" data-project-type="work">
+          <div class="project-type type-work">Work · Backend</div>
+          <h3>Multibook API @ Lyft</h3>
+          <p>Ride booking service powering efficient multi-ride scheduling at scale.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">AWS</span>
+          </div>
+        </a>
+
+        <a href="#" class="project-card" data-project-type="work">
+          <div class="project-type type-work">Work · Backend</div>
+          <h3>Search Optimization @ SkyWatch</h3>
+          <p>REST API redesign cutting geospatial query latency by 75%.</p>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Lambda</span>
+          </div>
+        </a>
+
+        <a href="#" class="project-card" data-project-type="work">
+          <div class="project-type type-work">Work · Backend</div>
+          <h3>Enterprise Org Platform @ SkyWatch</h3>
+          <p>Multi-tenant org management APIs driving 40% sales increase.</p>
+          <div class="tag-row">
+            <span class="tag">REST API</span>
+            <span class="tag">DynamoDB</span>
+            <span class="tag">OAuth/SAML</span>
+          </div>
+        </a>
+
+        <a href="#" class="project-card personal-card" data-project-type="personal">
+          <div class="project-type type-personal">Personal</div>
+          <h3>Side Project Slot</h3>
+          <p>Space for experiments, learning builds, and open source work.</p>
+          <div class="tag-row">
+            <span class="tag">Next.js</span>
+            <span class="tag">Learning</span>
+          </div>
+        </a>
+
+        <a href="#" class="project-card personal-card" data-project-type="personal">
+          <div class="project-type type-personal">Personal</div>
+          <h3>GitHub Experiments</h3>
+          <p>Pull from your repos — tools, scripts, and creative backend builds.</p>
+          <div class="tag-row">
+            <span class="tag">Open source</span>
+            <span class="tag">Python</span>
+          </div>
+        </a>
+      </div>
+    </main>
+
+    <footer class="site-footer container">
+      <p>Arshiya Sayyed · Toronto</p>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/arshiyasayyed/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://github.com/ArshiyaSayyed" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experience — Arshiya Sayyed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Lora:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body class="theme-work">
+    <div class="preview-banner">Work zone — Claude-inspired theme</div>
+
+    <header class="site-header">
+      <a href="index.html" class="logo">Arshiya Sayyed</a>
+      <nav class="nav">
+        <a href="experience.html" class="active">Work</a>
+        <a href="projects.html">Projects</a>
+        <a href="writing.html">Writing</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+
+    <main class="page container">
+      <p class="section-label">Professional journey</p>
+      <h1 class="page-title">Experience</h1>
+      <p class="page-subtitle">
+        Backend systems across ride-sharing, geospatial platforms, and healthcare — with a focus on
+        APIs, reliability, and measurable impact.
+      </p>
+
+      <article class="claude-card">
+        <div class="claude-card-header">
+          <span class="claude-period">2024 — present</span>
+          <span class="chip chip-accent">Lyft · Toronto</span>
+        </div>
+        <h2 class="claude-role">Software Engineer IV · <span class="claude-company">Lyft</span></h2>
+        <ul class="claude-list">
+          <li>Built backend services for Lyft Silver — ride-sharing infrastructure for seniors</li>
+          <li>Designed and shipped Multibook APIs, improving ride booking efficiency at scale</li>
+          <li>Systems powering 6.1M downstream events within 3 weeks of launch</li>
+        </ul>
+        <div class="code-block">
+          <span class="method">POST</span> /api/v1/multibook/book<br />
+          <span class="ok">→ 200 OK</span> · p99 latency: 42ms · Python · TypeScript · AWS Lambda
+        </div>
+      </article>
+
+      <article class="claude-card">
+        <div class="claude-card-header">
+          <span class="claude-period">2022 — 2024</span>
+          <span class="chip chip-accent">SkyWatch · Ontario</span>
+        </div>
+        <h2 class="claude-role">Software Engineer II · <span class="claude-company">SkyWatch</span></h2>
+        <ul class="claude-list">
+          <li>Led enterprise org management API — platform used by Azure, Al Jazeera, local gov (+40% sales)</li>
+          <li>Optimized geospatial search backend — 75% faster queries via REST API redesign</li>
+          <li>Stack: Python, PostgreSQL (RDS), DynamoDB, Lambda, API Gateway, GitHub Actions CI/CD</li>
+        </ul>
+        <div class="code-block">
+          <span class="method">GET</span> /api/v2/search?q=...&amp;bbox=...<br />
+          <span class="ok">→ 200 OK</span> · avg response: 180ms → 45ms after optimization
+        </div>
+      </article>
+
+      <article class="claude-card">
+        <div class="claude-card-header">
+          <span class="claude-period">2017 — 2022</span>
+          <span class="chip chip-accent">GE Healthcare · India</span>
+        </div>
+        <h2 class="claude-role">Software Engineer → Senior · <span class="claude-company">GE Healthcare</span></h2>
+        <ul class="claude-list">
+          <li>Backend for DICOM image viewer — DynamoDB, RDS, ECS, event-driven SQS/SNS pipelines</li>
+          <li>Healthcare device data ingestion and dashboard APIs on AWS EKS</li>
+          <li>Mentored junior engineers; delivered multiple innovation POCs</li>
+        </ul>
+        <div class="code-block">
+          <span class="method">SQS</span> imaging.events → Lambda → DynamoDB + OpenSearch<br />
+          <span class="ok">→</span> event-driven pipeline · Python · Java · Kubernetes
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer container">
+      <p>Arshiya Sayyed · Toronto</p>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/arshiyasayyed/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://github.com/ArshiyaSayyed" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </footer>
+  </body>
+</html>

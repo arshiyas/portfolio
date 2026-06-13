@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --claude-bg: #faf9f5;
+  --claude-surface: #ffffff;
+  --claude-text: #2d2a26;
+  --claude-muted: #6b6560;
+  --claude-border: #e8e4dc;
+  --claude-accent: #c96442;
+  --claude-accent-soft: #f4ebe6;
+  --playful-bg: #fff8f3;
+  --playful-surface: #ffffff;
+  --playful-border: #f0e4da;
+  --playful-purple: #9b72cf;
+  --playful-mint: #6bb88a;
+  --playful-coral: #e07a5f;
+  --playful-yellow: #f2cc8f;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-lora);
+  --font-mono: var(--font-ibm-plex-mono);
+  --color-claude-bg: var(--claude-bg);
+  --color-claude-surface: var(--claude-surface);
+  --color-claude-text: var(--claude-text);
+  --color-claude-muted: var(--claude-muted);
+  --color-claude-border: var(--claude-border);
+  --color-claude-accent: var(--claude-accent);
+  --color-claude-accent-soft: var(--claude-accent-soft);
+  --color-playful-bg: var(--playful-bg);
+  --color-playful-surface: var(--playful-surface);
+  --color-playful-border: var(--playful-border);
+  --color-playful-purple: var(--playful-purple);
+  --color-playful-mint: var(--playful-mint);
+  --color-playful-coral: var(--playful-coral);
+}
+
+body {
+  color: var(--claude-text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.theme-neutral {
+  background: linear-gradient(180deg, #faf9f5 0%, #f5f2ea 100%);
+}
+
+.theme-work {
+  background: var(--claude-bg);
+}
+
+.theme-personal {
+  background: var(--playful-bg);
+}
