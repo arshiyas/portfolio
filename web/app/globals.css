@@ -53,3 +53,16 @@ body {
 .theme-personal {
   background: var(--playful-bg);
 }
+
+.days-in-canada-app {
+  background-color: var(--claude-bg);
+}
+
+@media print {
+  .days-in-canada-app {
+    background: white;
+  }
+  .days-in-canada-no-print {
+    display: none !important;
+  }
+}

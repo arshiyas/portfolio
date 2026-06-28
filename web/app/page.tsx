@@ -115,7 +115,11 @@ export default function HomePage() {
             {featuredProjects.map((project) => (
               <Link
                 key={project.slug}
-                href={project.caseStudy ? `/projects/${project.slug}` : "/projects"}
+                href={
+                  project.caseStudy
+                    ? `/projects/${project.slug}`
+                    : project.toolUrl ?? "/projects"
+                }
                 className="group rounded-2xl border border-claude-border bg-claude-surface p-5 transition hover:border-claude-accent"
               >
                 <p className="text-xs font-semibold uppercase tracking-wider text-claude-accent">
@@ -127,9 +131,11 @@ export default function HomePage() {
                 <p className="mt-2 text-sm leading-relaxed text-claude-muted">
                   {project.description}
                 </p>
-                {project.caseStudy && (
+                {project.caseStudy ? (
                   <p className="mt-3 text-xs font-medium text-claude-accent">Read case study →</p>
-                )}
+                ) : project.toolUrl ? (
+                  <p className="mt-3 text-xs font-medium text-claude-accent">Open tool →</p>
+                ) : null}
               </Link>
             ))}
           </div>

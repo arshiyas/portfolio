@@ -32,7 +32,9 @@ export function ProjectGrid() {
       <div className="grid gap-4 sm:grid-cols-2">
         {filtered.map((project) => {
           const isPersonal = project.type === "personal";
-          const href = project.caseStudy ? `/projects/${project.slug}` : "/projects";
+          const href = project.caseStudy
+            ? `/projects/${project.slug}`
+            : project.toolUrl ?? "/projects";
           const className = isPersonal
             ? "group block rounded-[18px] border border-playful-border bg-[#fffdfb] p-5 transition hover:border-playful-purple"
             : "group block rounded-[18px] border border-claude-border bg-claude-surface p-5 transition hover:border-claude-accent";
@@ -72,9 +74,11 @@ export function ProjectGrid() {
                   </span>
                 ))}
               </div>
-              {project.caseStudy && (
+              {project.caseStudy ? (
                 <p className="mt-4 text-xs font-medium text-claude-accent">Read case study →</p>
-              )}
+              ) : project.toolUrl ? (
+                <p className="mt-4 text-xs font-medium text-claude-accent">Open tool →</p>
+              ) : null}
             </Link>
           );
         })}

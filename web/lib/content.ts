@@ -21,17 +21,49 @@ export type ProjectContribution = {
   media?: ProjectMediaPlaceholder[];
 };
 
+export type ProjectFeatureItem = {
+  title: string;
+  description: string;
+};
+
+export type ProjectTechGroup = {
+  category: string;
+  items: string[];
+};
+
+export type ProjectPipelineStep = {
+  title: string;
+  description: string;
+};
+
+export type ProjectCaseStudySection = {
+  title: string;
+  paragraphs: string[];
+};
+
 export type ProjectCaseStudy = {
   overview: string;
   problem: string;
-  approach: string;
-  features: string[];
-  stats: ProjectStat[];
-  myContribution: ProjectContribution;
   source: {
     label: string;
     url: string;
   };
+  contextTitle?: string;
+  metaLine?: string;
+  approach?: string;
+  features?: string[];
+  featureItems?: ProjectFeatureItem[];
+  pipeline?: ProjectPipelineStep[];
+  pipelineTitle?: string;
+  pipelineIntro?: string;
+  sections?: ProjectCaseStudySection[];
+  techStack?: ProjectTechGroup[];
+  underTheHood?: string;
+  learnings?: string[];
+  stats?: ProjectStat[];
+  myContribution?: ProjectContribution;
+  story?: string;
+  toolPreviewBlurb?: string;
 };
 
 export type Project = {
@@ -41,6 +73,7 @@ export type Project = {
   title: string;
   description: string;
   tags: string[];
+  toolUrl?: string;
   caseStudy?: ProjectCaseStudy;
 };
 
@@ -282,12 +315,83 @@ export const projects: Project[] = [
     tags: ["Python", "AWS", "Pipelines"],
   },
   {
-    slug: "side-project",
+    slug: "days-in-canada",
     type: "personal",
-    category: "Personal",
-    title: "Side Project Slot",
-    description: "Space for experiments, learning builds, and open source work.",
-    tags: ["Next.js", "Learning"],
+    category: "Personal · Citizenship",
+    title: "Days in Canada",
+    description:
+      "Personal tool for citizenship travel dates: wizard UX, client-side parsing, in-browser AI via WebLLM.",
+    tags: ["Next.js", "TypeScript", "WebLLM", "Privacy"],
+    toolUrl: "/days-in-canada",
+    caseStudy: {
+      metaLine: "Citizenship tool · Solo build",
+      contextTitle: "Background",
+      overview:
+        "IRCC's Physical Presence Calculator counts citizenship days, but it does not help you find when you traveled. You still have to enter every trip by hand, and those dates usually live in booking emails, loyalty exports, and scattered inboxes, not a ready-made list. I built Days in Canada for my own application to close that gap: paste messy travel records, extract and review trip dates in the browser, then copy confirmed rows into IRCC. Nothing uploads. I also wanted it for people who never kept a travel log and for anyone who has a log but wants to verify it against real data points (confirmations, exports, timeline snippets) before they submit.",
+      toolPreviewBlurb: "Paste travel text, review parsed trips, copy rows into IRCC.",
+      problem:
+        "I built this while preparing my own application. The citizenship process looks like a day-counting exercise until you sit down to list every trip. Many applicants never kept a travel log; others have a spreadsheet or notes but are not sure the dates are right. Both groups end up digging through the same scattered records.",
+      story: `To apply for Canadian citizenship, you must show at least 1,095 days of physical presence in Canada within the five years before you sign, and at least 730 days as a permanent resident. IRCC's Physical Presence Calculator takes your signing date, PR date, and every trip outside Canada (date left, date returned).
+
+The calculator does not connect to email, airlines, or border records. You rebuild the list from confirmations and exports, then type each row by hand. If you did not track trips as you went, that reconstruction is the whole task. If you did keep a log, you still need source-of-truth dates from somewhere else to trust it. IRCC only counts full calendar days entirely outside Canada; the day you leave and the day you return both count as days in Canada. That math is straightforward once you have the dates. Finding and verifying them is the work.`,
+      sections: [
+        {
+          title: "Design",
+          paragraphs: [
+            "Citizenship prep mixes IRCC rules, travel reconstruction, parsing, and eligibility math. Putting that on one screen is too much. The tool is a four-step wizard with one concern per step: start (local-only, paste-friendly), key dates (signing date and PR date), add trips, then results.",
+            "Trip entry uses a segmented control so you pick paste or manual input, not both at once. Parse results stay hidden until you paste and run the parser. That keeps the default path simple while still supporting hand entry for a single trip.",
+            "Incomplete parses get their own micro-flow. When parsing finds a departure but not a return, the row stays visible with a warning and a paste field expands underneath. You drop in a return confirmation from another email without restarting. Complete rows get add or discard; partial rows get find return or edit manually.",
+            "Review is the gate throughout. Parsed trips are proposals until you add them. The results step merges an editable trip table with eligibility totals so you fix rows and see day counts before copying into IRCC's calculator. That review step matters whether you are building a list from scratch or checking a travel log you already have against what your records actually say.",
+          ],
+        },
+        {
+          title: "Parsing",
+          paragraphs: [
+            "Paste is the primary input because that is how records actually exist: booking emails, Aeroplan exports, Google Timeline snippets, notes. A rules parser runs first on structured patterns (labeled depart and return lines, ISO and named dates, route strings like YVR → DEL). It is instant and works without a GPU.",
+            "Real inboxes exceed what rules cover: timeline prose, mixed date formats in one paste, footers wrapped around one useful line. That is where WebLLM comes in. A small language model running on WebGPU reads the pasted text and returns structured trip fields as JSON. Weights download once and cache in the browser; inference stays in the tab.",
+            "Server-side extraction would be simpler to ship, but pasted travel history is immigration data. In-browser parsing keeps the same privacy promise as the rest of the tool: nothing transits an API. Rules remain a first-class path for common airline email and for devices without WebGPU. Both parsers feed the same review UI, and nothing auto-saves. You confirm dates before they hit localStorage.",
+          ],
+        },
+      ],
+      pipelineTitle: "The flow",
+      pipelineIntro: "Four steps, one concern per screen.",
+      pipeline: [
+        {
+          title: "Start",
+          description:
+            "Set expectations: local-only, paste-friendly, about five minutes. No forms yet.",
+        },
+        {
+          title: "Key dates",
+          description:
+            "Signing date and PR date only. Defines the IRCC eligibility window before any trip entry.",
+        },
+        {
+          title: "Add trips",
+          description:
+            "Paste or manual, parse and review, fill missing returns in place. Parsing complexity lives here.",
+        },
+        {
+          title: "Results",
+          description:
+            "Editable trip table plus eligibility summary. Copy confirmed rows into IRCC's calculator.",
+        },
+      ],
+      techStack: [
+        {
+          category: "App",
+          items: ["Next.js", "TypeScript", "localStorage"],
+        },
+        {
+          category: "Parsing",
+          items: ["Rules parser", "WebLLM", "WebGPU"],
+        },
+      ],
+      source: {
+        label: "Open Days in Canada",
+        url: "/days-in-canada",
+      },
+    },
   },
   {
     slug: "github-experiments",
