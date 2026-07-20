@@ -82,38 +82,77 @@ function CaseStudyActions({ project }: { project: Project }) {
   );
 }
 
-function ToolPreviewFrame({ href, blurb }: { href: string; blurb?: string }) {
+function ToolPreviewFrame({ href }: { href: string }) {
+  const steps = ["Start", "Your dates", "Add trips", "Results"];
+
   return (
-    <Link
-      href={href}
-      className="group block overflow-hidden rounded-xl border border-claude-border bg-claude-surface shadow-sm transition hover:border-claude-accent/30"
-    >
-      <div className="flex items-center gap-2 border-b border-claude-border bg-[#f3f0ea] px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#e8e4dc]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#e8e4dc]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#e8e4dc]" />
-        <span className="ml-2 truncate font-mono text-[11px] text-claude-muted">days-in-canada</span>
-      </div>
-      <div className="bg-claude-bg px-6 py-8 sm:px-8 sm:py-10">
-        <div className="mx-auto max-w-xs space-y-4">
-          <div className="flex justify-between gap-2">
-            {[1, 2, 3, 4].map((n) => (
-              <div
-                key={n}
-                className={`h-1.5 flex-1 rounded-full ${n === 1 ? "bg-claude-accent" : "bg-claude-border"}`}
-              />
-            ))}
-          </div>
-          <p className="font-serif text-lg font-semibold text-claude-text">Days in Canada</p>
-          <p className="text-xs leading-relaxed text-claude-muted">
-            {blurb ?? "Paste travel history, review parsed trips, count days outside Canada."}
+    <div className="space-y-4">
+      <div
+        aria-hidden
+        className="days-in-canada-app overflow-hidden rounded-xl border border-claude-border bg-claude-bg"
+      >
+        <div className="days-in-canada-band border-b border-claude-border px-5 pb-5 pt-5 sm:px-6">
+          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-claude-accent">
+            Free · Private · Browser-only
           </p>
-          <span className="inline-flex rounded-lg bg-claude-accent px-3 py-1.5 text-xs font-medium text-white">
-            Open live tool →
-          </span>
+          <p className="mt-2 font-serif text-xl font-semibold tracking-tight text-claude-text">
+            Days in Canada
+          </p>
+
+          <ol className="mt-5 flex items-center">
+            {steps.map((label, i) => (
+              <li key={label} className="flex flex-1 items-center last:flex-none">
+                <div className="flex flex-col items-center gap-1.5">
+                  <div
+                    className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-semibold ${
+                      i === 0
+                        ? "bg-claude-accent text-white ring-4 ring-claude-accent/15"
+                        : "border border-claude-border bg-white text-claude-muted"
+                    }`}
+                  >
+                    {i + 1}
+                  </div>
+                  <span
+                    className={`hidden text-[10px] sm:block ${
+                      i === 0 ? "font-medium text-claude-text" : "text-claude-muted"
+                    }`}
+                  >
+                    {label}
+                  </span>
+                </div>
+                {i < steps.length - 1 ? (
+                  <div className="mx-1.5 mb-5 h-px flex-1 bg-claude-border" />
+                ) : null}
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="px-5 py-5 sm:px-6">
+          <div className="space-y-2.5">
+            <div className="rounded-xl border border-claude-border bg-claude-surface p-4">
+              <p className="text-sm font-medium text-claude-text">Check my eligibility</p>
+              <p className="mt-1 text-xs leading-relaxed text-claude-muted">
+                Dates, absences, and 1,095-day math
+              </p>
+            </div>
+            <div className="rounded-xl border border-claude-border bg-claude-surface p-4">
+              <p className="text-sm font-medium text-claude-text">Parse travel dates only</p>
+              <p className="mt-1 text-xs leading-relaxed text-claude-muted">
+                Paste messy history, extract trips with on-device WebLLM
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </Link>
+
+      <Link
+        href={href}
+        className="inline-flex rounded-lg bg-claude-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#b55638]"
+      >
+        Open tool
+      </Link>
+    </div>
   );
 }
 
@@ -154,20 +193,8 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       </header>
 
       {project.toolUrl ? (
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_minmax(280px,360px)] lg:items-start">
-          <ToolPreviewFrame href={project.toolUrl} blurb={caseStudy.toolPreviewBlurb} />
-          <div className="flex flex-col justify-center gap-4 lg:py-4">
-            <p className="text-sm leading-relaxed text-claude-muted">
-              {caseStudy.toolPreviewBlurb ??
-                "Four-step wizard: key dates, paste or add trips, fill missing returns, review totals for IRCC."}
-            </p>
-            <Link
-              href={project.toolUrl}
-              className="inline-flex w-fit items-center rounded-lg bg-claude-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#b55638]"
-            >
-              Open Days in Canada
-            </Link>
-          </div>
+        <div className="mt-10 max-w-xl">
+          <ToolPreviewFrame href={project.toolUrl} />
         </div>
       ) : null}
 
@@ -197,6 +224,32 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
               </p>
             ))}
           </div>
+          {section.figure ? (
+            <figure className="mt-8 overflow-hidden rounded-xl border border-claude-border bg-claude-bg">
+              {section.figure.kind === "video" || section.figure.src.endsWith(".mp4") ? (
+                <video
+                  src={section.figure.src}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="block w-full"
+                  aria-label={section.figure.alt}
+                />
+              ) : (
+                <img
+                  src={section.figure.src}
+                  alt={section.figure.alt}
+                  className="block w-full"
+                />
+              )}
+              {section.figure.caption ? (
+                <figcaption className="border-t border-claude-border px-4 py-3 text-sm leading-relaxed text-claude-muted">
+                  {section.figure.caption}
+                </figcaption>
+              ) : null}
+            </figure>
+          ) : null}
         </section>
       ))}
 
@@ -293,8 +346,8 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         <section className="mt-16 rounded-xl border border-claude-border bg-[#f3f0ea] px-6 py-8 sm:px-8">
           <h2 className="font-serif text-xl font-semibold text-claude-text">Try it yourself</h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-claude-muted">
-            Free and local-only. Built for citizenship applicants reconstructing travel dates from email
-            and exports.
+            Free and local-only. Optional WebLLM parsing runs in your browser over WebGPU; nothing
+            uploads.
           </p>
           <Link
             href={project.toolUrl}

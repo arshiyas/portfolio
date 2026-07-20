@@ -36,9 +36,17 @@ export type ProjectPipelineStep = {
   description: string;
 };
 
+export type ProjectCaseStudyFigure = {
+  src: string;
+  alt: string;
+  caption?: string;
+  kind?: "image" | "video";
+};
+
 export type ProjectCaseStudySection = {
   title: string;
   paragraphs: string[];
+  figure?: ProjectCaseStudyFigure;
 };
 
 export type ProjectCaseStudy = {
@@ -320,71 +328,76 @@ export const projects: Project[] = [
     category: "Personal · Citizenship",
     title: "Days in Canada",
     description:
-      "Personal tool for citizenship travel dates: wizard UX, client-side parsing, in-browser AI via WebLLM.",
-    tags: ["Next.js", "TypeScript", "WebLLM", "Privacy"],
+      "Reconstruct citizenship travel dates from messy records, with on-device WebLLM parsing when rules fall short.",
+    tags: ["WebLLM", "WebGPU", "Next.js", "TypeScript"],
     toolUrl: "/days-in-canada",
     caseStudy: {
-      metaLine: "Citizenship tool · Solo build",
-      contextTitle: "Background",
+      metaLine: "On-device LLM · Solo build",
+      contextTitle: "The problem",
       overview:
-        "IRCC's Physical Presence Calculator counts citizenship days, but it does not help you find when you traveled. You still have to enter every trip by hand, and those dates usually live in booking emails, loyalty exports, and scattered inboxes, not a ready-made list. I built Days in Canada for my own application to close that gap: paste messy travel records, extract and review trip dates in the browser, then copy confirmed rows into IRCC. Nothing uploads. I also wanted it for people who never kept a travel log and for anyone who has a log but wants to verify it against real data points (confirmations, exports, timeline snippets) before they submit.",
-      toolPreviewBlurb: "Paste travel text, review parsed trips, copy rows into IRCC.",
+        "I built Days in Canada while preparing my own citizenship application. IRCC's calculator needs every trip outside Canada, but those dates live in booking emails, loyalty exports, and scattered notes, not a ready-made list. The tool turns that mess into confirmed trip rows in the browser, including a local WebLLM path when rules are not enough.",
+      toolPreviewBlurb: "Paste travel text, parse on-device with WebLLM, copy rows into IRCC.",
       problem:
-        "I built this while preparing my own application. The citizenship process looks like a day-counting exercise until you sit down to list every trip. Many applicants never kept a travel log; others have a spreadsheet or notes but are not sure the dates are right. Both groups end up digging through the same scattered records.",
-      story: `To apply for Canadian citizenship, you must show at least 1,095 days of physical presence in Canada within the five years before you sign, and at least 730 days as a permanent resident. IRCC's Physical Presence Calculator takes your signing date, PR date, and every trip outside Canada (date left, date returned).
-
-The calculator does not connect to email, airlines, or border records. You rebuild the list from confirmations and exports, then type each row by hand. If you did not track trips as you went, that reconstruction is the whole task. If you did keep a log, you still need source-of-truth dates from somewhere else to trust it. IRCC only counts full calendar days entirely outside Canada; the day you leave and the day you return both count as days in Canada. That math is straightforward once you have the dates. Finding and verifying them is the work.`,
+        "The hard part is not the day math. It is reconstructing travel history from real records, then typing each row into IRCC by hand. I wanted something that could extract dates from a paste, let me review them, and never upload immigration data to a server.",
       sections: [
         {
-          title: "Design",
+          title: "Constraints",
           paragraphs: [
-            "Citizenship prep mixes IRCC rules, travel reconstruction, parsing, and eligibility math. Putting that on one screen is too much. The tool is a four-step wizard with one concern per step: start (local-only, paste-friendly), key dates (signing date and PR date), add trips, then results.",
-            "Trip entry uses a segmented control so you pick paste or manual input, not both at once. Parse results stay hidden until you paste and run the parser. That keeps the default path simple while still supporting hand entry for a single trip.",
-            "Incomplete parses get their own micro-flow. When parsing finds a departure but not a return, the row stays visible with a warning and a paste field expands underneath. You drop in a return confirmation from another email without restarting. Complete rows get add or discard; partial rows get find return or edit manually.",
-            "Review is the gate throughout. Parsed trips are proposals until you add them. The results step merges an editable trip table with eligibility totals so you fix rows and see day counts before copying into IRCC's calculator. That review step matters whether you are building a list from scratch or checking a travel log you already have against what your records actually say.",
+            "Pasted booking emails and timeline exports are immigration data. A server-side LLM would have been the easy path, and the wrong one. Inputs are messy too: mixed date formats, prose, footers wrapped around one useful line. Extraction had to stay in the browser, and still work when WebGPU is missing.",
           ],
         },
         {
-          title: "Parsing",
+          title: "What I shipped",
           paragraphs: [
-            "Paste is the primary input because that is how records actually exist: booking emails, Aeroplan exports, Google Timeline snippets, notes. A rules parser runs first on structured patterns (labeled depart and return lines, ISO and named dates, route strings like YVR → DEL). It is instant and works without a GPU.",
-            "Real inboxes exceed what rules cover: timeline prose, mixed date formats in one paste, footers wrapped around one useful line. That is where WebLLM comes in. A small language model running on WebGPU reads the pasted text and returns structured trip fields as JSON. Weights download once and cache in the browser; inference stays in the tab.",
-            "Server-side extraction would be simpler to ship, but pasted travel history is immigration data. In-browser parsing keeps the same privacy promise as the rest of the tool: nothing transits an API. Rules remain a first-class path for common airline email and for devices without WebGPU. Both parsers feed the same review UI, and nothing auto-saves. You confirm dates before they hit localStorage.",
+            "A wizard with two entry paths: full eligibility (dates + absences + 1,095-day math), or parse-only for people who just need trip rows. Both use a dual parser. Structured pastes hit a rules engine first (instant, no GPU). Everything else can fall through to WebLLM: weights download once, cache in the browser, and inference runs on-device over WebGPU, returning trip fields as JSON.",
+            "Both parsers feed the same review UI. Parsed trips are proposals until you confirm them. State stays in memory for the visit only. Partial rows (departure without return) stay editable in place so you can paste a second confirmation without restarting.",
+          ],
+          figure: {
+            src: "/projects/days-in-canada-model-loading.mp4",
+            kind: "video",
+            alt: "Days in Canada loading a local WebLLM model with a progress bar while parsing pasted travel history",
+            caption:
+              "First parse downloads the local model over WebGPU. Progress stays on-device; nothing is uploaded.",
+          },
+        },
+        {
+          title: "Why those choices",
+          paragraphs: [
+            "WebLLM was the technical center of the build: prove that a useful extraction model can run fully client-side for sensitive data. Server extraction would have shipped faster, but it would break the privacy constraint and make the project a thin UI over someone else's API.",
+            "Rules stay first-class so common airline emails still work on machines without WebGPU, and so the happy path does not wait on a model download. The LLM covers the long tail the rules cannot. Review stays human-gated either way, because citizenship dates are not something you want auto-committed.",
           ],
         },
       ],
       pipelineTitle: "The flow",
-      pipelineIntro: "Four steps, one concern per screen.",
+      pipelineIntro: "Same steps as the app. Eligibility path shown; parse-only skips Your dates.",
       pipeline: [
         {
           title: "Start",
           description:
-            "Set expectations: local-only, paste-friendly, about five minutes. No forms yet.",
+            "Pick a path: check eligibility, or parse travel dates only. Browser-only, no account.",
         },
         {
-          title: "Key dates",
-          description:
-            "Signing date and PR date only. Defines the IRCC eligibility window before any trip entry.",
+          title: "Your dates",
+          description: "Application date and PR date. Sets the IRCC window before trips.",
         },
         {
           title: "Add trips",
           description:
-            "Paste or manual, parse and review, fill missing returns in place. Parsing complexity lives here.",
+            "Paste travel text. Rules first, WebLLM on WebGPU when needed, then review.",
         },
         {
           title: "Results",
-          description:
-            "Editable trip table plus eligibility summary. Copy confirmed rows into IRCC's calculator.",
+          description: "Edit confirmed rows, check totals, copy into IRCC's calculator.",
         },
       ],
       techStack: [
         {
-          category: "App",
-          items: ["Next.js", "TypeScript", "localStorage"],
+          category: "On-device AI",
+          items: ["WebLLM", "WebGPU", "Rules parser"],
         },
         {
-          category: "Parsing",
-          items: ["Rules parser", "WebLLM", "WebGPU"],
+          category: "App",
+          items: ["Next.js", "TypeScript", "In-memory state"],
         },
       ],
       source: {

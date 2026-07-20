@@ -54,12 +54,31 @@ body {
   background: var(--playful-bg);
 }
 
+/* Days in Canada app theme: slate + seafoam (base K), scoped so the
+   portfolio keeps its cream/terracotta look. claude-* utilities resolve
+   to these vars, so overriding them here rethemes the whole app. */
 .days-in-canada-app {
+  --claude-bg: #f1f5f9;
+  --claude-surface: #ffffff;
+  --claude-text: #1e293b;
+  --claude-muted: #64748b;
+  --claude-border: #e2e8f0;
+  --claude-accent: #0f766e;
+  --claude-accent-soft: #ccfbf1;
+  --dic-band: #eaf6f4;
+  --dic-tint: #eef2f7;
+  --dic-faint: #f8fafc;
   background-color: var(--claude-bg);
+  color: var(--claude-text);
+}
+
+.days-in-canada-band {
+  background-color: var(--dic-band);
 }
 
 @media print {
-  .days-in-canada-app {
+  .days-in-canada-app,
+  .days-in-canada-band {
     background: white;
   }
   .days-in-canada-no-print {

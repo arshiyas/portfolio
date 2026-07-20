@@ -38,7 +38,7 @@ const panel = "rounded-xl border border-claude-border bg-claude-surface";
 const input =
   "w-full rounded-lg border border-claude-border bg-white px-3 py-2.5 text-sm text-claude-text transition placeholder:text-claude-muted/70 focus:border-claude-accent focus:outline-none focus:ring-2 focus:ring-claude-accent/15";
 const btnPrimary =
-  "rounded-lg bg-claude-accent px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#b55638] disabled:cursor-not-allowed disabled:opacity-45";
+  "rounded-lg bg-claude-accent px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#0d9488] disabled:cursor-not-allowed disabled:opacity-45";
 const btnSecondary =
   "rounded-lg border border-claude-border bg-white px-4 py-2.5 text-sm font-medium text-claude-text transition hover:border-claude-accent/40 hover:bg-claude-accent-soft/30";
 
@@ -93,7 +93,7 @@ function ParseStatusBanner({
   return (
     <div
       className={`mt-3 rounded-lg border px-3 py-3 ${
-        isActive ? "border-claude-accent/25 bg-claude-accent-soft/25" : "border-emerald-200/80 bg-emerald-50/60"
+        isActive ? "border-claude-border bg-[#f8fafc]" : "border-emerald-200/80 bg-emerald-50/60"
       }`}
     >
       <p className={`text-xs leading-relaxed ${isActive ? "text-claude-text" : "text-emerald-900"}`}>
@@ -485,7 +485,7 @@ function SegmentedControl<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <div className="inline-flex rounded-lg border border-claude-border bg-[#f3f0ea] p-1">
+    <div className="inline-flex rounded-lg border border-claude-border bg-[#eef2f7] p-1">
       {options.map((opt) => (
         <button
           key={opt.value}
@@ -585,7 +585,7 @@ function ParsedTripRow({
   const canSave = Boolean(resolvedLeft && resolvedReturn);
 
   return (
-    <div className="rounded-lg border border-claude-border/80 bg-[#faf9f5]/80 px-4 py-3.5">
+    <div className="rounded-lg border border-claude-border/80 bg-[#f8fafc]/80 px-4 py-3.5">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
         <span className="font-medium">
           {trip.left ? formatDisplayDate(trip.left) : "Date unknown"}
@@ -1246,7 +1246,7 @@ export function DaysInCanadaApp() {
 
 
   return (
-    <div className="mx-auto w-full max-w-[640px] px-5 py-10 sm:px-6 sm:py-12">
+    <div>
       {tripsReplacePrompt ? (
         <ClearTripsPrompt
           tripCount={displayFetchedTrips.length}
@@ -1260,26 +1260,31 @@ export function DaysInCanadaApp() {
           onCancel={() => setTripsReplacePrompt(null)}
         />
       ) : null}
-      <header className="mb-10 flex items-start justify-between gap-4 border-b border-claude-border pb-8">
-        <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-claude-accent">
-            Free · Private · Browser-only
-          </p>
-          <h1 className="mt-2 font-serif text-[1.75rem] font-semibold tracking-tight text-claude-text sm:text-[2rem]">
-            Days in Canada
-          </h1>
+
+      <div className="days-in-canada-band border-b border-claude-border">
+        <div className="mx-auto w-full max-w-[640px] px-5 pb-8 pt-10 sm:px-6 sm:pt-12">
+          <header className="mb-8 flex items-start justify-between gap-4">
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-claude-accent">
+                Free · Private · Browser-only
+              </p>
+              <h1 className="mt-2 font-serif text-[1.75rem] font-semibold tracking-tight text-claude-text sm:text-[2rem]">
+                Days in Canada
+              </h1>
+            </div>
+            <Link
+              href="/projects/days-in-canada"
+              className="days-in-canada-no-print shrink-0 pt-1 text-xs font-medium text-claude-accent hover:underline"
+            >
+              Why I built this
+            </Link>
+          </header>
+
+          <StepIndicator current={step} steps={wizardSteps} />
         </div>
-        <Link
-          href="/projects/days-in-canada"
-          className="days-in-canada-no-print shrink-0 pt-1 text-xs font-medium text-claude-accent hover:underline"
-        >
-          Why I built this
-        </Link>
-      </header>
+      </div>
 
-      <StepIndicator current={step} steps={wizardSteps} />
-
-      <div className="mt-10">
+      <div className="mx-auto w-full max-w-[640px] px-5 pb-10 pt-10 sm:px-6">
         {step === "welcome" ? (
           <div className="space-y-6">
             <p className="text-base leading-relaxed text-claude-muted">
@@ -1356,7 +1361,7 @@ export function DaysInCanadaApp() {
               </label>
 
               {state.prePrCredit ? (
-                <div className="space-y-4 rounded-lg border border-claude-border/80 bg-[#faf9f5]/80 p-4">
+                <div className="space-y-4 rounded-lg border border-claude-border/80 bg-[#f8fafc]/80 p-4">
                   <p className="text-xs leading-relaxed text-claude-muted">
                     Match IRCC&apos;s calculator: one row per stretch on a visitor, work, or study permit.
                     Trips you add later count as absences during these periods too.
@@ -1544,7 +1549,11 @@ export function DaysInCanadaApp() {
                       type="button"
                       onClick={() => requestParse(pasteText)}
                       disabled={isParsing || !pasteText.trim()}
-                      className={btnPrimary}
+                      className={
+                        isParsing
+                          ? "rounded-lg bg-slate-400 px-4 py-2.5 text-sm font-medium text-white cursor-not-allowed"
+                          : btnPrimary
+                      }
                     >
                       {isParsing ? "Parsing..." : "Parse with local AI"}
                     </button>
@@ -1671,7 +1680,7 @@ export function DaysInCanadaApp() {
                 <div className={`${panel} overflow-hidden`}>
                     <table className="w-full min-w-[480px] text-left text-sm">
                       <thead>
-                        <tr className="border-b border-claude-border bg-[#f3f0ea] text-xs font-medium uppercase tracking-wide text-claude-muted">
+                        <tr className="border-b border-claude-border bg-[#eef2f7] text-xs font-medium uppercase tracking-wide text-claude-muted">
                           <th className="px-4 py-3">Left Canada</th>
                           <th className="px-4 py-3">Returned</th>
                           <th className="px-4 py-3">Route</th>
@@ -1699,7 +1708,7 @@ export function DaysInCanadaApp() {
                             </td>
                           </tr>
                         ))}
-                        <tr className="bg-[#f3f0ea]/70 font-medium">
+                        <tr className="bg-[#eef2f7]/70 font-medium">
                           <td className="px-4 py-3" colSpan={3}>
                             Total
                           </td>
@@ -1717,7 +1726,7 @@ export function DaysInCanadaApp() {
                 <div className={`${panel} overflow-hidden`}>
                   <table className="w-full min-w-[480px] text-left text-sm">
                     <thead>
-                      <tr className="border-b border-claude-border bg-[#f3f0ea] text-xs font-medium uppercase tracking-wide text-claude-muted">
+                      <tr className="border-b border-claude-border bg-[#eef2f7] text-xs font-medium uppercase tracking-wide text-claude-muted">
                         <th className="px-4 py-3">Left Canada</th>
                         <th className="px-4 py-3">Returned</th>
                         <th className="px-4 py-3">Route</th>
@@ -1755,7 +1764,7 @@ export function DaysInCanadaApp() {
                           </td>
                         </tr>
                       ))}
-                      <tr className="bg-[#f3f0ea]/70 font-medium">
+                      <tr className="bg-[#eef2f7]/70 font-medium">
                         <td className="px-4 py-3" colSpan={3}>
                           Total in window
                         </td>
@@ -1852,17 +1861,17 @@ export function DaysInCanadaApp() {
             />
           </div>
         ) : null}
-      </div>
 
-      <footer className="days-in-canada-no-print mt-14 border-t border-claude-border pt-6 text-center text-xs text-claude-muted">
-        <Link href="/" className="hover:text-claude-accent">
-          arshiya.dev
-        </Link>
-        {" · "}
-        <button type="button" onClick={handleStartOver} className="hover:text-claude-accent">
-          Start over
-        </button>
-      </footer>
+        <footer className="days-in-canada-no-print mt-14 border-t border-claude-border pt-6 text-center text-xs text-claude-muted">
+          <Link href="/" className="hover:text-claude-accent">
+            arshiya.dev
+          </Link>
+          {" · "}
+          <button type="button" onClick={handleStartOver} className="hover:text-claude-accent">
+            Start over
+          </button>
+        </footer>
+      </div>
     </div>
   );
 }
