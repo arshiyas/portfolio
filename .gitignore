@@ -1,8 +1,8 @@
 # dependencies & build
 web/node_modules/
-web/.next/
-web/out/
+web/.output/
 web/.vercel/
+web/dist/
 
 # env
 .env
@@ -19,3 +19,8 @@ npm-debug.log*
 
 # temp files
 .tmp-*
+
+# archived Next.js app (pre-TanStack cutover)
+web-next/node_modules/
+web-next/.next/
+web-next/.vercel/

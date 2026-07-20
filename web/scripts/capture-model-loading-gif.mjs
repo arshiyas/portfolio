@@ -1,24 +1,18 @@
-import { copyFile, mkdir, readdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
-import ffmpegPath from "ffmpeg-static";
 import puppeteer from "puppeteer-core";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const framesDir = join(root, ".capture-frames");
-const seqDir = join(framesDir, "sequence");
-const outMp4 = join(root, "public/projects/days-gone-model-loading.mp4");
+const outGif = join(root, "public/projects/days-in-canada-model-loading.gif");
 const chromePath =
   process.env.CHROME_PATH ||
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const captureHtml = join(root, "scripts/capture/model-loading.html");
 const captureUrl = `file://${captureHtml}`;
-
-// Hold first/last frames longer so status text is readable.
-const frameHolds = [24, 12, 12, 12, 24];
-const fps = 12;
 
 function run(cmd, args) {
   return new Promise((resolve, reject) => {
@@ -32,8 +26,7 @@ function run(cmd, args) {
 
 await rm(framesDir, { recursive: true, force: true });
 await mkdir(framesDir, { recursive: true });
-await mkdir(seqDir, { recursive: true });
-await mkdir(dirname(outMp4), { recursive: true });
+await mkdir(dirname(outGif), { recursive: true });
 
 const browser = await puppeteer.launch({
   executablePath: chromePath,
@@ -59,36 +52,34 @@ try {
   await browser.close();
 }
 
-let seq = 0;
-for (let i = 0; i < frameHolds.length; i += 1) {
-  const source = join(framesDir, `frame-${String(i).padStart(2, "0")}.png`);
-  for (let h = 0; h < frameHolds[i]; h += 1) {
-    const target = join(seqDir, `seq-${String(seq).padStart(4, "0")}.png`);
-    await copyFile(source, target);
-    seq += 1;
-  }
+// Hold early/mid/end frames a bit longer for readability.
+const frameFiles = [];
+const frameArgs = [];
+for (let i = 0; i < 8; i += 1) {
+  const file = join(framesDir, `frame-${String(i).padStart(2, "0")}.png`);
+  frameFiles.push(file);
+  const delay = i === 0 || i === 7 ? 90 : 45; // centiseconds
+  frameArgs.push("-delay", String(delay), file);
 }
 
-if (!ffmpegPath) {
-  throw new Error("ffmpeg-static binary not found");
-}
+const paletteFile = join(framesDir, "palette.png");
+await run("magick", [...frameFiles, "-append", "-unique-colors", "-colors", "64", paletteFile]);
 
-await run(ffmpegPath, [
-  "-y",
-  "-framerate",
-  String(fps),
-  "-i",
-  join(seqDir, "seq-%04d.png"),
-  "-c:v",
-  "libx264",
-  "-crf",
-  "18",
-  "-pix_fmt",
-  "yuv420p",
-  "-movflags",
-  "+faststart",
-  outMp4,
+await run("magick", [
+  ...frameArgs,
+  "-remap",
+  paletteFile,
+  "-loop",
+  "0",
+  "-layers",
+  "Optimize",
+  outGif,
 ]);
 
-await writeFile(join(framesDir, "done.txt"), `Wrote ${outMp4}\n`, "utf8");
-console.log(`MP4 written to ${outMp4}`);
+await writeFile(
+  join(framesDir, "done.txt"),
+  `Wrote ${outGif}\n`,
+  "utf8",
+);
+
+console.log(`GIF written to ${outGif}`);

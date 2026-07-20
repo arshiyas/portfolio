@@ -10,7 +10,7 @@ cd preview && python3 -m http.server 3456
 
 Open http://localhost:3456
 
-## App (Next.js)
+## App (TanStack Start)
 
 ```bash
 cd web
@@ -22,25 +22,25 @@ Open http://localhost:3000
 
 ## Deploy to Vercel
 
-### Option A: Vercel CLI (fastest)
+The app uses TanStack Start with Nitro. Keep **Root Directory** set to `web`.
 
-From the `web` directory:
+### Option A: Vercel CLI
 
 ```bash
 cd web
-npx vercel login          # one-time, opens browser to authenticate
-npx vercel                # preview deploy
-npx vercel --prod         # production URL
+npx vercel login
+npx vercel
+npx vercel --prod
 ```
 
 ### Option B: GitHub + Vercel dashboard
 
-1. Push this repo to GitHub (the `web` folder is the Next.js app).
-2. Go to [vercel.com/new](https://vercel.com/new) and import the repository.
-3. Set **Root Directory** to `web` if the repo root is `portfolio/`, or leave blank if the repo root is `web/`.
-4. Click Deploy. Vercel auto-detects Next.js.
+1. Push this repo to GitHub.
+2. Import at [vercel.com/new](https://vercel.com/new).
+3. Set **Root Directory** to `web`.
+4. Deploy. Vercel picks up the Nitro/Start build via `web/vercel.json`.
 
-Every push to `main` redeploys automatically.
+`web-next/` is an archived copy of the previous Next.js app (rollback only). Do not deploy it.
 
 ### Custom domain
 
