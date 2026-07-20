@@ -326,16 +326,16 @@ export const projects: Project[] = [
     slug: "days-in-canada",
     type: "personal",
     category: "Personal · Citizenship",
-    title: "Days in Canada",
+    title: "Days Gone",
     description:
       "Reconstruct citizenship travel dates from messy records, with on-device WebLLM parsing when rules fall short.",
     tags: ["WebLLM", "WebGPU", "Next.js", "TypeScript"],
-    toolUrl: "/days-in-canada",
+    toolUrl: "/days-gone",
     caseStudy: {
       metaLine: "On-device LLM · Solo build",
       contextTitle: "The problem",
       overview:
-        "I built Days in Canada while preparing my own citizenship application. IRCC's calculator needs every trip outside Canada, but those dates live in booking emails, loyalty exports, and scattered notes, not a ready-made list. The tool turns that mess into confirmed trip rows in the browser, including a local WebLLM path when rules are not enough.",
+        "I built Days Gone (formerly Days in Canada) while preparing my own citizenship application. IRCC's calculator needs every trip outside Canada, but those dates live in booking emails, loyalty exports, and scattered notes, not a ready-made list. The tool turns that mess into confirmed trip rows in the browser, including a local WebLLM path when rules are not enough.",
       toolPreviewBlurb: "Paste travel text, parse on-device with WebLLM, copy rows into IRCC.",
       problem:
         "The hard part is not the day math. It is reconstructing travel history from real records, then typing each row into IRCC by hand. I wanted something that could extract dates from a paste, let me review them, and never upload immigration data to a server.",
@@ -355,7 +355,7 @@ export const projects: Project[] = [
           figure: {
             src: "/projects/days-in-canada-model-loading.mp4",
             kind: "video",
-            alt: "Days in Canada loading a local WebLLM model with a progress bar while parsing pasted travel history",
+            alt: "Days Gone loading a local WebLLM model with a progress bar while parsing pasted travel history",
             caption:
               "First parse downloads the local model over WebGPU. Progress stays on-device; nothing is uploaded.",
           },
@@ -401,8 +401,8 @@ export const projects: Project[] = [
         },
       ],
       source: {
-        label: "Open Days in Canada",
-        url: "/days-in-canada",
+        label: "Open Days Gone",
+        url: "/days-gone",
       },
     },
   },

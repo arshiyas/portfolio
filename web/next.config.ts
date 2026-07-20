@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  async redirects() {
+    return [
+      {
+        source: "/days-in-canada",
+        destination: "/days-gone",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -54,32 +54,70 @@ body {
   background: var(--playful-bg);
 }
 
-/* Days in Canada app theme: slate + seafoam (base K), scoped so the
-   portfolio keeps its cream/terracotta look. claude-* utilities resolve
-   to these vars, so overriding them here rethemes the whole app. */
+/* Days Gone app theme (researched from in-game menu/HUD/map UI references).
+   Original SVG backdrop only; no copyrighted game assets shipped. */
+.days-gone-app,
 .days-in-canada-app {
-  --claude-bg: #f1f5f9;
-  --claude-surface: #ffffff;
-  --claude-text: #1e293b;
-  --claude-muted: #64748b;
-  --claude-border: #e2e8f0;
-  --claude-accent: #0f766e;
-  --claude-accent-soft: #ccfbf1;
-  --dic-band: #eaf6f4;
-  --dic-tint: #eef2f7;
-  --dic-faint: #f8fafc;
+  --claude-bg: #e4e1dd;
+  --claude-surface: #f0eeea;
+  --claude-text: #131311;
+  --claude-muted: #6f695d;
+  --claude-border: #c5c2bd;
+  --claude-accent: #6b6f4a;
+  --claude-accent-soft: rgba(107, 111, 74, 0.15);
+  --dg-accent-hover: #5a5e3f;
+  --dg-band: #141312;
+  --dg-band-text: #f5f3f0;
+  --dg-band-muted: rgba(245, 243, 240, 0.72);
+  --dg-band-accent: #9a9e72;
+  --dg-tint: #eae7e2;
+  --dg-faint: #f5f3f0;
+  --dg-panel: rgba(19, 19, 17, 0.84);
+  --dg-panel-text: #f5f3f0;
+  --dg-panel-muted: rgba(245, 243, 240, 0.72);
+  --dg-input: #faf9f7;
+  --dg-elevated: #f5f3f0;
+  --dg-success-bg: rgba(58, 66, 58, 0.14);
+  --dg-success-border: #9aa89c;
+  --dg-success-text: #3a423a;
+  --dg-warning-bg: rgba(108, 77, 51, 0.1);
+  --dg-warning-border: rgba(140, 110, 95, 0.35);
+  --dg-warning-text: #6c4d33;
+  --dg-disabled: #8a8580;
+  --dg-danger: #9b3d2e;
   background-color: var(--claude-bg);
   color: var(--claude-text);
+  background-image: radial-gradient(rgba(19, 19, 17, 0.03) 0.4px, transparent 0.4px);
+  background-size: 3px 3px;
 }
 
+.days-gone-band,
 .days-in-canada-band {
-  background-color: var(--dic-band);
+  position: relative;
+  background-color: var(--dg-band);
+  color: var(--dg-band-text);
+  --claude-text: var(--dg-band-text);
+  --claude-muted: var(--dg-band-muted);
+  --claude-accent: var(--dg-band-accent);
+  --claude-border: rgba(245, 243, 240, 0.14);
+}
+
+.days-gone-band .days-gone-stepper,
+.days-in-canada-band .days-gone-stepper {
+  --claude-accent: #6b6f4a;
+  --claude-accent-soft: rgba(107, 111, 74, 0.28);
+  --claude-text: var(--dg-band-text);
+  --claude-muted: var(--dg-band-muted);
+  --claude-border: rgba(245, 243, 240, 0.22);
 }
 
 @media print {
+  .days-gone-app,
   .days-in-canada-app,
+  .days-gone-band,
   .days-in-canada-band {
     background: white;
+    background-image: none;
   }
   .days-in-canada-no-print {
     display: none !important;

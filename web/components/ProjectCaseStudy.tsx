@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Project } from "@/lib/content";
 import { getProjectBySlug, projects } from "@/lib/content";
+import { DaysGoneBackdrop } from "@/components/days-in-canada/DaysGoneBackdrop";
 
 type ProjectCaseStudyProps = {
   project: Project;
@@ -89,14 +90,15 @@ function ToolPreviewFrame({ href }: { href: string }) {
     <div className="space-y-4">
       <div
         aria-hidden
-        className="days-in-canada-app overflow-hidden rounded-xl border border-claude-border bg-claude-bg"
+        className="days-gone-app overflow-hidden rounded-xl border border-claude-border bg-claude-bg"
       >
-        <div className="days-in-canada-band border-b border-claude-border px-5 pb-5 pt-5 sm:px-6">
-          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-claude-accent">
+        <div className="days-gone-band relative overflow-hidden border-b border-claude-border px-5 pb-5 pt-5 sm:px-6">
+          <DaysGoneBackdrop />
+          <p className="relative z-10 font-mono text-[11px] uppercase tracking-[0.12em] text-claude-accent">
             Free · Private · Browser-only
           </p>
-          <p className="mt-2 font-serif text-xl font-semibold tracking-tight text-claude-text">
-            Days in Canada
+          <p className="relative z-10 mt-2 font-sans text-xl font-bold uppercase tracking-[0.12em] text-claude-text">
+            Days Gone
           </p>
 
           <ol className="mt-5 flex items-center">
@@ -106,8 +108,8 @@ function ToolPreviewFrame({ href }: { href: string }) {
                   <div
                     className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-semibold ${
                       i === 0
-                        ? "bg-claude-accent text-white ring-4 ring-claude-accent/15"
-                        : "border border-claude-border bg-white text-claude-muted"
+                        ? "bg-claude-accent text-[var(--dg-band-text)] ring-4 ring-claude-accent/15"
+                        : "border border-claude-border bg-transparent text-claude-muted"
                     }`}
                   >
                     {i + 1}
@@ -129,6 +131,12 @@ function ToolPreviewFrame({ href }: { href: string }) {
         </div>
 
         <div className="px-5 py-5 sm:px-6">
+          <div className="mb-3 rounded-xl border border-[rgba(245,243,240,0.14)] bg-[var(--dg-panel)] px-4 py-3">
+            <p className="text-xs font-semibold text-[var(--dg-panel-text)]">Your data stays in this session</p>
+            <p className="mt-1 text-xs leading-relaxed text-[var(--dg-panel-muted)]">
+              No account. No server. Local only.
+            </p>
+          </div>
           <div className="space-y-2.5">
             <div className="rounded-xl border border-claude-border bg-claude-surface p-4">
               <p className="text-sm font-medium text-claude-text">Check my eligibility</p>
@@ -148,7 +156,7 @@ function ToolPreviewFrame({ href }: { href: string }) {
 
       <Link
         href={href}
-        className="inline-flex rounded-lg bg-claude-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#b55638]"
+        className="inline-flex rounded-lg bg-claude-accent px-5 py-2.5 text-sm font-medium text-[var(--dg-band-text)] transition hover:bg-[var(--dg-accent-hover)]"
       >
         Open tool
       </Link>
@@ -353,7 +361,7 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
             href={project.toolUrl}
             className="mt-5 inline-flex rounded-lg bg-claude-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#b55638]"
           >
-            Open Days in Canada
+            Open Days Gone
           </Link>
         </section>
       ) : null}

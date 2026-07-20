@@ -12,13 +12,17 @@
     />
     <style>
       :root {
-        --claude-bg: #f1f5f9;
-        --claude-surface: #ffffff;
-        --claude-text: #1e293b;
-        --claude-muted: #64748b;
-        --claude-border: #e2e8f0;
-        --claude-accent: #0f766e;
-        --claude-accent-soft: #ccfbf1;
+        --claude-bg: #e4e1dd;
+        --claude-surface: #f0eeea;
+        --claude-text: #131311;
+        --claude-muted: #6f695d;
+        --claude-border: #c5c2bd;
+        --claude-accent: #6b6f4a;
+        --claude-input: #faf9f7;
+        --claude-disabled: #8a8580;
+        --dg-panel: rgba(19, 19, 17, 0.84);
+        --dg-panel-text: #f5f3f0;
+        --dg-track: rgba(245, 243, 240, 0.15);
       }
       * {
         box-sizing: border-box;
@@ -26,6 +30,8 @@
       body {
         margin: 0;
         background: var(--claude-bg);
+        background-image: radial-gradient(rgba(19, 19, 17, 0.03) 0.4px, transparent 0.4px);
+        background-size: 3px 3px;
         color: var(--claude-text);
         font-family: Inter, system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -66,7 +72,7 @@
         overflow: hidden;
         border: 1px solid var(--claude-border);
         border-radius: 8px;
-        background: #fff;
+        background: var(--claude-input);
         padding: 10px 12px;
         font-family: "IBM Plex Mono", ui-monospace, monospace;
         font-size: 12px;
@@ -80,8 +86,8 @@
         display: inline-flex;
         border: 0;
         border-radius: 8px;
-        background: #94a3b8;
-        color: #fff;
+        background: var(--claude-disabled);
+        color: var(--dg-panel-text);
         padding: 10px 16px;
         font-size: 0.875rem;
         font-weight: 500;
@@ -89,22 +95,22 @@
       .banner {
         margin-top: 12px;
         border-radius: 8px;
-        border: 1px solid var(--claude-border);
-        background: #f8fafc;
+        border: 1px solid rgba(245, 243, 240, 0.14);
+        background: var(--dg-panel);
         padding: 12px;
       }
       .banner p {
         margin: 0;
         font-size: 0.75rem;
         line-height: 1.55;
-        color: var(--claude-text);
+        color: var(--dg-panel-text);
       }
       .track {
         margin-top: 8px;
         height: 6px;
         overflow: hidden;
         border-radius: 999px;
-        background: #e2e8f0;
+        background: var(--dg-track);
       }
       .fill {
         height: 100%;
@@ -129,7 +135,7 @@
         <textarea id="paste" readonly></textarea>
         <button class="btn" type="button">Parsing...</button>
         <div class="banner">
-          <p id="msg">Loading local model (first time only)...</p>
+          <p id="msg">Loading local AI on your device...</p>
           <div class="track"><div class="fill" id="fill"></div></div>
         </div>
       </div>

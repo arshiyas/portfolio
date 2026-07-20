@@ -17,6 +17,7 @@ import {
   type ExportOptions,
 } from "@/lib/days-in-canada/export";
 import { dedupeTrips, mergeParsedIntoTrips, tripDedupeKey } from "@/lib/days-in-canada/trips";
+import { DaysGoneBackdrop } from "@/components/days-in-canada/DaysGoneBackdrop";
 
 type StepId = "welcome" | "dates" | "trips" | "results";
 type AppMode = "eligibility" | "parse";
@@ -36,11 +37,16 @@ const PARSE_STEPS: { id: StepId; label: string }[] = [
 
 const panel = "rounded-xl border border-claude-border bg-claude-surface";
 const input =
-  "w-full rounded-lg border border-claude-border bg-white px-3 py-2.5 text-sm text-claude-text transition placeholder:text-claude-muted/70 focus:border-claude-accent focus:outline-none focus:ring-2 focus:ring-claude-accent/15";
+  "w-full rounded-lg border border-claude-border bg-[var(--dg-input)] px-3 py-2.5 text-sm text-claude-text transition placeholder:text-claude-muted/70 focus:border-claude-accent focus:outline-none focus:ring-2 focus:ring-claude-accent/15";
 const btnPrimary =
-  "rounded-lg bg-claude-accent px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#0d9488] disabled:cursor-not-allowed disabled:opacity-45";
+  "rounded-lg bg-claude-accent px-4 py-2.5 text-sm font-medium text-[var(--dg-band-text)] transition hover:bg-[var(--dg-accent-hover)] disabled:cursor-not-allowed disabled:opacity-45";
 const btnSecondary =
-  "rounded-lg border border-claude-border bg-white px-4 py-2.5 text-sm font-medium text-claude-text transition hover:border-claude-accent/40 hover:bg-claude-accent-soft/30";
+  "rounded-lg border border-claude-border bg-[var(--dg-input)] px-4 py-2.5 text-sm font-medium text-claude-text transition hover:border-claude-accent/40 hover:bg-claude-accent-soft/30";
+const btnDisabled =
+  "rounded-lg bg-[var(--dg-disabled)] px-4 py-2.5 text-sm font-medium text-[var(--dg-panel-text)] cursor-not-allowed";
+const badgeSuccess = "rounded-full bg-[var(--dg-success-bg)] px-2 py-0.5 text-xs font-medium text-[var(--dg-success-text)]";
+const badgeWarning = "rounded-full bg-[var(--dg-warning-bg)] px-2 py-0.5 text-xs font-medium text-[var(--dg-warning-text)]";
+const tableHead = "border-b border-claude-border bg-[var(--dg-panel)] text-xs font-medium uppercase tracking-wide text-[var(--dg-panel-muted)]";
 
 function CalendarIcon() {
   return (
@@ -60,7 +66,7 @@ function ChevronDownIcon({ expanded }: { expanded: boolean }) {
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden
-      className={`shrink-0 text-emerald-800 transition ${expanded ? "rotate-180" : ""}`}
+      className={`shrink-0 text-claude-accent transition ${expanded ? "rotate-180" : ""}`}
     >
       <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -93,14 +99,20 @@ function ParseStatusBanner({
   return (
     <div
       className={`mt-3 rounded-lg border px-3 py-3 ${
-        isActive ? "border-claude-border bg-[#f8fafc]" : "border-emerald-200/80 bg-emerald-50/60"
+        isActive
+          ? "border-claude-border bg-[var(--dg-elevated)]"
+          : "border-[color:var(--dg-success-border)] bg-[var(--dg-success-bg)]"
       }`}
     >
-      <p className={`text-xs leading-relaxed ${isActive ? "text-claude-text" : "text-emerald-900"}`}>
+      <p
+        className={`text-xs leading-relaxed ${
+          isActive ? "text-claude-text" : "text-[var(--dg-success-text)]"
+        }`}
+      >
         {message}
       </p>
       {isActive && progress != null ? (
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/80">
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--dg-input)]">
           <div
             className="h-full rounded-full bg-claude-accent transition-all duration-300"
             style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
@@ -127,23 +139,23 @@ function AddedTripsCollapsible({
   if (count === 0) return null;
 
   return (
-    <div className="rounded-xl border border-emerald-200/80 bg-emerald-50/60">
+    <div className="rounded-xl border border-[color:var(--dg-success-border)] bg-[var(--dg-success-bg)]">
       <button
         type="button"
         onClick={() => setExpanded((open) => !open)}
         className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left sm:px-5"
         aria-expanded={expanded}
       >
-        <span className="text-sm font-semibold text-emerald-900">{title}</span>
+        <span className="text-sm font-semibold text-[var(--dg-success-text)]">{title}</span>
         <ChevronDownIcon expanded={expanded} />
       </button>
       {expanded ? (
-        <div className="border-t border-emerald-200/60 px-4 pb-4 pt-2 sm:px-5">
+        <div className="border-t border-[color:var(--dg-success-border)] px-4 pb-4 pt-2 sm:px-5">
           <ul className="space-y-2">
             {trips.map((trip) => (
               <li
                 key={trip.id}
-                className="flex items-start justify-between gap-2 rounded-lg bg-white/70 px-3 py-2"
+                className="flex items-start justify-between gap-2 rounded-lg bg-[var(--dg-input)]/80 px-3 py-2"
               >
                 <div className="min-w-0 text-sm">
                   <p className="font-medium text-claude-text">
@@ -157,7 +169,7 @@ function AddedTripsCollapsible({
                 <button
                   type="button"
                   onClick={() => onRemove(trip.id)}
-                  className="shrink-0 rounded p-1.5 text-claude-muted transition hover:bg-red-50 hover:text-red-700"
+                  className="shrink-0 rounded p-1.5 text-claude-muted transition hover:bg-[var(--dg-warning-bg)] hover:text-[var(--dg-danger)]"
                   aria-label={`Remove trip ${formatDisplayDate(trip.left)} to ${formatDisplayDate(trip.returned!)}`}
                 >
                   <TrashIcon />
@@ -178,23 +190,31 @@ function Callout({
 }: {
   title: string;
   children: React.ReactNode;
-  tone?: "neutral" | "success" | "warning";
+  tone?: "neutral" | "success" | "warning" | "hud";
 }) {
   const tones = {
     neutral: "border-claude-border bg-claude-surface",
-    success: "border-emerald-200/80 bg-emerald-50/60",
-    warning: "border-amber-200/80 bg-amber-50/60",
+    success: "border-[color:var(--dg-success-border)] bg-[var(--dg-success-bg)]",
+    warning: "border-[color:var(--dg-warning-border)] bg-[var(--dg-warning-bg)]",
+    hud: "border-[rgba(245,243,240,0.14)] bg-[var(--dg-panel)]",
   };
   const titleTone = {
     neutral: "text-claude-text",
-    success: "text-emerald-900",
-    warning: "text-amber-950",
+    success: "text-[var(--dg-success-text)]",
+    warning: "text-[var(--dg-warning-text)]",
+    hud: "text-[var(--dg-panel-text)]",
+  };
+  const bodyTone = {
+    neutral: "text-claude-muted",
+    success: "text-[var(--dg-success-text)] opacity-90",
+    warning: "text-[var(--dg-warning-text)] opacity-90",
+    hud: "text-[var(--dg-panel-muted)]",
   };
 
   return (
     <div className={`rounded-xl border px-4 py-4 sm:px-5 ${tones[tone]}`}>
       <p className={`text-sm font-semibold ${titleTone[tone]}`}>{title}</p>
-      <div className="mt-1.5 text-sm leading-relaxed text-claude-muted">{children}</div>
+      <div className={`mt-1.5 text-sm leading-relaxed ${bodyTone[tone]}`}>{children}</div>
     </div>
   );
 }
@@ -232,7 +252,7 @@ function DateField({
       <button
         type="button"
         onClick={openPicker}
-        className="flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border border-claude-border bg-white px-3 py-2.5 text-left transition hover:border-claude-accent/30 focus:border-claude-accent focus:outline-none focus:ring-2 focus:ring-claude-accent/15"
+        className="flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border border-claude-border bg-[var(--dg-input)] px-3 py-2.5 text-left transition hover:border-claude-accent/30 focus:border-claude-accent focus:outline-none focus:ring-2 focus:ring-claude-accent/15"
       >
         <div>
           <p className="text-xs font-medium text-claude-text">{label}</p>
@@ -279,9 +299,7 @@ function EligibilityResultsFootnote({
             Eligibility summary
             <span
               className={`ml-2 rounded-full px-2 py-0.5 text-[11px] font-medium ${
-                eligibility.eligible
-                  ? "bg-emerald-100 text-emerald-800"
-                  : "bg-amber-100 text-amber-900"
+                eligibility.eligible ? badgeSuccess : badgeWarning
               }`}
             >
               {eligibility.eligible ? "Eligible" : "Not yet eligible"}
@@ -378,7 +396,7 @@ function StepIndicator({ current, steps }: { current: StepId; steps: { id: StepI
   const index = steps.findIndex((s) => s.id === current);
 
   return (
-    <nav aria-label="Progress" className="days-in-canada-no-print">
+    <nav aria-label="Progress" className="days-gone-stepper days-in-canada-no-print">
       <ol className="flex items-center">
         {steps.map((step, i) => {
           const done = i < index;
@@ -389,10 +407,10 @@ function StepIndicator({ current, steps }: { current: StepId; steps: { id: StepI
                 <div
                   className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition ${
                     active
-                      ? "bg-claude-accent text-white ring-4 ring-claude-accent/15"
+                      ? "bg-claude-accent text-[var(--dg-band-text)] ring-4 ring-claude-accent/15"
                       : done
-                        ? "bg-claude-accent-soft text-claude-accent"
-                        : "border border-claude-border bg-white text-claude-muted"
+                        ? "bg-[rgba(245,243,240,0.16)] text-[var(--dg-band-text)]"
+                        : "border border-claude-border bg-transparent text-claude-muted"
                   }`}
                 >
                   {done ? "✓" : i + 1}
@@ -485,7 +503,7 @@ function SegmentedControl<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <div className="inline-flex rounded-lg border border-claude-border bg-[#eef2f7] p-1">
+    <div className="inline-flex rounded-lg border border-claude-border bg-[var(--dg-tint)] p-1">
       {options.map((opt) => (
         <button
           key={opt.value}
@@ -493,7 +511,7 @@ function SegmentedControl<T extends string>({
           onClick={() => onChange(opt.value)}
           className={`rounded-md px-4 py-2 text-sm font-medium transition ${
             value === opt.value
-              ? "bg-white text-claude-text shadow-sm"
+              ? "bg-[var(--dg-elevated)] text-claude-text"
               : "text-claude-muted hover:text-claude-text"
           }`}
         >
@@ -524,7 +542,7 @@ function ClearTripsPrompt({
       aria-modal="true"
       aria-labelledby="clear-trips-title"
     >
-      <div className="w-full max-w-md rounded-xl border border-claude-border bg-white p-5 shadow-lg sm:p-6">
+      <div className="w-full max-w-md rounded-xl border border-claude-border bg-claude-surface p-5 sm:p-6">
         <h3 id="clear-trips-title" className="font-serif text-lg font-semibold text-claude-text">
           Clear trips already added?
         </h3>
@@ -585,7 +603,7 @@ function ParsedTripRow({
   const canSave = Boolean(resolvedLeft && resolvedReturn);
 
   return (
-    <div className="rounded-lg border border-claude-border/80 bg-[#f8fafc]/80 px-4 py-3.5">
+    <div className="rounded-lg border border-claude-border/80 bg-[var(--dg-faint)]/80 px-4 py-3.5">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
         <span className="font-medium">
           {trip.left ? formatDisplayDate(trip.left) : "Date unknown"}
@@ -596,7 +614,7 @@ function ParsedTripRow({
         </span>
         {trip.route ? <span className="text-xs text-claude-muted">{trip.route}</span> : null}
         <span className="flex-1" />
-        <span className="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-800">
+        <span className={badgeWarning}>
           {missingLabel}
         </span>
       </div>
@@ -638,7 +656,7 @@ function ParsedTripRow({
             />
           ) : null}
           {manualDateError ? (
-            <p className="text-xs leading-relaxed text-amber-800">{manualDateError}</p>
+            <p className="text-xs leading-relaxed text-[var(--dg-warning-text)]">{manualDateError}</p>
           ) : null}
           <button
             type="button"
@@ -1261,16 +1279,20 @@ export function DaysInCanadaApp() {
         />
       ) : null}
 
-      <div className="days-in-canada-band border-b border-claude-border">
-        <div className="mx-auto w-full max-w-[640px] px-5 pb-8 pt-10 sm:px-6 sm:pt-12">
+      <div className="days-gone-band border-b border-claude-border">
+        <DaysGoneBackdrop />
+        <div className="relative z-10 mx-auto w-full max-w-[640px] px-5 pb-8 pt-10 sm:px-6 sm:pt-12">
           <header className="mb-8 flex items-start justify-between gap-4">
             <div>
               <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-claude-accent">
                 Free · Private · Browser-only
               </p>
-              <h1 className="mt-2 font-serif text-[1.75rem] font-semibold tracking-tight text-claude-text sm:text-[2rem]">
-                Days in Canada
+              <h1 className="mt-2 font-sans text-[1.65rem] font-bold uppercase tracking-[0.14em] text-claude-text sm:text-[1.85rem]">
+                Days Gone
               </h1>
+              <p className="mt-1.5 text-xs leading-relaxed text-claude-muted">
+                Track days gone from Canada for citizenship math.
+              </p>
             </div>
             <Link
               href="/projects/days-in-canada"
@@ -1292,7 +1314,7 @@ export function DaysInCanadaApp() {
               is finding exact travel dates scattered across emails, apps, and old notes. Choose how you want
               to use this tool.
             </p>
-            <Callout title="Your data stays in this session" tone="success">
+            <Callout title="Your data stays in this session" tone="hud">
               No account. No server. Trips live in memory for this visit only. Choosing a different path or
               Start over clears everything.
             </Callout>
@@ -1361,7 +1383,7 @@ export function DaysInCanadaApp() {
               </label>
 
               {state.prePrCredit ? (
-                <div className="space-y-4 rounded-lg border border-claude-border/80 bg-[#f8fafc]/80 p-4">
+                <div className="space-y-4 rounded-lg border border-claude-border/80 bg-[var(--dg-faint)]/80 p-4">
                   <p className="text-xs leading-relaxed text-claude-muted">
                     Match IRCC&apos;s calculator: one row per stretch on a visitor, work, or study permit.
                     Trips you add later count as absences during these periods too.
@@ -1399,7 +1421,7 @@ export function DaysInCanadaApp() {
                     Add another period
                   </button>
                   {state.prDate && state.prePrPeriods.some((p) => p.to && p.to >= state.prDate) ? (
-                    <p className="text-xs text-amber-800">
+                    <p className="text-xs text-[var(--dg-warning-text)]">
                       Each period must end before your PR date ({formatDisplayDate(state.prDate)}).
                     </p>
                   ) : null}
@@ -1549,11 +1571,7 @@ export function DaysInCanadaApp() {
                       type="button"
                       onClick={() => requestParse(pasteText)}
                       disabled={isParsing || !pasteText.trim()}
-                      className={
-                        isParsing
-                          ? "rounded-lg bg-slate-400 px-4 py-2.5 text-sm font-medium text-white cursor-not-allowed"
-                          : btnPrimary
-                      }
+                      className={isParsing ? btnDisabled : btnPrimary}
                     >
                       {isParsing ? "Parsing..." : "Parse with local AI"}
                     </button>
@@ -1572,7 +1590,7 @@ export function DaysInCanadaApp() {
                     </p>
                   )}
                   {parseError && !parseReturnedNoTrips ? (
-                    <p className="mt-2 text-xs leading-relaxed text-amber-800">{parseError}</p>
+                    <p className="mt-2 text-xs leading-relaxed text-[var(--dg-warning-text)]">{parseError}</p>
                   ) : null}
                 </div>
 
@@ -1590,7 +1608,7 @@ export function DaysInCanadaApp() {
                       <h3 className="font-medium text-claude-text">
                         {parsedTrips.length} trip{parsedTrips.length > 1 ? "s need" : " needs"} a missing date
                       </h3>
-                      <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800">
+                      <span className={badgeWarning}>
                         Incomplete
                       </span>
                     </div>
@@ -1680,7 +1698,7 @@ export function DaysInCanadaApp() {
                 <div className={`${panel} overflow-hidden`}>
                     <table className="w-full min-w-[480px] text-left text-sm">
                       <thead>
-                        <tr className="border-b border-claude-border bg-[#eef2f7] text-xs font-medium uppercase tracking-wide text-claude-muted">
+                        <tr className={tableHead}>
                           <th className="px-4 py-3">Left Canada</th>
                           <th className="px-4 py-3">Returned</th>
                           <th className="px-4 py-3">Route</th>
@@ -1708,7 +1726,7 @@ export function DaysInCanadaApp() {
                             </td>
                           </tr>
                         ))}
-                        <tr className="bg-[#eef2f7]/70 font-medium">
+                        <tr className="bg-[var(--dg-tint)]/70 font-medium">
                           <td className="px-4 py-3" colSpan={3}>
                             Total
                           </td>
@@ -1726,7 +1744,7 @@ export function DaysInCanadaApp() {
                 <div className={`${panel} overflow-hidden`}>
                   <table className="w-full min-w-[480px] text-left text-sm">
                     <thead>
-                      <tr className="border-b border-claude-border bg-[#eef2f7] text-xs font-medium uppercase tracking-wide text-claude-muted">
+                      <tr className={tableHead}>
                         <th className="px-4 py-3">Left Canada</th>
                         <th className="px-4 py-3">Returned</th>
                         <th className="px-4 py-3">Route</th>
@@ -1747,7 +1765,7 @@ export function DaysInCanadaApp() {
                           <td className="px-4 py-3 text-claude-muted">
                             {trip.destination || "—"}
                             {!trip.inEligibilityWindow ? (
-                              <span className="mt-1 block text-xs text-amber-800">Outside eligibility window</span>
+                              <span className="mt-1 block text-xs text-[var(--dg-warning-text)]">Outside eligibility window</span>
                             ) : null}
                           </td>
                           <td className="px-4 py-3 text-right font-mono font-semibold tabular-nums">
@@ -1764,7 +1782,7 @@ export function DaysInCanadaApp() {
                           </td>
                         </tr>
                       ))}
-                      <tr className="bg-[#eef2f7]/70 font-medium">
+                      <tr className="bg-[var(--dg-tint)]/70 font-medium">
                         <td className="px-4 py-3" colSpan={3}>
                           Total in window
                         </td>
@@ -1807,7 +1825,7 @@ export function DaysInCanadaApp() {
                       <button
                         type="button"
                         onClick={() => removeTrip(trip.id)}
-                        className="text-sm text-red-700 hover:underline"
+                        className="text-sm text-[var(--dg-danger)] hover:underline"
                       >
                         Remove trip
                       </button>
@@ -1848,7 +1866,7 @@ export function DaysInCanadaApp() {
               </div>
             ) : null}
 
-            <Callout title="All data stayed on this device" tone="success">
+            <Callout title="All data stayed on this device" tone="hud">
               Nothing was uploaded. Local AI (if you used it) ran on your device only. Use Start over to
               clear this session.
             </Callout>

@@ -130,7 +130,7 @@ export async function downloadTripsPdf(options: ExportOptions): Promise<void> {
   let cursorY = 18;
 
   doc.setFontSize(16);
-  doc.text("Days in Canada", marginX, cursorY);
+  doc.text("Days Gone", marginX, cursorY);
   cursorY += 8;
 
   doc.setFontSize(10);
