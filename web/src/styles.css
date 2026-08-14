@@ -157,6 +157,47 @@
   background: linear-gradient(180deg, #faf9f5 0%, #f5f2ea 100%);
 }
 
+.home-hero {
+  position: relative;
+  isolation: isolate;
+  margin-bottom: -2.5rem;
+}
+
+.home-hero__skyline {
+  position: absolute;
+  inset: 0;
+  bottom: -4rem;
+  z-index: 0;
+  background-image: url("/images/toronto-skyline.jpg");
+  background-size: cover;
+  background-position: 62% 42%;
+  transform: scaleX(-1);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.home-hero__wash {
+  position: absolute;
+  inset: 0;
+  bottom: -4rem;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 249, 245, 0.82) 0%,
+    rgba(250, 249, 245, 0.38) 38%,
+    rgba(250, 249, 245, 0.62) 62%,
+    rgba(245, 242, 234, 0.88) 82%,
+    rgba(245, 242, 234, 0.97) 92%,
+    #f5f2ea 100%
+  );
+  pointer-events: none;
+}
+
+.home-hero__content {
+  position: relative;
+  z-index: 1;
+}
+
 .theme-work {
   background: var(--claude-bg);
 }

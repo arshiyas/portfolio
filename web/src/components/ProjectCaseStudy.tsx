@@ -1,5 +1,5 @@
 import { Link, notFound } from "@tanstack/react-router";
-import type { Project } from "@/lib/content";
+import type { Project, ProjectCaseStudyFigure } from "@/lib/content";
 import { getProjectBySlug, projects } from "@/lib/content";
 import { DaysGoneBackdrop } from "@/components/days-in-canada/DaysGoneBackdrop";
 
@@ -270,30 +270,9 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
             ))}
           </div>
           {section.figure ? (
-            <figure className="mt-8 overflow-hidden rounded-xl border border-claude-border bg-claude-bg">
-              {section.figure.kind === "video" || section.figure.src.endsWith(".mp4") ? (
-                <video
-                  src={section.figure.src}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="block w-full"
-                  aria-label={section.figure.alt}
-                />
-              ) : (
-                <img
-                  src={section.figure.src}
-                  alt={section.figure.alt}
-                  className="block w-full"
-                />
-              )}
-              {section.figure.caption ? (
-                <figcaption className="border-t border-claude-border px-4 py-3 text-sm leading-relaxed text-claude-muted">
-                  {section.figure.caption}
-                </figcaption>
-              ) : null}
-            </figure>
+            <div className="mt-8">
+              <CaseStudyFigure figure={section.figure} />
+            </div>
           ) : null}
         </section>
       ))}
@@ -412,6 +391,69 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
   );
 }
 
+function CaseStudyFigure({ figure }: { figure: ProjectCaseStudyFigure }) {
+  return (
+    <figure className="overflow-hidden rounded-xl border border-claude-border bg-claude-bg">
+      {figure.kind === "link" ? (
+        <a
+          href={figure.src}
+          target="_blank"
+          rel="noreferrer"
+          className="block bg-claude-surface px-5 py-5 transition hover:border-claude-accent sm:px-6"
+        >
+          <p className="font-medium text-claude-text">{figure.alt}</p>
+          <p className="mt-2 text-sm text-claude-accent">View event on Luma ↗</p>
+        </a>
+      ) : figure.kind === "embed" ? (
+        <div className="flex justify-center bg-claude-surface p-4">
+          <iframe
+            src={figure.src}
+            title={figure.alt}
+            height={figure.embedHeight ?? 897}
+            width={figure.embedWidth ?? 504}
+            className="max-w-full border-0"
+            allowFullScreen
+          />
+        </div>
+      ) : figure.kind === "video" || figure.src.endsWith(".mp4") ? (
+        <video
+          src={figure.src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="block w-full"
+          aria-label={figure.alt}
+        />
+      ) : (
+        <img src={figure.src} alt={figure.alt} className="block w-full" />
+      )}
+      {figure.caption || figure.credit ? (
+        <figcaption className="border-t border-claude-border px-4 py-3 text-sm leading-relaxed text-claude-muted">
+          {figure.caption}
+          {figure.credit ? (
+            <>
+              {figure.caption ? " " : null}
+              <span className="text-claude-muted">
+                {figure.kind === "embed" ? "Post by " : "GIF from "}
+                <a
+                  href={figure.credit.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-claude-accent underline-offset-4 hover:underline"
+                >
+                  {figure.credit.label}
+                </a>
+                .
+              </span>
+            </>
+          ) : null}
+        </figcaption>
+      ) : null}
+    </figure>
+  );
+}
+
 function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
   const { caseStudy } = project;
   if (!caseStudy) return null;
@@ -440,17 +482,30 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         </div>
       </header>
 
+      {caseStudy.figure ? (
+        <section className="max-w-2xl">
+          <CaseStudyFigure figure={caseStudy.figure} />
+        </section>
+      ) : null}
+
       {caseStudy.stats && caseStudy.stats.length > 0 ? (
-        <section className="grid gap-4 sm:grid-cols-2">
-          {caseStudy.stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl border border-claude-border bg-claude-surface p-5"
-            >
-              <div className="font-mono text-xl text-claude-accent">{stat.value}</div>
-              <p className="mt-2 text-sm leading-relaxed text-claude-muted">{stat.label}</p>
-            </div>
-          ))}
+        <section>
+          <h2 className="font-mono text-xs uppercase tracking-widest text-claude-muted">
+            By the numbers
+          </h2>
+          <dl className="mt-4 border-t border-claude-border">
+            {caseStudy.stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="flex flex-col gap-1 border-b border-claude-border py-4 sm:flex-row sm:items-baseline sm:gap-6"
+              >
+                <dt className="shrink-0 font-serif text-3xl font-semibold leading-none tracking-tight text-claude-accent sm:w-32">
+                  {stat.value}
+                </dt>
+                <dd className="text-sm leading-relaxed text-claude-muted">{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
       ) : null}
 
@@ -460,18 +515,18 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
           className="absolute left-[18px] top-3 bottom-3 w-px bg-claude-border sm:left-[22px]"
         />
         <div className="space-y-8">
-          <Step number="01" title="The problem">
+          <Step number="01" title={caseStudy.problemTitle ?? "The problem"}>
             <p className="text-sm leading-relaxed text-claude-muted">{caseStudy.problem}</p>
           </Step>
 
           {caseStudy.approach ? (
-            <Step number="02" title="Approach">
+            <Step number="02" title={caseStudy.approachTitle ?? "Approach"}>
               <p className="text-sm leading-relaxed text-claude-muted">{caseStudy.approach}</p>
             </Step>
           ) : null}
 
           {caseStudy.myContribution ? (
-            <Step number="03" title="My contribution" highlight>
+            <Step number="03" title={caseStudy.contributionTitle ?? "My contribution"} highlight>
               <div className="rounded-2xl border-l-4 border-claude-accent bg-claude-accent-soft/50 p-5 sm:p-6">
                 <p className="max-w-2xl leading-relaxed text-claude-text">
                   {caseStudy.myContribution.intro}
@@ -486,6 +541,16 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
                       <p className="mt-2 text-sm leading-relaxed text-claude-muted">
                         {item.description}
                       </p>
+                      {item.link ? (
+                        <a
+                          href={item.link.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-3 inline-block text-sm text-claude-accent underline-offset-4 hover:underline"
+                        >
+                          {item.link.label} ↗
+                        </a>
+                      ) : null}
                     </li>
                   ))}
                 </ul>
@@ -512,7 +577,7 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
           ) : null}
 
           {caseStudy.features && caseStudy.features.length > 0 ? (
-            <Step number="04" title="What we built">
+            <Step number="04" title={caseStudy.featuresTitle ?? "What we built"}>
               <div className="grid gap-3 sm:grid-cols-2">
                 {caseStudy.features.map((feature) => (
                   <div

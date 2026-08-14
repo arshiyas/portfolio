@@ -13,6 +13,10 @@ export type ProjectMediaPlaceholder = {
 export type ProjectContributionItem = {
   title: string;
   description: string;
+  link?: {
+    label: string;
+    url: string;
+  };
 };
 
 export type ProjectContribution = {
@@ -40,7 +44,13 @@ export type ProjectCaseStudyFigure = {
   src: string;
   alt: string;
   caption?: string;
-  kind?: "image" | "video";
+  kind?: "image" | "video" | "embed" | "link";
+  credit?: {
+    label: string;
+    url: string;
+  };
+  embedHeight?: number;
+  embedWidth?: number;
 };
 
 export type ProjectCaseStudySection = {
@@ -52,13 +62,19 @@ export type ProjectCaseStudySection = {
 export type ProjectCaseStudy = {
   overview: string;
   problem: string;
-  source: {
+  /** Public write-up backing the claims. Omit when no public source exists. */
+  source?: {
     label: string;
     url: string;
   };
   contextTitle?: string;
   metaLine?: string;
   approach?: string;
+  /** Work case studies default to problem/approach/contribution/features headings. */
+  problemTitle?: string;
+  approachTitle?: string;
+  contributionTitle?: string;
+  featuresTitle?: string;
   features?: string[];
   featureItems?: ProjectFeatureItem[];
   pipeline?: ProjectPipelineStep[];
@@ -72,6 +88,7 @@ export type ProjectCaseStudy = {
   myContribution?: ProjectContribution;
   story?: string;
   toolPreviewBlurb?: string;
+  figure?: ProjectCaseStudyFigure;
 };
 
 export type Project = {
@@ -87,131 +104,25 @@ export type Project = {
   cardTheme?: "days-gone";
 };
 
-export type ExperienceRole = {
-  id: string;
-  period: string;
-  company: string;
-  location: string;
-  title: string;
-  bullets: string[];
-  code: string;
-};
-
-export type WritingPost = {
-  slug: string;
-  title: string;
-  category: "Engineering" | "Career";
-  date: string;
-  status: string;
-};
-
 export const site = {
   name: "Arshiya Sayyed",
   location: "Toronto",
-  eyebrow: "Backend engineer · Toronto",
+  eyebrow: "Software engineer · Toronto",
   tagline: "Software Engineer IV",
   lede:
-    "I build backend systems that hold up in production: APIs, data pipelines, and AWS infrastructure. At Lyft, I work on Silver, teens, and international expansion.",
+    "I build backend systems across mobility, geospatial, and healthcare. At Lyft, I shipped rider products for older adults and teens and now work on the backend bringing the app to Europe.",
   links: {
     linkedin: "https://www.linkedin.com/in/arshiyasayyed/",
-    github: "https://github.com/ArshiyaSayyed",
+    email: "arshiyasayyed8@gmail.com",
   },
-  social: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" },
-    { label: "GitHub", href: "https://github.com/ArshiyaSayyed" },
-  ],
+  social: [{ label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" }],
   heroButtons: [
     { label: "View projects", href: "/projects", primary: true },
     { label: "About me", href: "/about", primary: false },
   ],
-  stats: [
-    {
-      value: "86%",
-      label: "Lyft Silver",
-      detail: "Older adults who use the app themselves once familiar (USC study)",
-    },
-    {
-      value: "TBD",
-      label: "Teens",
-      detail: "Teen ride experience, metric coming soon",
-    },
-    {
-      value: "TBD",
-      label: "International expansion",
-      detail: "Scaling ride-share to new markets, metric coming soon",
-    },
-  ],
-  stack: ["Python", "TypeScript", "AWS", "PostgreSQL", "DynamoDB"],
-  featuredProjectSlugs: ["lyft-silver", "lyft-teens", "lyft-international"],
+  stack: ["Python", "Go", "TypeScript", "gRPC", "AWS", "PostgreSQL"],
+  featuredProjectSlugs: ["lyft-international", "lyft-teens", "lyft-silver", "ai-engineering"],
 };
-
-export const experience: ExperienceRole[] = [
-  {
-    id: "lyft-se4",
-    period: "2024 to present",
-    company: "Lyft",
-    location: "Toronto",
-    title: "Software Engineer IV",
-    bullets: [
-      "Redesigned the Silver app home screen with larger buttons and simpler messaging for senior riders",
-      "Built invite flows across internal messaging systems for new and older user types",
-      "Shipped a backend-driven senior discount homecard to onboard first-time senior riders",
-    ],
-    code: "POST /api/v1/invites · homecard placement · Silver home\n→ Python · TypeScript · AWS",
-  },
-  {
-    id: "skywatch-se2",
-    period: "2022 to 2024",
-    company: "SkyWatch",
-    location: "Ontario",
-    title: "Software Engineer II",
-    bullets: [
-      "Led enterprise org management API, the platform used by Azure, Al Jazeera, local gov (+40% sales)",
-      "Optimized geospatial search backend for 75% faster queries via REST API redesign",
-      "Stack: Python, PostgreSQL (RDS), DynamoDB, Lambda, API Gateway, GitHub Actions CI/CD",
-    ],
-    code: "GET /api/v2/search?q=...&bbox=...\n→ 200 OK · avg response: 180ms → 45ms after optimization",
-  },
-  {
-    id: "ge-senior-software-engineer",
-    period: "Apr to Jul 2022",
-    company: "GE Healthcare",
-    location: "Bangalore",
-    title: "Senior Software Engineer",
-    bullets: [
-      "Designed and implemented data pipelines in production, extending existing flows and building new ones for the business",
-      "Participated in Technical Design Reviews (TDRs) and architecture design reviews",
-    ],
-    code: "device.metrics → ETL pipeline → analytics store\n→ Python · AWS · pipeline design & TDR reviews",
-  },
-  {
-    id: "ge-software-engineer",
-    period: "2019 to 2022",
-    company: "GE Healthcare",
-    location: "Bangalore",
-    title: "Software Engineer",
-    bullets: [
-      "Wrote and deployed Python and Java services on AWS for production healthcare workloads",
-      "Owned system design: requirements, UML diagrams (sequence, class, deployment), and Confluence API docs",
-      "Extended microservices with new functionality and optimized existing workflows",
-      "Wrote test cases in pytest and JUnit; debugged and fixed defects across the stack",
-    ],
-    code: "POST /api/v1/feature\n→ pytest + JUnit · microservices on AWS · Python · Java",
-  },
-  {
-    id: "ge-edison-engineer",
-    period: "2017 to 2019",
-    company: "GE Healthcare",
-    location: "Bangalore",
-    title: "Edison Engineer",
-    bullets: [
-      "Researched and delivered proof-of-concepts for teams across the organization",
-      "Built a metrics visualization dashboard backend in Java with Spring Boot",
-      "Collaborated cross-team to improve workflows; documented all work clearly",
-    ],
-    code: "GET /api/metrics/dashboard\n→ Spring Boot · Java · PoC delivery · cross-team R&D",
-  },
-];
 
 export const projects: Project[] = [
   {
@@ -220,7 +131,7 @@ export const projects: Project[] = [
     category: "Work · Lyft",
     title: "Lyft Silver",
     description:
-      "Backend for senior ride-sharing: home screen redesign, invite flows, and a discount homecard to onboard first-time senior riders.",
+      "Growth and support backend for Lyft's senior rider product: invites, gift cards, trusted contacts, and a CMS-backed help API.",
     tags: ["Python", "TypeScript", "AWS", "Mobility"],
     caseStudy: {
       overview:
@@ -229,6 +140,16 @@ export const projects: Project[] = [
         "Older adults use rideshare far less than younger riders. Research showed a technology gap: unfamiliar interfaces, fear of doing the wrong thing, and reliance on caregivers. They are 55% more likely to have rides requested by someone else, with 15% of platform riders acting as caregivers for older adults.",
       approach:
         "The team's hypothesis: given the right tools, seniors can build confidence and use the app independently. Design and engineering focused on reducing cognitive load, adding human support when needed, and matching rides with vehicles that are physically easier to enter.",
+      figure: {
+        src: "/projects/lyft-silver-ui.gif",
+        alt: "Lyft Silver app walkthrough from home screen through destination search to requesting a Silver ride",
+        caption:
+          "Silver's simplified home screen, destination search, and ride request flow, designed for older riders with larger text and fewer choices.",
+        credit: {
+          label: "Lyft blog",
+          url: "https://www.lyft.com/blog/posts/under-the-hood-lyft-silver",
+        },
+      },
       features: [
         "Simplified home screen with two primary actions (ride now and schedule later) plus 1.4× larger text for readability",
         "Live \"Get Help\" support connecting riders to agents daily from 8am–9pm ET",
@@ -244,28 +165,28 @@ export const projects: Project[] = [
       ],
       myContribution: {
         intro:
-          "I worked on the backend and product systems that power the Silver experience, from the redesigned home screen to growth mechanics that bring new senior riders onto the platform.",
+          "I worked on the growth and support side of Silver: how an older rider gets invited onto the product, how their family stays connected to them, and how they get help when something goes wrong.",
         items: [
           {
-            title: "Silver home screen redesign",
+            title: "Invites and onboarding",
             description:
-              "Redesigned the Silver app home screen with larger primary buttons and simpler messaging, reducing cognitive load so older riders can book with confidence.",
+              "Built the invite system that brings older riders onto Silver end to end: SMS and push delivery, deep links that route a tapped invite to the right place in the app, and gift cards so family can cover a first ride. Later extended it so invites sent from Lyft Family behaved identically.",
           },
           {
-            title: "Invite flows for new and senior users",
+            title: "Trusted contacts",
             description:
-              "Built the mechanism for sending invites to new and older users, integrating across internal messaging systems and handling new user types end-to-end on the backend.",
+              "Shipped the home card prompting riders to add a trusted contact, so a family member can follow a ride without the rider setting anything up mid-trip.",
           },
           {
-            title: "Senior growth homecard",
+            title: "Contextual help API",
             description:
-              "Led a comms initiative to onboard more seniors onto Lyft, shipping a backend-driven homecard placement offering first-ride discounts to first-time senior users, prompting them to book.",
+              "Built the endpoints serving in-app help content and the path to a live agent, backed by a CMS so the content team can change what a rider sees without an app release. I pushed for the CMS over the static-file approach originally proposed, and added alerting so content changes are visible to the team.",
           },
-        ],
-        media: [
-          { id: "silver-home", caption: "Silver home screen redesign" },
-          { id: "invite-flow", caption: "Invite flow for new and senior users" },
-          { id: "senior-homecard", caption: "Senior discount homecard placement" },
+          {
+            title: "First-ride discount campaign",
+            description:
+              "Built the coupon eligibility handling and the placement behind a Grandparents Day promotion that ran as part of Lyft's Silver marketing push, plus the dashboard tracking taps through to redemption. Built it to be reused for later campaigns rather than as one-off code.",
+          },
         ],
       },
       source: {
@@ -278,30 +199,260 @@ export const projects: Project[] = [
     slug: "lyft-teens",
     type: "work",
     category: "Work · Lyft",
-    title: "Teens @ Lyft",
-    description: "Backend for the teen ride experience: safety, scheduling, and scale.",
-    tags: ["Python", "TypeScript", "AWS"],
+    title: "Lyft Teen",
+    description:
+      "Access-control foundation for teen rides: defining what a teen account is, and closing the flows that shouldn't be open to minors.",
+    tags: ["Python", "GraphQL", "gRPC", "Access control"],
+    caseStudy: {
+      overview:
+        "Lyft Teen lets 13 to 17 year olds request their own rides while a parent or guardian keeps full visibility: live tracking, PIN verification, audio recording, and drivers held to a higher bar. It launched in February 2026 across more than 200 US markets.",
+      problem:
+        "Opening the app to minors isn't a feature you add, it's a constraint on every feature that already exists. The rider platform assumed an adult account holder throughout, so before teen rides could launch someone had to answer two questions: what a teen account actually is in the system, and which of the flows built for adults must be closed. Until those answers existed, the teams building on top were blocked.",
+      approach:
+        "I wrote the definition first and the code second. A teen definition document and a product feature registry gave every team one shared answer for how a teen account is represented and which product surfaces it may reach. From there the work was auditing rider flows against that registry and shutting the ones that didn't belong, treating each as a safety guardrail rather than a config toggle.",
+      figure: {
+        src: "/projects/lyft-teen-ui.gif",
+        alt: "Lyft Teen app walkthrough showing how teens request rides with guardian oversight",
+        caption:
+          "Lyft Teen's rider experience: teens request their own rides while guardians keep live visibility, PIN verification, and billing control.",
+        credit: {
+          label: "Lyft blog",
+          url: "https://www.lyft.com/blog/posts/introducing-lyft-teen",
+        },
+      },
+      myContribution: {
+        intro:
+          "I owned the access-control foundation: the definition other teams built on top of, and the restriction work that came out of it.",
+        items: [
+          {
+            title: "Teen definition and feature registry",
+            description:
+              "Authored the definition of a teen account and the registry of which product surfaces are open or closed to one. It was the piece downstream teams were waiting on, and it became the single source of truth they built against instead of each inferring their own age rules.",
+          },
+          {
+            title: "Closing ride-for-others",
+            description:
+              "Drove the strategy and implementation to disable requesting rides on someone else's behalf from a teen account, keeping a minor's ride tied to their own verified account. The flow it replaced had high abandonment and low conversion, which made it a clear one to close.",
+          },
+          {
+            title: "Restricting ride modes and upsells",
+            description:
+              "Disabled autonomous-vehicle upsells and instant matching for teens, so a minor is never offered a ride type that falls outside the vetted-driver standard the product promises guardians.",
+          },
+          {
+            title: "Exposing restrictions to clients",
+            description:
+              "Surfaced teen restrictions and date of birth through the GraphQL layer and added the fields backing teen ride monitoring, so mobile and support tooling read one consistent state.",
+          },
+        ],
+      },
+      features: [
+        "Guardian-created accounts: only a verified adult can add a teen, who then completes a safety tutorial",
+        "PIN verification at pickup and audio recording on every ride",
+        "Live ride map, driver details, and pickup and dropoff notifications for the guardian",
+        "Drivers held to a higher standard: annual background checks, strong ratings, and road experience",
+        "Shared family payment, so guardians keep full billing visibility",
+      ],
+      stats: [
+        { value: "200+", label: "US markets live at launch in February 2026" },
+        { value: "13–17", label: "New rider age range the platform had to support" },
+      ],
+      source: {
+        label: "Introducing Lyft Teen, Lyft Blog",
+        url: "https://www.lyft.com/blog/posts/introducing-lyft-teen",
+      },
+    },
   },
   {
     slug: "lyft-international",
     type: "work",
     category: "Work · Lyft",
     title: "International Expansion",
-    description: "Infrastructure and APIs to bring ride-sharing to new markets.",
-    tags: ["Python", "TypeScript", "AWS"],
+    description:
+      "Roaming backend letting a Lyft rider request, pay for, and track a ride on the FREENOW network in Europe.",
+    tags: ["Go", "Python", "gRPC", "Payments"],
+    caseStudy: {
+      overview:
+        "After Lyft acquired FREENOW, the goal was one app: a Lyft rider lands in Europe and gets a ride without downloading anything new. I build the roaming backend that makes that ride work end to end, from the offers a rider sees through payment and tracking.",
+      problem:
+        "Roaming means one company's rider on another company's network. Nothing lines up for free. Pricing, payment authorization, ride states, notifications, and receipts all have to be translated between two platforms built independently, across currencies and regulatory regimes, and the rider should never see the seam. A ride abroad has to feel like a ride at home or the unified app isn't worth shipping.",
+      approach:
+        "The work runs through the whole stack rather than one service: the schema definitions that form the cross-platform contract, the roaming service that owns the translation, the trips layer, the notification path, the GraphQL the app reads, and the dashboards we watch it with. I take features across all of those layers rather than handing off at a service boundary, which is what a rider-visible flow needs to actually land.",
+      figure: {
+        kind: "embed",
+        src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7486173668218380288?collapsed=1",
+        alt: "David Risher on Lyft's international expansion and FREENOW integration",
+        caption:
+          "Lyft CEO David Risher on bringing European rides into the Lyft app after the FREENOW acquisition.",
+        credit: {
+          label: "David Risher on LinkedIn",
+          url: "https://www.linkedin.com/feed/update/urn:li:ugcPost:7486173668218380288",
+        },
+        embedHeight: 897,
+        embedWidth: 504,
+      },
+      myContribution: {
+        intro:
+          "I've built roaming features end to end since the program started, taking each one from the cross-platform schema through to the dashboard we monitor it with.",
+        items: [
+          {
+            title: "Ride offers and ride creation",
+            description:
+              "Built the calls that fetch available offers in a European city and create the ride on the partner network. These are the two requests every roaming trip starts with, and the foundation the rest of the features sit on.",
+          },
+          {
+            title: "Payment authorization",
+            description:
+              "Owned the epic integrating the billing platform's authorization and fraud checks into ride creation, so a ride on a partner network is held to the same payment guarantees as a domestic one.",
+          },
+          {
+            title: "Scheduled rides in Europe",
+            description:
+              "Owned the epic bringing scheduled rides to EU roaming, including request routing at the edge and the mobile empty states for cities where scheduling isn't offered. Shipped to production.",
+          },
+          {
+            title: "Post-request features",
+            description:
+              "Past rides, ride status notifications, tipping, and receipt handling are built but not released yet. More on this once they ship.",
+          },
+        ],
+      },
+      features: [
+        "Request a ride in a European city from the Lyft app you already have",
+        "Payment authorized and fraud-checked before the partner ride is created",
+        "Scheduled rides, with clear empty states where a city doesn't support them",
+        "Post-request features built but not yet released",
+      ],
+      stats: [
+        { value: "12+", label: "European cities live in the Lyft app beta as of Q2 2026" },
+        { value: "180+", label: "Cities across 9 countries on the network Lyft acquired" },
+        { value: "2027", label: "Target for one unified global Lyft app" },
+      ],
+      source: {
+        label: "Lyft goes global: FREENOW acquisition complete, Lyft Blog",
+        url: "https://www.lyft.com/blog/posts/lyft-goes-global-freenow-acquisition-complete",
+      },
+    },
+  },
+  {
+    slug: "ai-engineering",
+    type: "work",
+    category: "Work · Developer Experience",
+    title: "AI-Assisted Engineering",
+    description:
+      "Changing how a backend org works with coding agents: shared context standards, an evaluation to prove they help, and tooling other teams picked up.",
+    tags: ["AI tooling", "Claude Code", "Developer experience", "Analytics"],
+    caseStudy: {
+      overview:
+        "This isn't a product I shipped. It's the work of changing how my team and the teams around us actually build with coding agents: making repo context something engineers inherit rather than rediscover, and making the case for it with evidence instead of enthusiasm.",
+      problemTitle: "Where the team was",
+      problem:
+        "Coding agents were arriving team by team with no shared setup. The same agent would answer correctly in one service and confidently wrong in the next, and nobody could say which was which, because there was no baseline to compare against. Engineers re-explained the same context every session, and people were hand-migrating dashboards one query at a time. The friction was obvious, but the case for fixing it was all anecdote, and \"it feels faster\" isn't an argument you can take to an engineering org.",
+      approachTitle: "How I approached it",
+      approach:
+        "I wasn't interested in evangelizing tools, I wanted to move the default. That meant writing repo context down so every engineer inherits it instead of rebuilding it, then proving the value with a controlled evaluation rather than a demo, and publishing the results including the repos where it changed nothing. Once real numbers existed, adoption stopped being a matter of opinion.",
+      contributionTitle: "What I changed",
+      myContribution: {
+        intro:
+          "Three changes to how the work gets done day to day. Each started on my own team and ended up used well past it.",
+        items: [
+          {
+            title: "Made repo context the default instead of a personal habit",
+            description:
+              "Rolled out AGENTS.md standards across ten backend repos, so the context an engineer used to carry in their head now lives in the repo and applies to every agent session automatically. Then I evaluated the same tasks with and without it. Three of the ten produced a real correctness regression in the baseline that the context file prevented outright. Where both passed, the win was cost: one repo went from a 30-plus turn agent run to a single-turn answer.",
+          },
+          {
+            title: "Gave the org a shared view of its own health",
+            description:
+              "Co-built a dashboard tracking incidents, mean time to recovery, and deploy frequency, so conversations about how the team is doing start from data rather than impressions. Other teams forked the template, and demoing it got me onto the cross-org working group that owns the framework it feeds, where I now own the operational-health pillar.",
+          },
+          {
+            title: "Turned specialist migration work into something anyone can run",
+            description:
+              "Engineers were hand-converting dashboards out of our legacy analytics tool, query by query. I built a coding-agent skill that does the conversion, which took the work out of the specialist-knowledge category entirely. The platform team running the company-wide migration adopted it as the recommended interim path and assigned a pilot team to stress-test it on harder dashboards.",
+          },
+          {
+            title: "Made the case outside my own team",
+            description:
+              "Gave the engineering half of \"AI at Lyft: From Data Foundations to Shipping Faster,\" a sold-out Lyft Engineering session at Toronto Tech Week 2026 with just over 100 attendees. Lyft's Head of Corporate Data & Analytics covered the data foundations; I covered delivery: how a continent-scale Lyft and FREENOW integration that should have needed a year of ramp-up didn't, and where Cursor and Claude concretely changed how we plan, write, and review code. We closed on a joint panel tying the two halves together, which is the honest version of the argument. Agent-assisted delivery only compounds when the foundations underneath it hold.",
+            link: {
+              label: "Toronto Tech Week 2026 event page",
+              url: "https://luma.com/m7xed1iw",
+            },
+          },
+        ],
+      },
+      featuresTitle: "How it spread",
+      features: [
+        "Ten backend repos now inherit shared agent context by default, no per-engineer setup",
+        "The evaluation was published openly, including the repos where it made no difference, so adoption ran on evidence",
+        "Other teams forked the operational-health dashboard rather than building their own",
+        "The migration skill became the recommended interim path for a company-wide tooling migration, with a pilot team assigned to it",
+        "Seats on cross-org working groups for operational excellence and bug-triage automation",
+        "A public account of the European build, given to a sold-out room during Toronto Tech Week",
+      ],
+      source: {
+        label: "AI at Lyft: From Data Foundations to Shipping Faster, Toronto Tech Week 2026",
+        url: "https://luma.com/m7xed1iw",
+      },
+    },
   },
   {
     slug: "search-skywatch",
     type: "work",
-    category: "Work · Backend",
+    category: "Work · SkyWatch",
     title: "Search Optimization @ SkyWatch",
-    description: "REST API redesign cutting geospatial query latency by 75%.",
-    tags: ["Python", "PostgreSQL", "Lambda"],
+    description:
+      "Streamed multi-provider search results over WebSocket so users saw imagery as soon as the fastest provider responded.",
+    tags: ["Python", "PostgreSQL", "WebSocket", "Lambda"],
+    caseStudy: {
+      overview:
+        "SkyWatch's EarthCache API lets developers search satellite imagery archives by area, date, and sensor before placing an order. Search fans out to multiple imagery providers on every query. I redesigned the search flow so results stream to the client as each provider responds, instead of waiting for the slowest one, and cut average API latency from 180 ms to 45 ms on the backend path.",
+      problem:
+        "Users entered a search area and criteria, and the backend queried multiple imagery providers in parallel. The UI waited until every provider returned before showing anything, then ran pricing and processing on the full result set. Time to first result was effectively the slowest provider plus post-processing, so users often stared at a loading screen even when faster providers had already returned usable imagery.",
+      approach:
+        "I split the pipeline so pricing and processing could run in parallel with provider fetches instead of blocking the first paint. A WebSocket connection streams each provider's results to the client as they arrive, so the UI can render incrementally. We also tuned how providers return results so the streaming model could deliver value immediately rather than waiting for a complete batch.",
+      myContribution: {
+        intro:
+          "I owned the search flow redesign end to end: decoupling fetch from enrichment, adding real-time delivery, and tightening the underlying API query path.",
+        items: [
+          {
+            title: "Decoupled fetch from pricing and processing",
+            description:
+              "Moved pricing and metadata processing off the critical path to first result. Enrichment runs alongside provider fetches instead of gating the UI until every provider and every downstream step finishes.",
+          },
+          {
+            title: "WebSocket streaming for incremental results",
+            description:
+              "Replaced the all-or-nothing batch response with a WebSocket stream that pushes each provider's results as they arrive. Users see imagery when the fastest provider responds, not when the slowest one finally completes.",
+          },
+          {
+            title: "Provider return-time tuning",
+            description:
+              "Worked with provider integrations so return behavior fit the streaming model, letting partial results surface early instead of holding everything back for a synchronized release.",
+          },
+          {
+            title: "Backend query path optimization",
+            description:
+              "Profiled and tightened the PostgreSQL-backed search path behind the REST API. Average response time dropped from 180 ms to 45 ms on the common bounding-box search case.",
+          },
+        ],
+      },
+      stats: [
+        { value: "Fastest provider", label: "Time to first result, instead of waiting on the slowest" },
+        { value: "180ms → 45ms", label: "Average search API response time on the backend path" },
+        { value: "75%", label: "Latency reduction after the query path redesign" },
+      ],
+      source: {
+        label: "SkyWatch EarthCache API documentation",
+        url: "https://docs.skywatch.com/",
+      },
+    },
   },
   {
     slug: "enterprise-skywatch",
     type: "work",
-    category: "Work · Backend",
+    category: "Work · SkyWatch",
     title: "Enterprise Org Platform @ SkyWatch",
     description: "Multi-tenant org management APIs driving 40% sales increase.",
     tags: ["REST API", "DynamoDB", "OAuth/SAML"],
@@ -409,45 +560,13 @@ export const projects: Project[] = [
       },
     },
   },
-  {
-    slug: "github-experiments",
-    type: "personal",
-    category: "Personal",
-    title: "GitHub Experiments",
-    description: "Pull from your repos: tools, scripts, and creative backend builds.",
-    tags: ["Open source", "Python"],
-  },
-];
-
-export const writingPosts: WritingPost[] = [
-  {
-    slug: "lyft-silver-backend",
-    title: "Building backend for Lyft Silver",
-    category: "Engineering",
-    date: "Draft",
-    status: "Draft",
-  },
-  {
-    slug: "startup-to-big-tech",
-    title: "What I learned moving from startup to big tech",
-    category: "Career",
-    date: "Jan 2025",
-    status: "Draft",
-  },
-  {
-    slug: "faster-search",
-    title: "Designing for 75% faster search at scale",
-    category: "Engineering",
-    date: "Nov 2024",
-    status: "Draft",
-  },
 ];
 
 export const navLinks = [
-  { href: "/experience", label: "Work" },
-  { href: "/projects", label: "Projects" },
-  { href: "/writing", label: "Writing" },
+  { href: "/projects", label: "Work" },
+  { href: "/resume", label: "Resume" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 export function getFeaturedProjects(): Project[] {

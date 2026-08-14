@@ -13,12 +13,12 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Arshiya Sayyed | Backend Engineer",
+        title: "Arshiya Sayyed | Software Engineer",
       },
       {
         name: "description",
         content:
-          "Backend engineer at Lyft. Python, TypeScript, AWS: APIs and distributed systems across healthcare, geospatial, and mobility.",
+          "Software engineer at Lyft. Python, TypeScript, AWS: APIs and distributed systems across healthcare, geospatial, and mobility.",
       },
     ],
     links: [

@@ -14,8 +14,8 @@ import { Route as PersonalRouteImport } from './routes/_personal'
 import { Route as WorkRouteImport } from './routes/_work'
 import { Route as DaysGoneRouteImport } from './routes/days-gone'
 import { Route as PersonalAboutRouteImport } from './routes/_personal/about'
-import { Route as PersonalWritingRouteImport } from './routes/_personal/writing'
-import { Route as WorkExperienceRouteImport } from './routes/_work/experience'
+import { Route as PersonalContactRouteImport } from './routes/_personal/contact'
+import { Route as WorkResumeRouteImport } from './routes/_work/resume'
 import { Route as WorkProjectsIndexRouteImport } from './routes/_work/projects/index'
 import { Route as WorkProjectsSlugRouteImport } from './routes/_work/projects/$slug'
 
@@ -42,14 +42,14 @@ const PersonalAboutRoute = PersonalAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => PersonalRoute,
 } as any)
-const PersonalWritingRoute = PersonalWritingRouteImport.update({
-  id: '/writing',
-  path: '/writing',
+const PersonalContactRoute = PersonalContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => PersonalRoute,
 } as any)
-const WorkExperienceRoute = WorkExperienceRouteImport.update({
-  id: '/experience',
-  path: '/experience',
+const WorkResumeRoute = WorkResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
   getParentRoute: () => WorkRoute,
 } as any)
 const WorkProjectsIndexRoute = WorkProjectsIndexRouteImport.update({
@@ -67,8 +67,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/days-gone': typeof DaysGoneRoute
   '/about': typeof PersonalAboutRoute
-  '/writing': typeof PersonalWritingRoute
-  '/experience': typeof WorkExperienceRoute
+  '/contact': typeof PersonalContactRoute
+  '/resume': typeof WorkResumeRoute
   '/projects/$slug': typeof WorkProjectsSlugRoute
   '/projects/': typeof WorkProjectsIndexRoute
 }
@@ -76,8 +76,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/days-gone': typeof DaysGoneRoute
   '/about': typeof PersonalAboutRoute
-  '/writing': typeof PersonalWritingRoute
-  '/experience': typeof WorkExperienceRoute
+  '/contact': typeof PersonalContactRoute
+  '/resume': typeof WorkResumeRoute
   '/projects/$slug': typeof WorkProjectsSlugRoute
   '/projects': typeof WorkProjectsIndexRoute
 }
@@ -88,8 +88,8 @@ export interface FileRoutesById {
   '/_work': typeof WorkRouteWithChildren
   '/days-gone': typeof DaysGoneRoute
   '/_personal/about': typeof PersonalAboutRoute
-  '/_personal/writing': typeof PersonalWritingRoute
-  '/_work/experience': typeof WorkExperienceRoute
+  '/_personal/contact': typeof PersonalContactRoute
+  '/_work/resume': typeof WorkResumeRoute
   '/_work/projects/$slug': typeof WorkProjectsSlugRoute
   '/_work/projects/': typeof WorkProjectsIndexRoute
 }
@@ -99,8 +99,8 @@ export interface FileRouteTypes {
     | '/'
     | '/days-gone'
     | '/about'
-    | '/writing'
-    | '/experience'
+    | '/contact'
+    | '/resume'
     | '/projects/$slug'
     | '/projects/'
   fileRoutesByTo: FileRoutesByTo
@@ -108,8 +108,8 @@ export interface FileRouteTypes {
     | '/'
     | '/days-gone'
     | '/about'
-    | '/writing'
-    | '/experience'
+    | '/contact'
+    | '/resume'
     | '/projects/$slug'
     | '/projects'
   id:
@@ -119,8 +119,8 @@ export interface FileRouteTypes {
     | '/_work'
     | '/days-gone'
     | '/_personal/about'
-    | '/_personal/writing'
-    | '/_work/experience'
+    | '/_personal/contact'
+    | '/_work/resume'
     | '/_work/projects/$slug'
     | '/_work/projects/'
   fileRoutesById: FileRoutesById
@@ -169,18 +169,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PersonalAboutRouteImport
       parentRoute: typeof PersonalRoute
     }
-    '/_personal/writing': {
-      id: '/_personal/writing'
-      path: '/writing'
-      fullPath: '/writing'
-      preLoaderRoute: typeof PersonalWritingRouteImport
+    '/_personal/contact': {
+      id: '/_personal/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof PersonalContactRouteImport
       parentRoute: typeof PersonalRoute
     }
-    '/_work/experience': {
-      id: '/_work/experience'
-      path: '/experience'
-      fullPath: '/experience'
-      preLoaderRoute: typeof WorkExperienceRouteImport
+    '/_work/resume': {
+      id: '/_work/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof WorkResumeRouteImport
       parentRoute: typeof WorkRoute
     }
     '/_work/projects/': {
@@ -202,12 +202,12 @@ declare module '@tanstack/react-router' {
 
 interface PersonalRouteChildren {
   PersonalAboutRoute: typeof PersonalAboutRoute
-  PersonalWritingRoute: typeof PersonalWritingRoute
+  PersonalContactRoute: typeof PersonalContactRoute
 }
 
 const PersonalRouteChildren: PersonalRouteChildren = {
   PersonalAboutRoute: PersonalAboutRoute,
-  PersonalWritingRoute: PersonalWritingRoute,
+  PersonalContactRoute: PersonalContactRoute,
 }
 
 const PersonalRouteWithChildren = PersonalRoute._addFileChildren(
@@ -215,13 +215,13 @@ const PersonalRouteWithChildren = PersonalRoute._addFileChildren(
 )
 
 interface WorkRouteChildren {
-  WorkExperienceRoute: typeof WorkExperienceRoute
+  WorkResumeRoute: typeof WorkResumeRoute
   WorkProjectsSlugRoute: typeof WorkProjectsSlugRoute
   WorkProjectsIndexRoute: typeof WorkProjectsIndexRoute
 }
 
 const WorkRouteChildren: WorkRouteChildren = {
-  WorkExperienceRoute: WorkExperienceRoute,
+  WorkResumeRoute: WorkResumeRoute,
   WorkProjectsSlugRoute: WorkProjectsSlugRoute,
   WorkProjectsIndexRoute: WorkProjectsIndexRoute,
 }

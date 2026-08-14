@@ -18,19 +18,13 @@ export const Route = createFileRoute("/_personal/about")({
 function AboutPage() {
   return (
     <main className="mx-auto w-full max-w-[920px] flex-1 px-6 py-14">
-      <div className="mb-8 flex flex-wrap items-center gap-6">
-        <div
-          className="h-[72px] w-[72px] rounded-full bg-gradient-to-br from-playful-purple to-playful-coral"
-          aria-hidden
-        />
-        <div>
-          <h1 className="font-serif text-3xl font-semibold">Hey, I&apos;m Arshiya</h1>
-          <p className="text-claude-muted">Toronto · Penn State MS · Pune BE</p>
-        </div>
+      <div className="mb-8">
+        <h1 className="font-serif text-3xl font-semibold">Hey, I&apos;m Arshiya</h1>
+        <p className="mt-2 text-claude-muted">Toronto · Penn State MS</p>
       </div>
 
       <p className="max-w-xl text-[1.05rem] leading-relaxed">
-        I&apos;m a backend engineer who loves shipping systems that actually get used, from
+        I&apos;m a software engineer who loves shipping systems that actually get used, from
         hospital imaging pipelines to satellite data platforms to ride-sharing APIs used by
         millions.
       </p>
@@ -58,12 +52,30 @@ function AboutPage() {
         <CardHeader>
           <CardTitle className="font-serif text-lg">Beyond the resume</CardTitle>
           <CardDescription>
-            This is where the personal side lives: what you&apos;re reading, what you&apos;re
-            learning, what you care about outside of sprint planning. We&apos;ll fill this in
-            together.
+            A lot of what I enjoy at work happens next to the code.
           </CardDescription>
         </CardHeader>
-        <CardContent />
+        <CardContent className="space-y-3 text-sm leading-relaxed text-claude-muted">
+          <p>
+            I mentor engineers ramping onto unfamiliar projects, and I write and run interview
+            questions for engineering hiring, including the rubrics behind them.
+          </p>
+          <p>
+            I speak when I have something worth sharing. Most recently that was &ldquo;Expanding
+            Lyft to Europe with Cursor and Claude&rdquo; at Toronto Tech Week 2026, on what
+            actually changes when a team builds with coding agents.
+          </p>
+          <p>
+            I build small tools for problems I personally have. Days Gone came out of my own
+            citizenship application, and it stayed browser-only because I wasn&apos;t willing to
+            upload immigration data to anyone&apos;s server, including mine.
+          </p>
+          <p>
+            Away from a screen, I kayak and hike as much as the season allows, which in Ontario is a
+            narrower window than I&apos;d like. The rest of the time I&apos;m at home with two cats,
+            who treat my desk as theirs.
+          </p>
+        </CardContent>
       </Card>
     </main>
   )
