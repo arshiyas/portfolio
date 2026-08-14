@@ -48,7 +48,7 @@ export const resume = {
         "Build the roaming backend behind Lyft's European expansion: ride creation, payment authorization, and scheduled rides across the FREENOW network",
         "Owned the access-control foundation for Lyft Teen ahead of launch in 200+ US markets",
         "Shipped growth and support surfaces for Lyft Silver: invites, gift cards, trusted contacts, and a CMS-backed contextual help API",
-        "Rolled out agent coding standards across ten backend repos with a published before/after eval, and co-built the operational-health dashboard now used across the org",
+        "Rolled out agent coding standards across ten backend repos with a published before/after eval, and co-built the operational-health dashboard",
       ],
     },
     {

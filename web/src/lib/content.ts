@@ -115,6 +115,7 @@ export const site = {
     linkedin: "https://www.linkedin.com/in/arshiyasayyed/",
     email: "arshiyasayyed8@gmail.com",
   },
+  url: "https://arshiya.dev",
   social: [{ label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" }],
   heroButtons: [
     { label: "View projects", href: "/projects", primary: true },
@@ -353,8 +354,7 @@ export const projects: Project[] = [
         "I wasn't interested in evangelizing tools, I wanted to move the default. That meant writing repo context down so every engineer inherits it instead of rebuilding it, then proving the value with a controlled evaluation rather than a demo, and publishing the results including the repos where it changed nothing. Once real numbers existed, adoption stopped being a matter of opinion.",
       contributionTitle: "What I changed",
       myContribution: {
-        intro:
-          "Three changes to how the work gets done day to day. Each started on my own team and ended up used well past it.",
+        intro: "Three changes to how the work gets done day to day.",
         items: [
           {
             title: "Made repo context the default instead of a personal habit",
@@ -364,7 +364,7 @@ export const projects: Project[] = [
           {
             title: "Gave the org a shared view of its own health",
             description:
-              "Co-built a dashboard tracking incidents, mean time to recovery, and deploy frequency, so conversations about how the team is doing start from data rather than impressions. Other teams forked the template, and demoing it got me onto the cross-org working group that owns the framework it feeds, where I now own the operational-health pillar.",
+              "Co-built a dashboard tracking incidents, mean time to recovery, and deploy frequency, so conversations about how the team is doing start from data rather than impressions. I own the operational-health pillar on the cross-org working group that maintains the framework it feeds.",
           },
           {
             title: "Turned specialist migration work into something anyone can run",
@@ -386,7 +386,6 @@ export const projects: Project[] = [
       features: [
         "Ten backend repos now inherit shared agent context by default, no per-engineer setup",
         "The evaluation was published openly, including the repos where it made no difference, so adoption ran on evidence",
-        "Other teams forked the operational-health dashboard rather than building their own",
         "The migration skill became the recommended interim path for a company-wide tooling migration, with a pilot team assigned to it",
         "Seats on cross-org working groups for operational excellence and bug-triage automation",
         "A public account of the European build, given to a sold-out room during Toronto Tech Week",
