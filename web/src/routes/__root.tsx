@@ -3,6 +3,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { TanStackDevtools } from "@tanstack/react-devtools"
 
 import appCss from "../styles.css?url"
+import { SiteAnalytics } from "@/components/SiteAnalytics"
 import { site } from "@/lib/content"
 
 const siteDescription =
@@ -72,6 +73,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="min-h-full">
         {children}
+        <SiteAnalytics />
         <TanStackDevtools
           config={{
             position: "bottom-right",

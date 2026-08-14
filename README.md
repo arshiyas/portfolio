@@ -45,3 +45,13 @@ npx vercel --prod
 ### Custom domain
 
 In the Vercel project → **Settings → Domains**, add your domain and follow the DNS instructions.
+
+### Analytics
+
+The app ships with [Vercel Web Analytics](https://vercel.com/docs/analytics) and [Speed Insights](https://vercel.com/docs/speed-insights). After deploying:
+
+1. Open your project in the [Vercel dashboard](https://vercel.com/dashboard).
+2. Go to **Analytics** → **Enable** (Web Analytics).
+3. Go to **Speed Insights** → **Enable**.
+
+Once enabled, you can see visitors, top pages, referrers, countries, devices, and Core Web Vitals. Analytics only runs in production builds, not during local `npm run dev`.
