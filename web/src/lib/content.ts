@@ -147,7 +147,7 @@ export const projects: Project[] = [
         caption:
           "Silver's simplified home screen, destination search, and ride request flow, designed for older riders with larger text and fewer choices.",
         credit: {
-          label: "Lyft blog",
+          label: "Under the Hood: Lyft Silver",
           url: "https://www.lyft.com/blog/posts/under-the-hood-lyft-silver",
         },
       },
@@ -217,7 +217,7 @@ export const projects: Project[] = [
         caption:
           "Lyft Teen's rider experience: teens request their own rides while guardians keep live visibility, PIN verification, and billing control.",
         credit: {
-          label: "Lyft blog",
+          label: "Introducing Lyft Teen",
           url: "https://www.lyft.com/blog/posts/introducing-lyft-teen",
         },
       },

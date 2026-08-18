@@ -435,7 +435,11 @@ function CaseStudyFigure({ figure }: { figure: ProjectCaseStudyFigure }) {
             <>
               {figure.caption ? " " : null}
               <span className="text-claude-muted">
-                {figure.kind === "embed" ? "Post by " : "GIF from "}
+                {figure.kind === "embed"
+                  ? "Post by "
+                  : figure.kind === "video" || figure.src.endsWith(".mp4")
+                    ? "Recording from "
+                    : "App screens from "}
                 <a
                   href={figure.credit.url}
                   target="_blank"
