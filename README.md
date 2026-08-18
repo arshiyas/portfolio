@@ -38,7 +38,8 @@ npx vercel --prod
 1. Push this repo to GitHub.
 2. Import at [vercel.com/new](https://vercel.com/new).
 3. Set **Root Directory** to `web`.
-4. Deploy. Vercel picks up the Nitro/Start build via `web/vercel.json`.
+4. Set **Framework Preset** to **TanStack Start** and leave **Output Directory** empty (Nitro emits the Vercel Build Output API automatically).
+5. Deploy. Vercel picks up the Nitro/Start build via `web/vercel.json`.
 
 `web-next/` is an archived copy of the previous Next.js app (rollback only). Do not deploy it.
 
