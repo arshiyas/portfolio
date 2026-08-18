@@ -116,7 +116,7 @@ export function SiteFooter({ theme = "neutral" }: SiteFooterProps) {
   return (
     <footer
       className={cn(
-        "border-t px-6 py-10 pb-14 text-sm text-claude-muted",
+        "site-content-safe site-footer-safe border-t px-6 py-10 text-sm text-claude-muted",
         borderClass,
       )}
     >

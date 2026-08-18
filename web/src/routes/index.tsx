@@ -27,16 +27,16 @@ function HomePage() {
     <div className="theme-neutral flex min-h-full flex-col">
       <SiteHeader theme="neutral" />
 
-      <main className="mx-auto w-full max-w-[920px] flex-1 pb-20">
+      <main className="site-content-safe mx-auto w-full max-w-[920px] flex-1 pb-20">
         <div className="home-hero relative left-1/2 -ml-[50vw] w-screen overflow-hidden">
           <div aria-hidden className="home-hero__skyline" />
           <div aria-hidden className="home-hero__wash" />
-          <div className="home-hero__content mx-auto w-full max-w-[920px] px-6 pb-14 pt-16">
+          <div className="home-hero__content site-content-safe mx-auto w-full max-w-[920px] pb-8 pt-10 sm:pb-14 sm:pt-16">
             <section>
-              <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-claude-muted">
+              <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-claude-muted sm:mb-4">
                 <a
                   href={`mailto:${site.links.email}`}
-                  className="transition hover:text-claude-accent"
+                  className="inline-flex min-h-11 items-center transition hover:text-claude-accent sm:min-h-0"
                 >
                   {site.links.email}
                 </a>
@@ -47,35 +47,53 @@ function HomePage() {
                   href={site.links.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="transition hover:text-claude-accent"
+                  className="inline-flex min-h-11 items-center transition hover:text-claude-accent sm:min-h-0"
                 >
                   LinkedIn ↗
                 </a>
               </div>
-              <p className="mb-3 font-mono text-sm text-claude-accent">{site.eyebrow}</p>
+              <p className="mb-2 font-mono text-sm text-claude-accent sm:mb-3">{site.eyebrow}</p>
               <h1 className="font-serif text-[clamp(2.2rem,5vw,3.2rem)] font-semibold leading-[1.15] tracking-tight">
                 {site.name}
               </h1>
-              <div className="mt-4 flex flex-wrap items-center gap-3">
+              <div className="mt-3 flex flex-wrap items-center gap-3 sm:mt-4">
                 <LyftLogo className="h-[22px] w-auto" />
                 <span className="text-sm font-medium text-claude-muted">{site.tagline}</span>
               </div>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-claude-muted">
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-claude-muted sm:mt-5 sm:text-lg">
                 {site.lede}
               </p>
 
-              <div className="mt-7 flex flex-wrap gap-2">
-                {site.stack.map((item) => (
-                  <Badge key={item} variant="outline" className="rounded-full font-normal">
-                    {item}
-                  </Badge>
-                ))}
+              <div className="mt-5 sm:mt-7">
+                <details className="home-hero__stack sm:hidden">
+                  <summary className="cursor-pointer text-sm font-medium text-claude-muted transition hover:text-claude-accent">
+                    Tech stack
+                  </summary>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {site.stack.map((item) => (
+                      <Badge key={item} variant="outline" className="rounded-full font-normal">
+                        {item}
+                      </Badge>
+                    ))}
+                  </div>
+                </details>
+                <div className="hidden flex-wrap gap-2 sm:flex">
+                  {site.stack.map((item) => (
+                    <Badge key={item} variant="outline" className="rounded-full font-normal">
+                      {item}
+                    </Badge>
+                  ))}
+                </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
                 {site.heroButtons.map((button) =>
                   button.primary ? (
-                    <Button key={button.href} asChild className="rounded-full px-5">
+                    <Button
+                      key={button.href}
+                      asChild
+                      className="h-11 w-full rounded-full px-5 sm:h-auto sm:w-auto"
+                    >
                       <Link to={button.href}>{button.label}</Link>
                     </Button>
                   ) : (
@@ -83,7 +101,7 @@ function HomePage() {
                       key={button.href}
                       asChild
                       variant="outline"
-                      className="rounded-full px-5"
+                      className="h-11 w-full rounded-full px-5 sm:h-auto sm:w-auto"
                     >
                       <Link to={button.href}>{button.label}</Link>
                     </Button>
@@ -94,15 +112,16 @@ function HomePage() {
           </div>
         </div>
 
-        <div className="px-6">
-          <section className="relative z-[1] mt-14">
+        <div className="site-content-safe">
+          <section className="relative z-[1] mt-8 sm:mt-14">
             <div className="mb-5 flex items-end justify-between gap-4">
               <div>
                 <h2 className="font-serif text-2xl font-semibold tracking-tight">
                   Selected work
                 </h2>
                 <p className="mt-1 text-sm text-claude-muted">
-                  European expansion, teen rides, Silver, and AI-assisted engineering at Lyft.
+                  Lyft backend work across mobility products, plus Days Gone, a personal
+                  citizenship tool.
                 </p>
               </div>
               <Button asChild variant="link" className="h-auto shrink-0 px-0 text-claude-accent">

@@ -119,10 +119,10 @@ export const site = {
   social: [{ label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" }],
   heroButtons: [
     { label: "View projects", href: "/projects", primary: true },
-    { label: "About me", href: "/about", primary: false },
+    { label: "Resume", href: "/resume", primary: false },
   ],
   stack: ["Python", "Go", "TypeScript", "gRPC", "AWS", "PostgreSQL"],
-  featuredProjectSlugs: ["lyft-international", "lyft-teens", "lyft-silver", "ai-engineering"],
+  featuredProjectSlugs: ["lyft-international", "lyft-teens", "lyft-silver", "days-gone"],
 };
 
 export const projects: Project[] = [
@@ -560,6 +560,12 @@ export const projects: Project[] = [
     },
   },
 ];
+
+export const primaryNavLinks = [
+  { href: "/resume", label: "Resume" },
+  { href: "/projects", label: "Work" },
+  { href: "/about", label: "About" },
+] as const;
 
 export const navLinks = [
   { href: "/projects", label: "Work" },
