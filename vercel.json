@@ -3,5 +3,5 @@
   "framework": "tanstack-start",
   "installCommand": "cd web && npm install",
   "buildCommand": "cd web && npm run build",
-  "outputDirectory": "web/.output"
+  "outputDirectory": "web/.vercel/output"
 }
