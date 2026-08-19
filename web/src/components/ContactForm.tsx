@@ -62,12 +62,12 @@ export function ContactForm() {
   return (
     <div className="max-w-xl">
       {!accessKey ? (
-        <p className="mb-6 rounded-xl border border-playful-border bg-[#fff5ef] px-4 py-3 text-sm leading-relaxed text-claude-muted">
+        <p className="mb-6 rounded-xl border border-border bg-card px-4 py-3 text-sm leading-relaxed text-muted-foreground">
           Form delivery is not wired up in this environment yet. You can still
           reach me at{" "}
           <a
             href={`mailto:${site.links.email}`}
-            className="text-playful-purple underline-offset-4 hover:underline"
+            className="text-primary underline-offset-4 hover:underline"
           >
             {site.links.email}
           </a>
@@ -96,7 +96,7 @@ export function ContactForm() {
             required
             autoComplete="name"
             placeholder="Your name"
-            className="h-10 border-playful-border bg-white"
+            className="h-10 border-border bg-card"
           />
         </div>
 
@@ -109,7 +109,7 @@ export function ContactForm() {
             required
             autoComplete="email"
             placeholder="you@example.com"
-            className="h-10 border-playful-border bg-white"
+            className="h-10 border-border bg-card"
           />
         </div>
 
@@ -121,26 +121,26 @@ export function ContactForm() {
             required
             rows={6}
             placeholder="What would you like to talk about?"
-            className="min-h-36 border-playful-border bg-white"
+            className="min-h-36 border-border bg-card"
           />
         </div>
 
         <Button
           type="submit"
           disabled={status === "submitting"}
-          className="rounded-full bg-playful-purple px-6 hover:bg-playful-purple/90"
+          className="rounded-full px-6"
         >
           {status === "submitting" ? "Sending..." : "Send message"}
         </Button>
 
         {status === "success" ? (
-          <p className="text-sm text-[#3d7a55]" role="status">
+          <p className="text-sm text-chart-4" role="status">
             Message sent. I&apos;ll get back to you soon.
           </p>
         ) : null}
 
         {status === "error" ? (
-          <p className="text-sm text-playful-coral" role="alert">
+          <p className="text-sm text-destructive" role="alert">
             {errorMessage}{" "}
             <a
               href={`mailto:${site.links.email}`}

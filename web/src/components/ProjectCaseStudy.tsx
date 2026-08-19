@@ -58,14 +58,14 @@ function Step({ number, title, highlight = false, children }: StepProps) {
       <div
         className={`relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border font-mono text-xs tabular-nums sm:h-11 sm:w-11 ${
           highlight
-            ? "border-claude-accent bg-claude-accent text-white"
-            : "border-claude-border bg-claude-bg text-claude-accent"
+            ? "border-primary bg-primary text-primary-foreground"
+            : "border-border bg-background text-primary"
         }`}
       >
         {number}
       </div>
       <div className="min-w-0 flex-1 pt-1 sm:pt-2">
-        <h2 className="font-serif text-lg font-semibold text-claude-text">{title}</h2>
+        <h2 className="font-serif text-lg font-semibold text-foreground">{title}</h2>
         <div className="mt-3">{children}</div>
       </div>
     </div>
@@ -90,8 +90,8 @@ function CaseStudyActions({ project }: { project: Project }) {
           url={project.toolUrl}
           className={
             isPersonal
-              ? "inline-flex rounded-full bg-playful-purple px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-              : "inline-flex rounded-full bg-claude-accent px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90"
+              ? "inline-flex rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+              : "inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
           }
         >
           {isPersonal ? "Try it yourself" : "Open live tool"}
@@ -101,7 +101,7 @@ function CaseStudyActions({ project }: { project: Project }) {
         isInternalUrl(caseStudy.source.url) ? (
           <InternalPathLink
             url={caseStudy.source.url}
-            className="text-sm text-claude-accent underline-offset-4 hover:underline"
+            className="text-sm text-primary underline-offset-4 hover:underline"
           >
             {caseStudy.source.label} →
           </InternalPathLink>
@@ -110,7 +110,7 @@ function CaseStudyActions({ project }: { project: Project }) {
             href={caseStudy.source.url}
             target="_blank"
             rel="noreferrer"
-            className="text-sm text-claude-accent underline-offset-4 hover:underline"
+            className="text-sm text-primary underline-offset-4 hover:underline"
           >
             {caseStudy.source.label} ↗
           </a>
@@ -211,25 +211,25 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
     <article>
       <Link
         to="/projects"
-        className="mb-8 inline-block text-sm text-claude-muted transition hover:text-claude-accent"
+        className="mb-8 inline-block text-sm text-muted-foreground transition hover:text-primary"
       >
         ← Projects
       </Link>
 
       {caseStudy.metaLine ? (
-        <p className="font-mono text-xs uppercase tracking-widest text-claude-muted">{caseStudy.metaLine}</p>
+        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{caseStudy.metaLine}</p>
       ) : null}
 
       <header className="mt-3 max-w-3xl">
-        <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-tight tracking-tight text-claude-text">
+        <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-tight tracking-tight text-foreground">
           {project.title}
         </h1>
-        <p className="mt-5 text-lg leading-relaxed text-claude-muted">{caseStudy.overview}</p>
+        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{caseStudy.overview}</p>
         <div className="mt-5 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-md border border-claude-border bg-claude-surface px-2.5 py-1 font-mono text-xs text-claude-muted"
+              className="rounded-md border border-border bg-card px-2.5 py-1 font-mono text-xs text-muted-foreground"
             >
               {tag}
             </span>
@@ -244,14 +244,14 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       ) : null}
 
       <section className="mt-16 max-w-3xl">
-        <h2 className="font-serif text-2xl font-semibold text-claude-text">
+        <h2 className="font-serif text-2xl font-semibold text-foreground">
           {caseStudy.contextTitle ?? "Why I built this"}
         </h2>
-        <p className="mt-4 text-base leading-[1.75] text-claude-text">{caseStudy.problem}</p>
+        <p className="mt-4 text-base leading-[1.75] text-foreground">{caseStudy.problem}</p>
         {storyParagraphs.length > 0 ? (
           <div className="mt-6 space-y-4">
             {storyParagraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 48)} className="text-base leading-[1.75] text-claude-muted">
+              <p key={paragraph.slice(0, 48)} className="text-base leading-[1.75] text-muted-foreground">
                 {paragraph}
               </p>
             ))}
@@ -261,10 +261,10 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.sections?.map((section) => (
         <section key={section.title} className="mt-16 max-w-3xl">
-          <h2 className="font-serif text-2xl font-semibold text-claude-text">{section.title}</h2>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">{section.title}</h2>
           <div className="mt-6 space-y-4">
             {section.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 48)} className="text-base leading-[1.75] text-claude-muted">
+              <p key={paragraph.slice(0, 48)} className="text-base leading-[1.75] text-muted-foreground">
                 {paragraph}
               </p>
             ))}
@@ -279,10 +279,10 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.pipeline && caseStudy.pipeline.length > 0 ? (
         <section className="mt-16">
-          <h2 className="font-serif text-2xl font-semibold text-claude-text">
+          <h2 className="font-serif text-2xl font-semibold text-foreground">
             {caseStudy.pipelineTitle ?? "How it works"}
           </h2>
-          <p className="mt-2 max-w-2xl text-sm text-claude-muted">
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
             {caseStudy.pipelineIntro ??
               "Four stages from scattered travel records to a row-by-row list for IRCC."}
           </p>
@@ -290,13 +290,13 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
             {caseStudy.pipeline.map((step, index) => (
               <li
                 key={step.title}
-                className="rounded-xl border border-claude-border bg-claude-surface p-5"
+                className="rounded-xl border border-border bg-card p-5"
               >
-                <p className="font-mono text-xs font-semibold text-claude-accent">
+                <p className="font-mono text-xs font-semibold text-primary">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-2 font-medium text-claude-text">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-claude-muted">{step.description}</p>
+                <h3 className="mt-2 font-medium text-foreground">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
               </li>
             ))}
           </ol>
@@ -305,15 +305,15 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.featureItems && caseStudy.featureItems.length > 0 ? (
         <section className="mt-16">
-          <h2 className="font-serif text-2xl font-semibold text-claude-text">Key features</h2>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">Key features</h2>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
             {caseStudy.featureItems.map((feature) => (
               <li
                 key={feature.title}
-                className="rounded-xl border border-claude-border bg-claude-surface p-5"
+                className="rounded-xl border border-border bg-card p-5"
               >
-                <h3 className="font-medium text-claude-text">{feature.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-claude-muted">{feature.description}</p>
+                <h3 className="font-medium text-foreground">{feature.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
               </li>
             ))}
           </ul>
@@ -322,18 +322,18 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.techStack && caseStudy.techStack.length > 0 ? (
         <section className="mt-16">
-          <h2 className="font-serif text-2xl font-semibold text-claude-text">Tech stack</h2>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">Tech stack</h2>
           <div className="mt-8 space-y-6">
             {caseStudy.techStack.map((group) => (
               <div key={group.category}>
-                <p className="font-mono text-xs uppercase tracking-widest text-claude-muted">
+                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
                   {group.category}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {group.items.map((item) => (
                     <span
                       key={item}
-                      className="rounded-md border border-claude-border bg-[#f3f0ea] px-2.5 py-1 text-xs text-claude-text"
+                      className="rounded-md border border-border bg-muted px-2.5 py-1 text-xs text-foreground"
                     >
                       {item}
                     </span>
@@ -347,18 +347,18 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.underTheHood ? (
         <section className="mt-16 max-w-3xl">
-          <h2 className="font-serif text-2xl font-semibold text-claude-text">Under the hood</h2>
-          <p className="mt-4 text-base leading-[1.75] text-claude-muted">{caseStudy.underTheHood}</p>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">Under the hood</h2>
+          <p className="mt-4 text-base leading-[1.75] text-muted-foreground">{caseStudy.underTheHood}</p>
         </section>
       ) : null}
 
       {caseStudy.learnings && caseStudy.learnings.length > 0 ? (
         <section className="mt-16 max-w-3xl">
-          <h2 className="font-serif text-2xl font-semibold text-claude-text">What I learned</h2>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">What I learned</h2>
           <ul className="mt-6 space-y-4">
             {caseStudy.learnings.map((item) => (
-              <li key={item.slice(0, 40)} className="flex gap-3 text-sm leading-relaxed text-claude-muted">
-                <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-claude-accent" />
+              <li key={item.slice(0, 40)} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" />
                 {item}
               </li>
             ))}
@@ -367,23 +367,23 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       ) : null}
 
       {project.toolUrl ? (
-        <section className="mt-16 rounded-xl border border-claude-border bg-[#f3f0ea] px-6 py-8 sm:px-8">
-          <h2 className="font-serif text-xl font-semibold text-claude-text">Try it yourself</h2>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-claude-muted">
+        <section className="mt-16 rounded-xl border border-border bg-muted px-6 py-8 sm:px-8">
+          <h2 className="font-serif text-xl font-semibold text-foreground">Try it yourself</h2>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
             Free and local-only. Optional WebLLM parsing runs in your browser over WebGPU; nothing
             uploads.
           </p>
           <InternalPathLink
             url={project.toolUrl}
-            className="mt-5 inline-flex rounded-lg bg-claude-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#b55638]"
+            className="mt-5 inline-flex rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/80"
           >
             Open Days Gone
           </InternalPathLink>
         </section>
       ) : null}
 
-      <footer className="mt-12 border-t border-claude-border pt-8">
-        <Link to="/projects" className="text-sm text-claude-muted transition hover:text-claude-accent">
+      <footer className="mt-12 border-t border-border pt-8">
+        <Link to="/projects" className="text-sm text-muted-foreground transition hover:text-primary">
           ← All projects
         </Link>
       </footer>
@@ -393,19 +393,19 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
 function CaseStudyFigure({ figure }: { figure: ProjectCaseStudyFigure }) {
   return (
-    <figure className="overflow-hidden rounded-xl border border-claude-border bg-claude-bg">
+    <figure className="overflow-hidden rounded-xl border border-border bg-background">
       {figure.kind === "link" ? (
         <a
           href={figure.src}
           target="_blank"
           rel="noreferrer"
-          className="block bg-claude-surface px-5 py-5 transition hover:border-claude-accent sm:px-6"
+          className="block bg-card px-5 py-5 transition hover:border-primary sm:px-6"
         >
-          <p className="font-medium text-claude-text">{figure.alt}</p>
-          <p className="mt-2 text-sm text-claude-accent">View event on Luma ↗</p>
+          <p className="font-medium text-foreground">{figure.alt}</p>
+          <p className="mt-2 text-sm text-primary">View event on Luma ↗</p>
         </a>
       ) : figure.kind === "embed" ? (
-        <div className="flex justify-center bg-claude-surface p-4">
+        <div className="flex justify-center bg-card p-4">
           <iframe
             src={figure.src}
             title={figure.alt}
@@ -429,12 +429,12 @@ function CaseStudyFigure({ figure }: { figure: ProjectCaseStudyFigure }) {
         <img src={figure.src} alt={figure.alt} className="block w-full" />
       )}
       {figure.caption || figure.credit ? (
-        <figcaption className="border-t border-claude-border px-4 py-3 text-sm leading-relaxed text-claude-muted">
+        <figcaption className="border-t border-border px-4 py-3 text-sm leading-relaxed text-muted-foreground">
           {figure.caption}
           {figure.credit ? (
             <>
               {figure.caption ? " " : null}
-              <span className="text-claude-muted">
+              <span className="text-muted-foreground">
                 {figure.kind === "embed"
                   ? "Post by "
                   : figure.kind === "video" || figure.src.endsWith(".mp4")
@@ -444,7 +444,7 @@ function CaseStudyFigure({ figure }: { figure: ProjectCaseStudyFigure }) {
                   href={figure.credit.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-claude-accent underline-offset-4 hover:underline"
+                  className="text-primary underline-offset-4 hover:underline"
                 >
                   {figure.credit.label}
                 </a>
@@ -465,20 +465,20 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
   return (
     <article className="space-y-10">
       <header>
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-claude-accent">
+        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">
           {project.category}
         </p>
         <h1 className="font-serif text-[clamp(1.8rem,4vw,2.5rem)] font-semibold tracking-tight">
           {project.title}
         </h1>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-claude-muted">
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
           {caseStudy.overview}
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-claude-accent-soft px-3 py-1 text-xs text-claude-accent"
+              className="rounded-full bg-secondary px-3 py-1 text-xs text-primary"
             >
               {tag}
             </span>
@@ -494,19 +494,19 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.stats && caseStudy.stats.length > 0 ? (
         <section>
-          <h2 className="font-mono text-xs uppercase tracking-widest text-claude-muted">
+          <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
             By the numbers
           </h2>
-          <dl className="mt-4 border-t border-claude-border">
+          <dl className="mt-4 border-t border-border">
             {caseStudy.stats.map((stat) => (
               <div
                 key={stat.label}
-                className="flex flex-col gap-1 border-b border-claude-border py-4 sm:flex-row sm:items-baseline sm:gap-6"
+                className="flex flex-col gap-1 border-b border-border py-4 sm:flex-row sm:items-baseline sm:gap-6"
               >
-                <dt className="shrink-0 font-serif text-3xl font-semibold leading-none tracking-tight text-claude-accent sm:w-32">
+                <dt className="shrink-0 font-serif text-3xl font-semibold leading-none tracking-tight text-primary sm:w-32">
                   {stat.value}
                 </dt>
-                <dd className="text-sm leading-relaxed text-claude-muted">{stat.label}</dd>
+                <dd className="text-sm leading-relaxed text-muted-foreground">{stat.label}</dd>
               </div>
             ))}
           </dl>
@@ -516,33 +516,33 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       <section className="relative">
         <span
           aria-hidden
-          className="absolute left-[18px] top-3 bottom-3 w-px bg-claude-border sm:left-[22px]"
+          className="absolute left-[18px] top-3 bottom-3 w-px bg-border sm:left-[22px]"
         />
         <div className="space-y-8">
           <Step number="01" title={caseStudy.problemTitle ?? "The problem"}>
-            <p className="text-sm leading-relaxed text-claude-muted">{caseStudy.problem}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{caseStudy.problem}</p>
           </Step>
 
           {caseStudy.approach ? (
             <Step number="02" title={caseStudy.approachTitle ?? "Approach"}>
-              <p className="text-sm leading-relaxed text-claude-muted">{caseStudy.approach}</p>
+              <p className="text-sm leading-relaxed text-muted-foreground">{caseStudy.approach}</p>
             </Step>
           ) : null}
 
           {caseStudy.myContribution ? (
             <Step number="03" title={caseStudy.contributionTitle ?? "My contribution"} highlight>
-              <div className="rounded-2xl border-l-4 border-claude-accent bg-claude-accent-soft/50 p-5 sm:p-6">
-                <p className="max-w-2xl leading-relaxed text-claude-text">
+              <div className="rounded-2xl border-l-4 border-primary bg-secondary/50 p-5 sm:p-6">
+                <p className="max-w-2xl leading-relaxed text-foreground">
                   {caseStudy.myContribution.intro}
                 </p>
                 <ul className="mt-6 space-y-4">
                   {caseStudy.myContribution.items.map((item) => (
                     <li
                       key={item.title}
-                      className="rounded-xl border border-claude-border/80 bg-claude-surface px-4 py-4 shadow-sm"
+                      className="rounded-xl border border-border/80 bg-card px-4 py-4 shadow-sm"
                     >
                       <h3 className="font-serif text-base font-semibold">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-claude-muted">
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                         {item.description}
                       </p>
                       {item.link ? (
@@ -550,7 +550,7 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
                           href={item.link.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="mt-3 inline-block text-sm text-claude-accent underline-offset-4 hover:underline"
+                          className="mt-3 inline-block text-sm text-primary underline-offset-4 hover:underline"
                         >
                           {item.link.label} ↗
                         </a>
@@ -564,12 +564,12 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
                     {caseStudy.myContribution.media.map((placeholder) => (
                       <figure
                         key={placeholder.id}
-                        className="overflow-hidden rounded-xl border border-dashed border-claude-border bg-claude-surface"
+                        className="overflow-hidden rounded-xl border border-dashed border-border bg-card"
                       >
-                        <div className="flex aspect-[16/10] items-center justify-center bg-[#f3f0ea] px-4">
-                          <p className="text-center text-xs text-claude-muted">Screenshot coming soon</p>
+                        <div className="flex aspect-[16/10] items-center justify-center bg-muted px-4">
+                          <p className="text-center text-xs text-muted-foreground">Screenshot coming soon</p>
                         </div>
-                        <figcaption className="border-t border-claude-border px-4 py-3 text-sm text-claude-muted">
+                        <figcaption className="border-t border-border px-4 py-3 text-sm text-muted-foreground">
                           {placeholder.caption}
                         </figcaption>
                       </figure>
@@ -586,13 +586,13 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
                 {caseStudy.features.map((feature) => (
                   <div
                     key={feature}
-                    className="flex gap-3 rounded-xl border border-claude-border bg-claude-surface px-4 py-4"
+                    className="flex gap-3 rounded-xl border border-border bg-card px-4 py-4"
                   >
                     <span
                       aria-hidden
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-claude-accent"
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
                     />
-                    <p className="text-sm leading-relaxed text-claude-muted">{feature}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{feature}</p>
                   </div>
                 ))}
               </div>
@@ -605,7 +605,7 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       <Link
         to="/projects"
-        className="inline-block text-sm text-claude-accent transition hover:underline"
+        className="inline-block text-sm text-primary transition hover:underline"
       >
         ← All projects
       </Link>

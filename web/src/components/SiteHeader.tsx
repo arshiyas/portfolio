@@ -25,8 +25,8 @@ function NavButton({ href, label, active }: NavLink & { active: boolean }) {
       className={cn(
         "h-11 min-h-11 px-3 py-2 font-normal sm:h-auto sm:min-h-0 sm:px-2 sm:py-1",
         active
-          ? "text-claude-accent"
-          : "text-claude-muted hover:bg-transparent hover:text-claude-accent",
+          ? "text-primary"
+          : "text-muted-foreground hover:bg-transparent hover:text-primary",
       )}
     >
       <Link to={href}>{label}</Link>
@@ -34,12 +34,9 @@ function NavButton({ href, label, active }: NavLink & { active: boolean }) {
   )
 }
 
-export function SiteHeader({ theme = "neutral" }: SiteHeaderProps) {
+export function SiteHeader({ theme: _theme = "neutral" }: SiteHeaderProps) {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
-  const headerBg =
-    theme === "personal"
-      ? "bg-[rgba(255,248,243,0.92)] border-playful-border"
-      : "bg-[rgba(250,249,245,0.9)] border-claude-border"
+  const headerBg = "bg-background/90 border-border"
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
 
@@ -52,7 +49,7 @@ export function SiteHeader({ theme = "neutral" }: SiteHeaderProps) {
     >
       <Link
         to="/"
-        className="min-h-11 py-2 font-serif text-[1.05rem] font-semibold leading-none tracking-tight text-claude-text sm:min-h-0 sm:py-0"
+        className="min-h-11 py-2 font-serif text-[1.05rem] font-semibold leading-none tracking-tight text-foreground sm:min-h-0 sm:py-0"
       >
         {site.name}
       </Link>
@@ -66,7 +63,7 @@ export function SiteHeader({ theme = "neutral" }: SiteHeaderProps) {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-11 min-h-11 w-11 px-0 text-claude-muted hover:bg-transparent hover:text-claude-accent"
+                className="h-11 min-h-11 w-11 px-0 text-muted-foreground hover:bg-transparent hover:text-primary"
                 aria-label="More navigation links"
               >
                 <MoreHorizontal className="size-5" />

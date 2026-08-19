@@ -46,13 +46,11 @@ export function ProjectGridCard({ project }: { project: Project }) {
   const isPersonal = project.type === "personal"
   const hasTheme = project.cardTheme === "days-gone"
 
-  const baseClass = isPersonal
-    ? "border-playful-border hover:border-playful-purple"
-    : "border-claude-border bg-claude-surface hover:border-claude-accent"
+  const baseClass = "border-border bg-card hover:border-primary"
 
   const className = `group relative block overflow-hidden rounded-[18px] border transition-[border-color] duration-300 ${
-    hasTheme ? "project-card-days-gone border-playful-border" : baseClass
-  } ${!hasTheme && isPersonal ? "bg-[#fffdfb]" : ""}`
+    hasTheme ? "project-card-days-gone border-border" : baseClass
+  }`
 
   const inner = (
     <>
@@ -71,22 +69,18 @@ export function ProjectGridCard({ project }: { project: Project }) {
           hasTheme ? "group-hover:pt-[5.25rem] group-focus-visible:pt-[5.25rem]" : ""
         }`}
       >
-        <p
-          className={`project-card-category truncate text-xs font-semibold uppercase tracking-wider ${
-            isPersonal ? "text-playful-purple" : "text-claude-accent"
-          }`}
-        >
+        <p className="project-card-category truncate text-xs font-semibold uppercase tracking-wider text-primary">
           {project.category}
         </p>
         <h3
           className={`project-card-title mt-2 line-clamp-2 font-sans text-base font-semibold ${
-            isPersonal ? "text-claude-text" : "font-serif"
+            isPersonal ? "text-foreground" : "font-serif"
           }`}
         >
           {project.title}
         </h3>
         <p
-          className={`mt-2 line-clamp-3 text-sm leading-relaxed text-claude-muted ${hasTheme ? "group-hover:mt-0 group-focus-visible:mt-0" : ""}`}
+          className={`mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground ${hasTheme ? "group-hover:mt-0 group-focus-visible:mt-0" : ""}`}
         >
           {project.description}
         </p>
@@ -94,20 +88,16 @@ export function ProjectGridCard({ project }: { project: Project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className={`project-card-tag rounded-full px-2 py-0.5 text-xs ${
-                isPersonal
-                  ? "bg-[#f3ecfb] text-playful-purple"
-                  : "bg-claude-accent-soft text-claude-accent"
-              }`}
+              className="project-card-tag rounded-full bg-secondary px-2 py-0.5 text-xs text-primary"
             >
               {tag}
             </span>
           ))}
         </div>
         {project.caseStudy ? (
-          <p className="mt-4 text-xs font-medium text-claude-accent">Read case study →</p>
+          <p className="mt-4 text-xs font-medium text-primary">Read case study →</p>
         ) : project.toolUrl ? (
-          <p className="mt-4 text-xs font-medium text-claude-accent">Open tool →</p>
+          <p className="mt-4 text-xs font-medium text-primary">Open tool →</p>
         ) : null}
       </div>
     </>

@@ -19,7 +19,7 @@ function ResumePage() {
           <h1 className="font-serif text-[clamp(1.8rem,4vw,2.4rem)] font-semibold tracking-tight">
             Resume
           </h1>
-          <p className="mt-3 max-w-lg text-claude-muted">
+          <p className="mt-3 max-w-lg text-muted-foreground">
             Software engineering across mobility, geospatial, and healthcare.
           </p>
         </div>

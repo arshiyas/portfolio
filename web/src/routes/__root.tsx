@@ -48,6 +48,9 @@ export const Route = createRootRoute({
         href: "/favicon.png",
       },
     ],
+    scripts: import.meta.env.DEV
+      ? [{ src: "https://tweakcn.com/live-preview.min.js" }]
+      : [],
   }),
   notFoundComponent: () => (
     <main className="mx-auto max-w-[920px] px-6 py-16">

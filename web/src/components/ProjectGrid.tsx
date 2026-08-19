@@ -21,8 +21,8 @@ export function ProjectGrid() {
             onClick={() => setFilter(value)}
             className={
               filter === value
-                ? "rounded-full border-claude-accent-soft bg-claude-accent-soft text-claude-accent"
-                : "rounded-full text-claude-muted"
+                ? "rounded-full border-secondary bg-secondary text-primary"
+                : "rounded-full text-muted-foreground"
             }
           >
             {value === "all" ? "All" : value === "work" ? "Work" : "Personal"}

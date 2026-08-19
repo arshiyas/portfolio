@@ -1,129 +1,140 @@
-export type ProjectType = "work" | "personal";
+export type ProjectType = "work" | "personal"
 
 export type ProjectStat = {
-  value: string;
-  label: string;
-};
+  value: string
+  label: string
+}
 
 export type ProjectMediaPlaceholder = {
-  id: string;
-  caption: string;
-};
+  id: string
+  caption: string
+}
 
 export type ProjectContributionItem = {
-  title: string;
-  description: string;
+  title: string
+  description: string
   link?: {
-    label: string;
-    url: string;
-  };
-};
+    label: string
+    url: string
+  }
+}
 
 export type ProjectContribution = {
-  intro: string;
-  items: ProjectContributionItem[];
-  media?: ProjectMediaPlaceholder[];
-};
+  intro: string
+  items: ProjectContributionItem[]
+  media?: ProjectMediaPlaceholder[]
+}
 
 export type ProjectFeatureItem = {
-  title: string;
-  description: string;
-};
+  title: string
+  description: string
+}
 
 export type ProjectTechGroup = {
-  category: string;
-  items: string[];
-};
+  category: string
+  items: string[]
+}
 
 export type ProjectPipelineStep = {
-  title: string;
-  description: string;
-};
+  title: string
+  description: string
+}
 
 export type ProjectCaseStudyFigure = {
-  src: string;
-  alt: string;
-  caption?: string;
-  kind?: "image" | "video" | "embed" | "link";
+  src: string
+  alt: string
+  caption?: string
+  kind?: "image" | "video" | "embed" | "link"
   credit?: {
-    label: string;
-    url: string;
-  };
-  embedHeight?: number;
-  embedWidth?: number;
-};
+    label: string
+    url: string
+  }
+  embedHeight?: number
+  embedWidth?: number
+}
 
 export type ProjectCaseStudySection = {
-  title: string;
-  paragraphs: string[];
-  figure?: ProjectCaseStudyFigure;
-};
+  title: string
+  paragraphs: string[]
+  figure?: ProjectCaseStudyFigure
+}
 
 export type ProjectCaseStudy = {
-  overview: string;
-  problem: string;
+  overview: string
+  problem: string
   /** Public write-up backing the claims. Omit when no public source exists. */
   source?: {
-    label: string;
-    url: string;
-  };
-  contextTitle?: string;
-  metaLine?: string;
-  approach?: string;
+    label: string
+    url: string
+  }
+  contextTitle?: string
+  metaLine?: string
+  approach?: string
   /** Work case studies default to problem/approach/contribution/features headings. */
-  problemTitle?: string;
-  approachTitle?: string;
-  contributionTitle?: string;
-  featuresTitle?: string;
-  features?: string[];
-  featureItems?: ProjectFeatureItem[];
-  pipeline?: ProjectPipelineStep[];
-  pipelineTitle?: string;
-  pipelineIntro?: string;
-  sections?: ProjectCaseStudySection[];
-  techStack?: ProjectTechGroup[];
-  underTheHood?: string;
-  learnings?: string[];
-  stats?: ProjectStat[];
-  myContribution?: ProjectContribution;
-  story?: string;
-  toolPreviewBlurb?: string;
-  figure?: ProjectCaseStudyFigure;
-};
+  problemTitle?: string
+  approachTitle?: string
+  contributionTitle?: string
+  featuresTitle?: string
+  features?: string[]
+  featureItems?: ProjectFeatureItem[]
+  pipeline?: ProjectPipelineStep[]
+  pipelineTitle?: string
+  pipelineIntro?: string
+  sections?: ProjectCaseStudySection[]
+  techStack?: ProjectTechGroup[]
+  underTheHood?: string
+  learnings?: string[]
+  stats?: ProjectStat[]
+  myContribution?: ProjectContribution
+  story?: string
+  toolPreviewBlurb?: string
+  figure?: ProjectCaseStudyFigure
+}
 
 export type Project = {
-  slug: string;
-  type: ProjectType;
-  category: string;
-  title: string;
-  description: string;
-  tags: string[];
-  toolUrl?: string;
-  caseStudy?: ProjectCaseStudy;
+  slug: string
+  type: ProjectType
+  category: string
+  title: string
+  description: string
+  tags: string[]
+  toolUrl?: string
+  caseStudy?: ProjectCaseStudy
   /** Hover card chrome on /projects matches the live tool theme. */
-  cardTheme?: "days-gone";
-};
+  cardTheme?: "days-gone"
+}
 
 export const site = {
   name: "Arshiya Sayyed",
   location: "Toronto",
   eyebrow: "Software engineer · Toronto",
   tagline: "Software Engineer IV",
-  lede:
-    "I build backend systems across mobility, geospatial, and healthcare. At Lyft, I shipped rider products for older adults and teens and now work on the backend bringing the app to Europe.",
+  lede: "I shipped rider products for older adults and teens and now work on bringing the app to Europe, with earlier backend work in geospatial and healthcare.",
   links: {
     linkedin: "https://www.linkedin.com/in/arshiyasayyed/",
     email: "arshiyasayyed8@gmail.com",
+    calendly: "https://calendly.com/arshiyasayyed8/chat-with-arshiya",
   },
   url: "https://arshiya.dev",
-  social: [{ label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" }],
+  social: [
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" },
+  ],
   heroButtons: [
     { label: "View projects", href: "/projects", primary: true },
-    { label: "Resume", href: "/resume", primary: false },
+    {
+      label: "Contact me",
+      href: "mailto:arshiyasayyed8@gmail.com",
+      primary: false,
+    },
   ],
   stack: ["Python", "Go", "TypeScript", "gRPC", "AWS", "PostgreSQL"],
-  featuredProjectSlugs: ["lyft-international", "lyft-teens", "lyft-silver", "days-gone"],
-};
+  featuredProjectSlugs: [
+    "lyft-international",
+    "lyft-teens",
+    "lyft-silver",
+    "days-gone",
+  ],
+}
 
 export const projects: Project[] = [
   {
@@ -153,16 +164,30 @@ export const projects: Project[] = [
       },
       features: [
         "Simplified home screen with two primary actions (ride now and schedule later) plus 1.4× larger text for readability",
-        "Live \"Get Help\" support connecting riders to agents daily from 8am–9pm ET",
+        'Live "Get Help" support connecting riders to agents daily from 8am–9pm ET',
         "Mandatory pickup and dropoff confirmation before a ride is dispatched",
         "Reduced ride modes to Standard and Extra Comfort to avoid choice overload",
         "Preferred vehicle matching that deprioritizes high step-height cars (e.g. pickup trucks) based on field research with seniors",
       ],
       stats: [
-        { value: "86%", label: "Self-serve adoption once familiar with the app (USC study)" },
-        { value: "55%", label: "More likely to have rides booked by someone else vs. younger riders" },
-        { value: "57%", label: "Higher no-show rate among older riders before product improvements" },
-        { value: "2×", label: "More likely to cancel when matched with a pickup truck" },
+        {
+          value: "86%",
+          label: "Self-serve adoption once familiar with the app (USC study)",
+        },
+        {
+          value: "55%",
+          label:
+            "More likely to have rides booked by someone else vs. younger riders",
+        },
+        {
+          value: "57%",
+          label:
+            "Higher no-show rate among older riders before product improvements",
+        },
+        {
+          value: "2×",
+          label: "More likely to cancel when matched with a pickup truck",
+        },
       ],
       myContribution: {
         intro:
@@ -256,7 +281,10 @@ export const projects: Project[] = [
       ],
       stats: [
         { value: "200+", label: "US markets live at launch in February 2026" },
-        { value: "13–17", label: "New rider age range the platform had to support" },
+        {
+          value: "13–17",
+          label: "New rider age range the platform had to support",
+        },
       ],
       source: {
         label: "Introducing Lyft Teen, Lyft Blog",
@@ -325,8 +353,14 @@ export const projects: Project[] = [
         "Post-request features built but not yet released",
       ],
       stats: [
-        { value: "12+", label: "European cities live in the Lyft app beta as of Q2 2026" },
-        { value: "180+", label: "Cities across 9 countries on the network Lyft acquired" },
+        {
+          value: "12+",
+          label: "European cities live in the Lyft app beta as of Q2 2026",
+        },
+        {
+          value: "180+",
+          label: "Cities across 9 countries on the network Lyft acquired",
+        },
         { value: "2027", label: "Target for one unified global Lyft app" },
       ],
       source: {
@@ -348,7 +382,7 @@ export const projects: Project[] = [
         "This isn't a product I shipped. It's the work of changing how my team and the teams around us actually build with coding agents: making repo context something engineers inherit rather than rediscover, and making the case for it with evidence instead of enthusiasm.",
       problemTitle: "Where the team was",
       problem:
-        "Coding agents were arriving team by team with no shared setup. The same agent would answer correctly in one service and confidently wrong in the next, and nobody could say which was which, because there was no baseline to compare against. Engineers re-explained the same context every session, and people were hand-migrating dashboards one query at a time. The friction was obvious, but the case for fixing it was all anecdote, and \"it feels faster\" isn't an argument you can take to an engineering org.",
+        'Coding agents were arriving team by team with no shared setup. The same agent would answer correctly in one service and confidently wrong in the next, and nobody could say which was which, because there was no baseline to compare against. Engineers re-explained the same context every session, and people were hand-migrating dashboards one query at a time. The friction was obvious, but the case for fixing it was all anecdote, and "it feels faster" isn\'t an argument you can take to an engineering org.',
       approachTitle: "How I approached it",
       approach:
         "I wasn't interested in evangelizing tools, I wanted to move the default. That meant writing repo context down so every engineer inherits it instead of rebuilding it, then proving the value with a controlled evaluation rather than a demo, and publishing the results including the repos where it changed nothing. Once real numbers existed, adoption stopped being a matter of opinion.",
@@ -367,7 +401,8 @@ export const projects: Project[] = [
               "Co-built a dashboard tracking incidents, mean time to recovery, and deploy frequency, so conversations about how the team is doing start from data rather than impressions. I own the operational-health pillar on the cross-org working group that maintains the framework it feeds.",
           },
           {
-            title: "Turned specialist migration work into something anyone can run",
+            title:
+              "Turned specialist migration work into something anyone can run",
             description:
               "Engineers were hand-converting dashboards out of our legacy analytics tool, query by query. I built a coding-agent skill that does the conversion, which took the work out of the specialist-knowledge category entirely. The platform team running the company-wide migration adopted it as the recommended interim path and assigned a pilot team to stress-test it on harder dashboards.",
           },
@@ -391,7 +426,8 @@ export const projects: Project[] = [
         "A public account of the European build, given to a sold-out room during Toronto Tech Week",
       ],
       source: {
-        label: "AI at Lyft: From Data Foundations to Shipping Faster, Toronto Tech Week 2026",
+        label:
+          "AI at Lyft: From Data Foundations to Shipping Faster, Toronto Tech Week 2026",
         url: "https://luma.com/m7xed1iw",
       },
     },
@@ -438,9 +474,18 @@ export const projects: Project[] = [
         ],
       },
       stats: [
-        { value: "Fastest provider", label: "Time to first result, instead of waiting on the slowest" },
-        { value: "180ms → 45ms", label: "Average search API response time on the backend path" },
-        { value: "75%", label: "Latency reduction after the query path redesign" },
+        {
+          value: "Fastest provider",
+          label: "Time to first result, instead of waiting on the slowest",
+        },
+        {
+          value: "180ms → 45ms",
+          label: "Average search API response time on the backend path",
+        },
+        {
+          value: "75%",
+          label: "Latency reduction after the query path redesign",
+        },
       ],
       source: {
         label: "SkyWatch EarthCache API documentation",
@@ -489,7 +534,8 @@ export const projects: Project[] = [
       contextTitle: "The problem",
       overview:
         "I built Days Gone while preparing my own citizenship application. IRCC's calculator needs every trip outside Canada, but those dates live in booking emails, loyalty exports, and scattered notes, not a ready-made list. The tool turns that mess into confirmed trip rows in the browser, including a local WebLLM path when rules are not enough.",
-      toolPreviewBlurb: "Paste travel text, parse on-device with WebLLM, copy rows into IRCC.",
+      toolPreviewBlurb:
+        "Paste travel text, parse on-device with WebLLM, copy rows into IRCC.",
       problem:
         "The hard part is not the day math. It is reconstructing travel history from real records, then typing each row into IRCC by hand. I wanted something that could extract dates from a paste, let me review them, and never upload immigration data to a server.",
       sections: [
@@ -522,7 +568,8 @@ export const projects: Project[] = [
         },
       ],
       pipelineTitle: "The flow",
-      pipelineIntro: "Same steps as the app. Eligibility path shown; parse-only skips Your dates.",
+      pipelineIntro:
+        "Same steps as the app. Eligibility path shown; parse-only skips Your dates.",
       pipeline: [
         {
           title: "Start",
@@ -531,7 +578,8 @@ export const projects: Project[] = [
         },
         {
           title: "Your dates",
-          description: "Application date and PR date. Sets the IRCC window before trips.",
+          description:
+            "Application date and PR date. Sets the IRCC window before trips.",
         },
         {
           title: "Add trips",
@@ -540,7 +588,8 @@ export const projects: Project[] = [
         },
         {
           title: "Results",
-          description: "Edit confirmed rows, check totals, copy into IRCC's calculator.",
+          description:
+            "Edit confirmed rows, check totals, copy into IRCC's calculator.",
         },
       ],
       techStack: [
@@ -559,31 +608,31 @@ export const projects: Project[] = [
       },
     },
   },
-];
+]
 
 export const primaryNavLinks = [
   { href: "/resume", label: "Resume" },
   { href: "/projects", label: "Work" },
   { href: "/about", label: "About" },
-] as const;
+] as const
 
 export const navLinks = [
   { href: "/projects", label: "Work" },
   { href: "/resume", label: "Resume" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
-] as const;
+] as const
 
 export function getFeaturedProjects(): Project[] {
   return site.featuredProjectSlugs
     .map((slug) => projects.find((p) => p.slug === slug))
-    .filter((p): p is Project => p !== undefined);
+    .filter((p): p is Project => p !== undefined)
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {
-  return projects.find((p) => p.slug === slug);
+  return projects.find((p) => p.slug === slug)
 }
 
 export function getProjectsWithCaseStudies(): Project[] {
-  return projects.filter((p) => p.caseStudy !== undefined);
+  return projects.filter((p) => p.caseStudy !== undefined)
 }

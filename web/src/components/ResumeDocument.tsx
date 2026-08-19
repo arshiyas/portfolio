@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { resume } from "@/lib/resume"
 
-const linkClass = "text-claude-accent underline-offset-4 hover:underline"
+const linkClass = "text-primary underline-offset-4 hover:underline"
 
 function linkifyResumeText(text: string): ReactNode {
   const companyLinks = resume.experience
@@ -46,24 +46,24 @@ function linkifyResumeText(text: string): ReactNode {
 
 export function ResumeDocument() {
   return (
-    <article className="rounded-xl border border-claude-border bg-claude-surface px-6 py-8 shadow-none sm:px-10 sm:py-10">
-      <header className="border-b border-claude-border pb-6">
-        <h2 className="font-serif text-[1.65rem] font-semibold tracking-tight text-claude-text">
+    <article className="rounded-xl border border-border bg-card px-6 py-8 shadow-none sm:px-10 sm:py-10">
+      <header className="border-b border-border pb-6">
+        <h2 className="font-serif text-[1.65rem] font-semibold tracking-tight text-foreground">
           {resume.name}
         </h2>
-        <p className="mt-1 text-sm font-medium text-claude-text">
+        <p className="mt-1 text-sm font-medium text-foreground">
           {resume.headline}
-          <span className="font-normal text-claude-muted"> · {resume.location}</span>
+          <span className="font-normal text-muted-foreground"> · {resume.location}</span>
         </p>
-        <p className="mt-3 text-sm leading-relaxed text-claude-muted">
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           <a href={`mailto:${resume.email}`} className={linkClass}>
             {resume.email}
           </a>
-          <span className="mx-2 text-claude-border">|</span>
+          <span className="mx-2 text-border">|</span>
           <a href="tel:+16476732138" className={linkClass}>
             {resume.phone}
           </a>
-          <span className="mx-2 text-claude-border">|</span>
+          <span className="mx-2 text-border">|</span>
           <a href={resume.linkedin} target="_blank" rel="noreferrer" className={linkClass}>
             linkedin.com/in/arshiyasayyed
           </a>
@@ -71,13 +71,13 @@ export function ResumeDocument() {
       </header>
 
       <ResumeSection title="Summary">
-        <p className="text-sm leading-relaxed text-claude-muted">
+        <p className="text-sm leading-relaxed text-muted-foreground">
           {linkifyResumeText(resume.summary)}
         </p>
       </ResumeSection>
 
       <ResumeSection title="Skills">
-        <ul className="space-y-2.5 text-sm leading-relaxed text-claude-muted">
+        <ul className="space-y-2.5 text-sm leading-relaxed text-muted-foreground">
           {resume.skills.map((skill) => (
             <SkillLine key={skill} skill={skill} />
           ))}
@@ -88,8 +88,8 @@ export function ResumeDocument() {
         <div className="space-y-7">
           {resume.experience.map((role) => (
             <div key={`${role.company}-${role.period}`}>
-              <p className="text-sm font-semibold text-claude-text">{role.title}</p>
-              <p className="mt-0.5 text-sm text-claude-muted">
+              <p className="text-sm font-semibold text-foreground">{role.title}</p>
+              <p className="mt-0.5 text-sm text-muted-foreground">
                 {role.companyUrl ? (
                   <a href={role.companyUrl} target="_blank" rel="noreferrer" className={linkClass}>
                     {role.company}
@@ -98,13 +98,13 @@ export function ResumeDocument() {
                   role.company
                 )}
                 , {role.location}
-                <span className="mx-2 text-claude-border">|</span>
+                <span className="mx-2 text-border">|</span>
                 {role.period}
               </p>
-              <ul className="mt-2.5 list-none space-y-1.5 pl-0 text-sm leading-relaxed text-claude-muted">
+              <ul className="mt-2.5 list-none space-y-1.5 pl-0 text-sm leading-relaxed text-muted-foreground">
                 {role.bullets.map((bullet) => (
                   <li key={bullet} className="flex gap-2">
-                    <span className="shrink-0 text-claude-muted">-</span>
+                    <span className="shrink-0 text-muted-foreground">-</span>
                     <span>{linkifyResumeText(bullet)}</span>
                   </li>
                 ))}
@@ -115,11 +115,11 @@ export function ResumeDocument() {
       </ResumeSection>
 
       <ResumeSection title="Education">
-        <ul className="space-y-2.5 text-sm text-claude-muted">
+        <ul className="space-y-2.5 text-sm text-muted-foreground">
           {resume.education.map((item) => (
             <li key={`${item.degree}-${item.school}`}>
-              <span className="font-semibold text-claude-text">{item.degree}</span>
-              <span className="mx-2 text-claude-border">|</span>
+              <span className="font-semibold text-foreground">{item.degree}</span>
+              <span className="mx-2 text-border">|</span>
               {item.school}
             </li>
           ))}
@@ -138,7 +138,7 @@ function SkillLine({ skill }: { skill: string }) {
 
   return (
     <li>
-      <span className="font-semibold text-claude-text">{label}</span> {value}
+      <span className="font-semibold text-foreground">{label}</span> {value}
     </li>
   )
 }
@@ -146,7 +146,7 @@ function SkillLine({ skill }: { skill: string }) {
 function ResumeSection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="mt-8">
-      <h3 className="border-b border-claude-border pb-2 font-mono text-xs font-semibold uppercase tracking-widest text-claude-text">
+      <h3 className="border-b border-border pb-2 font-mono text-xs font-semibold uppercase tracking-widest text-foreground">
         {title}
       </h3>
       <div className="mt-4">{children}</div>

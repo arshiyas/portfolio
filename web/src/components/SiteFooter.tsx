@@ -1,6 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router"
 import { site } from "@/lib/content"
-import { cn } from "@/lib/utils"
 
 type SiteFooterProps = {
   theme?: "work" | "personal" | "neutral"
@@ -35,7 +34,7 @@ const footerContent: Record<FooterVariant, FooterContent> = {
     ],
   },
   projects: {
-    note: "Mobility, geospatial, and healthcare — the through-line is backend systems at scale.",
+    note: "Mobility, geospatial, and healthcare: the through-line is backend systems at scale.",
     links: [
       { label: "Resume", href: "/resume" },
       { label: "About", href: "/about" },
@@ -67,7 +66,7 @@ const footerContent: Record<FooterVariant, FooterContent> = {
     ],
   },
   contact: {
-    note: "Prefer email? I read everything that comes through here.",
+    note: "Prefer email or a calendar invite? Both work.",
     links: [
       { label: "Email", href: `mailto:${site.links.email}` },
       { label: "LinkedIn ↗", href: site.links.linkedin, external: true },
@@ -89,7 +88,7 @@ function FooterLink({
   href: string
   external?: boolean
 }) {
-  const className = "transition hover:text-claude-accent"
+  const className = "transition hover:text-primary"
 
   if (external || href.startsWith("mailto:")) {
     return (
@@ -106,20 +105,13 @@ function FooterLink({
   )
 }
 
-export function SiteFooter({ theme = "neutral" }: SiteFooterProps) {
+export function SiteFooter({ theme: _theme = "neutral" }: SiteFooterProps) {
   const pathname = useRouterState({ select: (state) => state.location.pathname })
   const variant = getFooterVariant(pathname)
   const content = footerContent[variant]
-  const borderClass =
-    theme === "personal" ? "border-playful-border" : "border-claude-border"
 
   return (
-    <footer
-      className={cn(
-        "site-content-safe site-footer-safe border-t px-6 py-10 text-sm text-claude-muted",
-        borderClass,
-      )}
-    >
+    <footer className="site-content-safe site-footer-safe border-t border-border px-6 py-10 text-sm text-muted-foreground">
       <div className="mx-auto flex w-full max-w-[920px] flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <p className="max-w-md leading-relaxed">{content.note}</p>
         <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">

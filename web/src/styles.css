@@ -154,7 +154,7 @@
 }
 
 .theme-neutral {
-  background: linear-gradient(180deg, #faf9f5 0%, #f5f2ea 100%);
+  background: var(--background);
 }
 
 .site-header-safe {
@@ -200,12 +200,12 @@
   z-index: 0;
   background: linear-gradient(
     180deg,
-    rgba(250, 249, 245, 0.82) 0%,
-    rgba(250, 249, 245, 0.38) 38%,
-    rgba(250, 249, 245, 0.62) 62%,
-    rgba(245, 242, 234, 0.88) 82%,
-    rgba(245, 242, 234, 0.97) 92%,
-    #f5f2ea 100%
+    color-mix(in srgb, var(--background) 82%, transparent) 0%,
+    color-mix(in srgb, var(--background) 38%, transparent) 38%,
+    color-mix(in srgb, var(--background) 62%, transparent) 62%,
+    color-mix(in srgb, var(--background) 88%, transparent) 82%,
+    color-mix(in srgb, var(--background) 97%, transparent) 92%,
+    var(--background) 100%
   );
   pointer-events: none;
 }
@@ -220,20 +220,12 @@
   padding-right: max(1.5rem, env(safe-area-inset-right));
 }
 
-.home-hero__stack summary {
-  list-style: none;
-}
-
-.home-hero__stack summary::-webkit-details-marker {
-  display: none;
-}
-
 .theme-work {
-  background: var(--claude-bg);
+  background: var(--background);
 }
 
 .theme-personal {
-  background: var(--playful-bg);
+  background: var(--background);
 }
 
 .days-gone-app {
@@ -332,6 +324,20 @@
   --color-claude-accent: #6b6f4a;
   --color-claude-border: #c5c2bd;
   --color-claude-accent-soft: rgba(107, 111, 74, 0.15);
+  --foreground: #131311;
+  --muted-foreground: #6f695d;
+  --primary: #6b6f4a;
+  --border: #c5c2bd;
+  --secondary: rgba(107, 111, 74, 0.15);
+  --accent: rgba(107, 111, 74, 0.15);
+  --card: #f0eeea;
+  --color-foreground: #131311;
+  --color-muted-foreground: #6f695d;
+  --color-primary: #6b6f4a;
+  --color-border: #c5c2bd;
+  --color-secondary: rgba(107, 111, 74, 0.15);
+  --color-accent: rgba(107, 111, 74, 0.15);
+  --color-card: #f0eeea;
   --dg-input: #faf9f7;
 }
 
