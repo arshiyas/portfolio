@@ -1296,13 +1296,21 @@ export function DaysInCanadaApp() {
                 Track days gone from Canada for citizenship math.
               </p>
             </div>
-            <Link
-              to="/projects/$slug"
-              params={{ slug: "days-gone" }}
-              className="days-gone-no-print shrink-0 text-xs font-medium text-claude-accent hover:underline sm:pt-1"
-            >
-              Why I built this
-            </Link>
+            <div className="days-gone-no-print flex shrink-0 items-center gap-2 text-xs font-medium sm:pt-1">
+              <Link to="/" className="text-claude-accent hover:underline">
+                arshiya.dev
+              </Link>
+              <span className="text-claude-muted" aria-hidden>
+                ·
+              </span>
+              <Link
+                to="/projects/$slug"
+                params={{ slug: "days-gone" }}
+                className="text-claude-accent hover:underline"
+              >
+                Why I built this
+              </Link>
+            </div>
           </header>
 
           <StepIndicator current={step} steps={wizardSteps} />

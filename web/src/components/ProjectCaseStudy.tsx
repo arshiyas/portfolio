@@ -8,6 +8,7 @@ import {
 } from "@/lib/content"
 import { DaysGoneBackdrop } from "@/components/days-in-canada/DaysGoneBackdrop"
 import { PageTrail } from "@/components/PageTrail"
+import { ProjectTitleAddon } from "@/components/ProjectCompanyLogo"
 
 const caseStudyTrail = [
   { label: "Home", to: "/" as const },
@@ -103,17 +104,15 @@ function NextProjectPreview({ currentSlug }: { currentSlug: string }) {
         params={{ slug: next.slug }}
         className="group mt-4 block max-w-2xl rounded-xl border border-border bg-card p-5 transition hover:border-primary sm:p-6"
       >
-        <p className="text-xs font-semibold tracking-wider text-primary uppercase">
-          {next.category}
-        </p>
-        <h2 className="mt-2 font-serif text-xl font-semibold tracking-tight group-hover:text-primary">
-          {next.title}
+        <h2 className="flex flex-wrap items-center gap-x-1.5 font-serif text-xl font-semibold tracking-tight group-hover:text-primary">
+          <span>{next.title}</span>
+          <ProjectTitleAddon project={next} />
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           {next.description}
         </p>
         <p className="mt-4 text-sm font-medium text-primary">
-          Read case study →
+          Learn more →
         </p>
       </Link>
     </section>
@@ -277,8 +276,9 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       ) : null}
 
       <header className="mt-3 max-w-3xl">
-        <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] leading-tight font-semibold tracking-tight text-foreground">
-          {project.title}
+        <h1 className="flex flex-wrap items-center gap-x-2 font-serif text-[clamp(2rem,4vw,2.75rem)] leading-tight font-semibold tracking-tight text-foreground">
+          <span>{project.title}</span>
+          <ProjectTitleAddon project={project} className="h-5 w-auto" />
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
           {caseStudy.overview}
@@ -563,11 +563,9 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       <PageTrail items={caseStudyTrail} />
       <div className="space-y-10">
         <header>
-          <p className="mb-2 font-mono text-xs tracking-widest text-primary uppercase">
-            {project.category}
-          </p>
-          <h1 className="font-serif text-[clamp(1.8rem,4vw,2.5rem)] font-semibold tracking-tight">
-            {project.title}
+          <h1 className="flex flex-wrap items-center gap-x-2 font-serif text-[clamp(1.8rem,4vw,2.5rem)] font-semibold tracking-tight">
+            <span>{project.title}</span>
+            <ProjectTitleAddon project={project} className="h-5 w-auto" />
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             {caseStudy.overview}

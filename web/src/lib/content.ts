@@ -122,8 +122,7 @@ export const site = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" },
   ],
   heroButtons: [
-    { label: "View projects", href: "/projects", primary: true },
-    { label: "Resume", href: "/resume", primary: false },
+    { label: "Resume", href: "/resume", primary: true },
   ],
   stack: ["Python", "Go", "TypeScript", "gRPC", "AWS", "PostgreSQL"],
   featuredProjectSlugs: [

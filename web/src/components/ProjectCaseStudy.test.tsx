@@ -53,6 +53,7 @@ test("work case study trail is Home / Projects above the title", () => {
   expect(
     screen.getByRole("link", { name: "Projects" }).getAttribute("href")
   ).toBe("/projects")
+  expect(screen.queryByText("Work · Lyft")).toBeNull()
 })
 
 test("work case study ends with a readable preview of the next project", () => {
@@ -63,13 +64,13 @@ test("work case study ends with a readable preview of the next project", () => {
 
   expect(screen.getByText("Next")).toBeTruthy()
   expect(
-    screen.getByRole("heading", { name: "AI-Assisted Engineering" })
+    screen.getByRole("heading", { name: /AI-Assisted Engineering/ })
   ).toBeTruthy()
   expect(
     screen.getByText(/Changing how a backend org works with coding agents/)
   ).toBeTruthy()
   expect(
-    screen.getByRole("link", { name: /Read case study/ }).getAttribute("href")
+    screen.getByRole("link", { name: /Learn more/ }).getAttribute("href")
   ).toBe("/projects/ai-engineering")
 })
 
@@ -79,8 +80,8 @@ test("personal case study wraps to the first case study as next", () => {
 
   render(<ProjectCaseStudy project={project} />)
 
-  expect(screen.getByRole("heading", { name: "Lyft Silver" })).toBeTruthy()
+  expect(screen.getByRole("heading", { name: /Lyft Silver/ })).toBeTruthy()
   expect(
-    screen.getByRole("link", { name: /Read case study/ }).getAttribute("href")
+    screen.getByRole("link", { name: /Learn more/ }).getAttribute("href")
   ).toBe("/projects/lyft-silver")
 })

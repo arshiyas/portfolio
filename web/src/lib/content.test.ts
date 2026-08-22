@@ -15,10 +15,9 @@ test("hero role is Software Engineer without a level", () => {
   expect(site.tagline).toBe("Software Engineer")
 })
 
-test("hero CTAs are view projects and resume", () => {
+test("hero CTA is resume", () => {
   expect(site.heroButtons).toEqual([
-    { label: "View projects", href: "/projects", primary: true },
-    { label: "Resume", href: "/resume", primary: false },
+    { label: "Resume", href: "/resume", primary: true },
   ])
 })
 

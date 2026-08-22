@@ -21,7 +21,7 @@ vi.mock("@tanstack/react-router", () => ({
   ),
 }))
 
-test("shows name with compact social icons, intro, view projects, and resume", () => {
+test("shows name with compact social icons, intro, and resume", () => {
   render(<HomeHero />)
 
   const hero = document.querySelector(".home-hero")
@@ -58,11 +58,9 @@ test("shows name with compact social icons, intro, view projects, and resume", (
     location.compareDocumentPosition(linkedin) & Node.DOCUMENT_POSITION_FOLLOWING
   ).toBeTruthy()
 
-  const projects = scope.getByRole("link", { name: "View projects" })
-  expect(projects.getAttribute("href")).toBe("/projects")
-
   const resume = scope.getByRole("link", { name: "Resume" })
   expect(resume.getAttribute("href")).toBe("/resume")
+  expect(scope.queryByRole("link", { name: "View projects" })).toBeNull()
 
   expect(scope.queryByText(site.eyebrow)).toBeNull()
   expect(scope.queryByText("Tech stack")).toBeNull()

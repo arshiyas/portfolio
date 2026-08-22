@@ -33,14 +33,13 @@ test("portfolio chrome uses shadcn semantic color classes", () => {
   }
 })
 
-test("page theme shells and hero wash follow --background", () => {
+test("page theme shells follow --background", () => {
   const css = readFileSync(join(srcRoot, "styles.css"), "utf8")
   expect(css).toMatch(/\.theme-work\s*\{\s*background:\s*var\(--background\)/)
   expect(css).toMatch(
     /\.theme-personal\s*\{\s*background:\s*var\(--background\)/
   )
   expect(css).toMatch(/\.theme-neutral\s*\{[\s\S]*?var\(--background\)/)
-  expect(css).toMatch(/\.home-hero__wash[\s\S]*?var\(--background\)/)
 })
 
 test("Days Gone keeps custom claude tokens", () => {

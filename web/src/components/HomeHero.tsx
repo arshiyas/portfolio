@@ -36,82 +36,79 @@ const socialLinkClass =
 
 export function HomeHero() {
   return (
-    <div className="home-hero relative left-1/2 -ml-[50vw] w-screen overflow-hidden">
-      <div aria-hidden className="home-hero__skyline" />
-      <div aria-hidden className="home-hero__wash" />
-      <div className="home-hero__content site-content-safe mx-auto w-full max-w-[920px] pt-14 pb-8 sm:pt-20 sm:pb-14">
-        <section>
-          <h1 className="font-serif text-[clamp(2.2rem,5vw,3.2rem)] leading-[1.15] font-semibold tracking-tight">
-            {site.name}
-          </h1>
-          <div className="mt-3 flex flex-wrap items-center gap-y-2 text-sm font-medium text-muted-foreground sm:mt-4">
-            <div className="flex items-center whitespace-nowrap">
-              <LyftLogo className="h-[22px] w-auto" />
-              <span className="ml-2">{site.tagline}</span>
-              <MetaDot />
-              <span>{site.location}</span>
-              <MetaDot />
-            </div>
-            <div className="flex items-center whitespace-nowrap">
-              <a
-                href={`mailto:${site.links.email}`}
-                aria-label="Email"
-                className={socialLinkClass}
-              >
-                <Mail className="size-4" aria-hidden />
-              </a>
-              <a
-                href={site.links.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-                className={`${socialLinkClass} ml-2 hover:opacity-80`}
-              >
-                <LinkedInIcon className="size-4" />
-              </a>
-            </div>
+    <div className="home-hero pt-14 pb-0 sm:pt-16">
+      <section>
+        <h1 className="font-serif text-[clamp(2.2rem,5vw,3.2rem)] leading-[1.15] font-semibold tracking-tight">
+          {site.name}
+        </h1>
+        <div className="mt-3 flex flex-wrap items-center gap-y-2 text-sm font-medium text-muted-foreground sm:mt-4">
+          <div className="flex items-center whitespace-nowrap">
+            <LyftLogo className="h-[22px] w-auto" />
+            <span className="ml-2">{site.tagline}</span>
+            <MetaDot />
+            <span>{site.location}</span>
+            <MetaDot />
           </div>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg">
-            {site.lede}
-          </p>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Want to learn more?{" "}
+          <div className="flex items-center whitespace-nowrap">
             <a
-              href={site.links.calendly}
+              href={`mailto:${site.links.email}`}
+              aria-label="Email"
+              className={socialLinkClass}
+            >
+              <Mail className="size-4" aria-hidden />
+            </a>
+            <a
+              href={site.links.linkedin}
               target="_blank"
               rel="noreferrer"
-              className={chatLinkClass}
+              aria-label="LinkedIn"
+              className={`${socialLinkClass} ml-2 hover:opacity-80`}
             >
-              Book a time
-            </a>{" "}
-            or{" "}
-            <Link to="/about" hash="contact" className={chatLinkClass}>
-              send a note
-            </Link>
-            .
-          </p>
-
-          <div className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
-            {site.heroButtons.map((button) => {
-              const action = button.href.startsWith("mailto:") ? (
-                <a href={button.href}>{button.label}</a>
-              ) : (
-                <Link to={button.href}>{button.label}</Link>
-              )
-
-              return (
-                <Button
-                  key={button.href}
-                  asChild
-                  variant={button.primary ? "default" : "outline"}
-                >
-                  {action}
-                </Button>
-              )
-            })}
+              <LinkedInIcon className="size-4" />
+            </a>
           </div>
-        </section>
-      </div>
+        </div>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg">
+          {site.lede}
+        </p>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          Want to learn more?{" "}
+          <a
+            href={site.links.calendly}
+            target="_blank"
+            rel="noreferrer"
+            className={chatLinkClass}
+          >
+            Book a time
+          </a>{" "}
+          or{" "}
+          <Link to="/about" hash="contact" className={chatLinkClass}>
+            send a note
+          </Link>
+          .
+        </p>
+
+        <div className="mt-5">
+          {site.heroButtons.map((button) => {
+            const action = button.href.startsWith("mailto:") ? (
+              <a href={button.href}>{button.label}</a>
+            ) : (
+              <Link to={button.href}>{button.label}</Link>
+            )
+
+            return (
+              <Button
+                key={button.href}
+                asChild
+                variant={button.primary ? "default" : "outline"}
+                className="h-11 w-full px-4 sm:h-8 sm:w-auto sm:px-2.5"
+              >
+                {action}
+              </Button>
+            )
+          })}
+        </div>
+      </section>
     </div>
   )
 }
