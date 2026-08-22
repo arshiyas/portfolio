@@ -1,123 +1,65 @@
-import { Link, useRouterState } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
+import { Mail } from "lucide-react"
 import { site } from "@/lib/content"
 
-type SiteFooterProps = {
-  theme?: "work" | "personal" | "neutral"
-}
+const links = [
+  { label: "Projects", href: "/projects" },
+  { label: "Resume", href: "/resume" },
+  { label: "About", href: "/about" },
+] as const
 
-type FooterVariant = "home" | "projects" | "project" | "resume" | "about" | "contact" | "default"
-
-function getFooterVariant(pathname: string): FooterVariant {
-  if (pathname === "/") return "home"
-  if (pathname === "/about") return "about"
-  if (pathname === "/contact") return "contact"
-  if (pathname === "/resume") return "resume"
-  if (pathname === "/projects" || pathname === "/projects/") return "projects"
-  if (pathname.startsWith("/projects/")) return "project"
-  return "default"
-}
-
-type FooterContent = {
-  note: string
-  links: Array<{ label: string; href: string; external?: boolean }>
-}
-
-const footerContent: Record<FooterVariant, FooterContent> = {
-  home: {
-    note: "Software engineer in Toronto. Building systems that hold up in production.",
-    links: [
-      { label: "Resume", href: "/resume" },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "Email", href: `mailto:${site.links.email}` },
-      { label: "LinkedIn ↗", href: site.links.linkedin, external: true },
-    ],
-  },
-  projects: {
-    note: "Mobility, geospatial, and healthcare: the through-line is backend systems at scale.",
-    links: [
-      { label: "Resume", href: "/resume" },
-      { label: "About", href: "/about" },
-      { label: "Home", href: "/" },
-    ],
-  },
-  project: {
-    note: "Want the tradeoffs and dead ends too? Just ask.",
-    links: [
-      { label: "All projects", href: "/projects" },
-      { label: "Resume", href: "/resume" },
-      { label: "Email", href: `mailto:${site.links.email}` },
-    ],
-  },
-  resume: {
-    note: "Happy to walk through any of this in more detail.",
-    links: [
-      { label: "View projects", href: "/projects" },
-      { label: "About", href: "/about" },
-      { label: "Email", href: `mailto:${site.links.email}` },
-    ],
-  },
-  about: {
-    note: "Away from the keyboard: kayaking, hiking, or being supervised by two cats.",
-    links: [
-      { label: "See my work", href: "/projects" },
-      { label: "Resume", href: "/resume" },
-      { label: "LinkedIn ↗", href: site.links.linkedin, external: true },
-    ],
-  },
-  contact: {
-    note: "Prefer email or a calendar invite? Both work.",
-    links: [
-      { label: "Email", href: `mailto:${site.links.email}` },
-      { label: "LinkedIn ↗", href: site.links.linkedin, external: true },
-      { label: "Home", href: "/" },
-    ],
-  },
-  default: {
-    note: `${site.name} · ${site.location}`,
-    links: [{ label: "LinkedIn ↗", href: site.links.linkedin, external: true }],
-  },
-}
-
-function FooterLink({
-  label,
-  href,
-  external = false,
-}: {
-  label: string
-  href: string
-  external?: boolean
-}) {
-  const className = "transition hover:text-primary"
-
-  if (external || href.startsWith("mailto:")) {
-    return (
-      <a href={href} target="_blank" rel="noreferrer" className={className}>
-        {label}
-      </a>
-    )
-  }
-
+function LinkedInIcon({ className }: { className?: string }) {
   return (
-    <Link to={href as "/"} className={className}>
-      {label}
-    </Link>
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden
+    >
+      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z" />
+    </svg>
   )
 }
 
-export function SiteFooter({ theme: _theme = "neutral" }: SiteFooterProps) {
-  const pathname = useRouterState({ select: (state) => state.location.pathname })
-  const variant = getFooterVariant(pathname)
-  const content = footerContent[variant]
+const iconLinkClass =
+  "inline-flex min-h-11 min-w-11 items-center justify-center text-muted-foreground transition hover:text-primary sm:min-h-0 sm:min-w-0"
 
+export function SiteFooter() {
   return (
     <footer className="site-content-safe site-footer-safe border-t border-border px-6 py-10 text-sm text-muted-foreground">
-      <div className="mx-auto flex w-full max-w-[920px] flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-        <p className="max-w-md leading-relaxed">{content.note}</p>
-        <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">
-          {content.links.map((link) => (
-            <FooterLink key={link.label} {...link} />
+      <div className="mx-auto flex w-full max-w-[920px] flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <Link
+          to="/"
+          className="font-serif text-base font-semibold tracking-tight text-foreground transition hover:text-primary"
+        >
+          {site.name}
+        </Link>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className="transition hover:text-primary"
+            >
+              {link.label}
+            </Link>
           ))}
+          <a
+            href={`mailto:${site.links.email}`}
+            aria-label="Email"
+            className={iconLinkClass}
+          >
+            <Mail className="size-4" aria-hidden />
+          </a>
+          <a
+            href={site.links.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+            className={iconLinkClass}
+          >
+            <LinkedInIcon className="size-4" />
+          </a>
         </div>
       </div>
     </footer>

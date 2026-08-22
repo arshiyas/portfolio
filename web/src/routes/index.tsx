@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card"
 import { HomeHero } from "@/components/HomeHero"
 import { SiteFooter } from "@/components/SiteFooter"
-import { SiteHeader } from "@/components/SiteHeader"
 import { getFeaturedProjects } from "@/lib/content"
 
 export const Route = createFileRoute("/")({
@@ -24,8 +23,6 @@ function HomePage() {
 
   return (
     <div className="theme-neutral flex min-h-full flex-col">
-      <SiteHeader theme="neutral" />
-
       <main className="site-content-safe mx-auto w-full max-w-[920px] flex-1 pb-20">
         <HomeHero />
 
@@ -118,7 +115,7 @@ function HomePage() {
         </div>
       </main>
 
-      <SiteFooter theme="neutral" />
+      <SiteFooter />
     </div>
   )
 }

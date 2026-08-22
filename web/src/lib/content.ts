@@ -108,7 +108,7 @@ export const site = {
   name: "Arshiya Sayyed",
   location: "Toronto",
   eyebrow: "Software engineer · Toronto",
-  tagline: "Software Engineer IV",
+  tagline: "Software Engineer",
   lede: "I shipped rider products for older adults and teens and now work on bringing the app to Europe, with earlier backend work in geospatial and healthcare.",
   links: {
     linkedin: "https://www.linkedin.com/in/arshiyasayyed/",
@@ -121,11 +121,7 @@ export const site = {
   ],
   heroButtons: [
     { label: "View projects", href: "/projects", primary: true },
-    {
-      label: "Contact me",
-      href: "mailto:arshiyasayyed8@gmail.com",
-      primary: false,
-    },
+    { label: "Resume", href: "/resume", primary: false },
   ],
   stack: ["Python", "Go", "TypeScript", "gRPC", "AWS", "PostgreSQL"],
   featuredProjectSlugs: [
@@ -610,19 +606,6 @@ export const projects: Project[] = [
   },
 ]
 
-export const primaryNavLinks = [
-  { href: "/resume", label: "Resume" },
-  { href: "/projects", label: "Work" },
-  { href: "/about", label: "About" },
-] as const
-
-export const navLinks = [
-  { href: "/projects", label: "Work" },
-  { href: "/resume", label: "Resume" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-] as const
-
 export function getFeaturedProjects(): Project[] {
   return site.featuredProjectSlugs
     .map((slug) => projects.find((p) => p.slug === slug))
@@ -635,4 +618,11 @@ export function getProjectBySlug(slug: string): Project | undefined {
 
 export function getProjectsWithCaseStudies(): Project[] {
   return projects.filter((p) => p.caseStudy !== undefined)
+}
+
+export function getNextCaseStudy(slug: string): Project | undefined {
+  const caseStudies = getProjectsWithCaseStudies()
+  const index = caseStudies.findIndex((project) => project.slug === slug)
+  if (index === -1 || caseStudies.length < 2) return undefined
+  return caseStudies[(index + 1) % caseStudies.length]
 }

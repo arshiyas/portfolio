@@ -1,5 +1,9 @@
 import { expect, test } from "vitest"
-import { site } from "@/lib/content"
+import {
+  getNextCaseStudy,
+  getProjectsWithCaseStudies,
+  site,
+} from "@/lib/content"
 
 test("exposes the Calendly chat URL", () => {
   expect(site.links.calendly).toBe(
@@ -7,13 +11,29 @@ test("exposes the Calendly chat URL", () => {
   )
 })
 
-test("hero CTAs are view projects and a contact mailto", () => {
+test("hero role is Software Engineer without a level", () => {
+  expect(site.tagline).toBe("Software Engineer")
+})
+
+test("hero CTAs are view projects and resume", () => {
   expect(site.heroButtons).toEqual([
     { label: "View projects", href: "/projects", primary: true },
-    {
-      label: "Contact me",
-      href: `mailto:${site.links.email}`,
-      primary: false,
-    },
+    { label: "Resume", href: "/resume", primary: false },
   ])
+})
+
+test("next case study follows listing order and wraps", () => {
+  const caseStudies = getProjectsWithCaseStudies()
+  expect(caseStudies.length).toBeGreaterThan(1)
+
+  const first = caseStudies[0]
+  const second = caseStudies[1]
+  const last = caseStudies[caseStudies.length - 1]
+  if (!first || !second || !last) {
+    throw new Error("expected at least two case studies")
+  }
+
+  expect(getNextCaseStudy(first.slug)?.slug).toBe(second.slug)
+  expect(getNextCaseStudy(last.slug)?.slug).toBe(first.slug)
+  expect(getNextCaseStudy("lyft-international")?.slug).toBe("ai-engineering")
 })

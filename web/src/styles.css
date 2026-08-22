@@ -157,13 +157,6 @@
   background: var(--background);
 }
 
-.site-header-safe {
-  padding-top: max(1rem, env(safe-area-inset-top));
-  padding-right: max(1.5rem, env(safe-area-inset-right));
-  padding-bottom: 1rem;
-  padding-left: max(1.5rem, env(safe-area-inset-left));
-}
-
 .site-footer-safe {
   padding-bottom: max(3.5rem, env(safe-area-inset-bottom));
 }

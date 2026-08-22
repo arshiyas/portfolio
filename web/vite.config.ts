@@ -18,6 +18,7 @@ const config = defineConfig({
           redirect: { to: "/projects/days-gone", status: 301 },
         },
         "/experience": { redirect: { to: "/projects", status: 301 } },
+        "/contact": { redirect: { to: "/about", status: 301 } },
       },
     }),
     viteReact(),

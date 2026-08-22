@@ -1,56 +1,67 @@
-import { Link, notFound } from "@tanstack/react-router";
-import type { Project, ProjectCaseStudyFigure } from "@/lib/content";
-import { getProjectBySlug, projects } from "@/lib/content";
-import { DaysGoneBackdrop } from "@/components/days-in-canada/DaysGoneBackdrop";
+import { Link, notFound } from "@tanstack/react-router"
+import {
+  getNextCaseStudy,
+  getProjectBySlug,
+  projects,
+  type Project,
+  type ProjectCaseStudyFigure,
+} from "@/lib/content"
+import { DaysGoneBackdrop } from "@/components/days-in-canada/DaysGoneBackdrop"
+import { PageTrail } from "@/components/PageTrail"
+
+const caseStudyTrail = [
+  { label: "Home", to: "/" as const },
+  { label: "Projects", to: "/projects" as const },
+]
 
 function InternalPathLink({
   url,
   className,
   children,
 }: {
-  url: string;
-  className?: string;
-  children: React.ReactNode;
+  url: string
+  className?: string
+  children: React.ReactNode
 }) {
   if (url === "/days-gone") {
     return (
       <Link to="/days-gone" className={className}>
         {children}
       </Link>
-    );
+    )
   }
   if (url === "/projects") {
     return (
       <Link to="/projects" className={className}>
         {children}
       </Link>
-    );
+    )
   }
   if (url.startsWith("/projects/")) {
-    const slug = url.slice("/projects/".length);
+    const slug = url.slice("/projects/".length)
     return (
       <Link to="/projects/$slug" params={{ slug }} className={className}>
         {children}
       </Link>
-    );
+    )
   }
   return (
     <Link to={url as "/"} className={className}>
       {children}
     </Link>
-  );
+  )
 }
 
 type ProjectCaseStudyProps = {
-  project: Project;
-};
+  project: Project
+}
 
 type StepProps = {
-  number: string;
-  title: string;
-  highlight?: boolean;
-  children: React.ReactNode;
-};
+  number: string
+  title: string
+  highlight?: boolean
+  children: React.ReactNode
+}
 
 function Step({ number, title, highlight = false, children }: StepProps) {
   return (
@@ -65,23 +76,60 @@ function Step({ number, title, highlight = false, children }: StepProps) {
         {number}
       </div>
       <div className="min-w-0 flex-1 pt-1 sm:pt-2">
-        <h2 className="font-serif text-lg font-semibold text-foreground">{title}</h2>
+        <h2 className="font-serif text-lg font-semibold text-foreground">
+          {title}
+        </h2>
         <div className="mt-3">{children}</div>
       </div>
     </div>
-  );
+  )
 }
 
 function isInternalUrl(url: string): boolean {
-  return url.startsWith("/");
+  return url.startsWith("/")
+}
+
+function NextProjectPreview({ currentSlug }: { currentSlug: string }) {
+  const next = getNextCaseStudy(currentSlug)
+  if (!next) return null
+
+  return (
+    <section className="border-t border-border pt-8">
+      <p className="font-mono text-xs tracking-widest text-primary uppercase">
+        Next
+      </p>
+      <Link
+        to="/projects/$slug"
+        params={{ slug: next.slug }}
+        className="group mt-4 block max-w-2xl rounded-xl border border-border bg-card p-5 transition hover:border-primary sm:p-6"
+      >
+        <p className="text-xs font-semibold tracking-wider text-primary uppercase">
+          {next.category}
+        </p>
+        <h2 className="mt-2 font-serif text-xl font-semibold tracking-tight group-hover:text-primary">
+          {next.title}
+        </h2>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          {next.description}
+        </p>
+        <p className="mt-4 text-sm font-medium text-primary">
+          Read case study →
+        </p>
+      </Link>
+    </section>
+  )
 }
 
 function CaseStudyActions({ project }: { project: Project }) {
-  const { caseStudy } = project;
-  if (!caseStudy) return null;
-  if (!project.toolUrl && !(caseStudy.source && caseStudy.source.url !== project.toolUrl)) return null;
+  const { caseStudy } = project
+  if (!caseStudy) return null
+  if (
+    !project.toolUrl &&
+    !(caseStudy.source && caseStudy.source.url !== project.toolUrl)
+  )
+    return null
 
-  const isPersonal = project.type === "personal";
+  const isPersonal = project.type === "personal"
 
   return (
     <section className="flex flex-wrap items-center gap-3">
@@ -117,11 +165,11 @@ function CaseStudyActions({ project }: { project: Project }) {
         )
       ) : null}
     </section>
-  );
+  )
 }
 
 function ToolPreviewFrame({ href }: { href: string }) {
-  const steps = ["Start", "Your dates", "Add trips", "Results"];
+  const steps = ["Start", "Your dates", "Add trips", "Results"]
 
   return (
     <div className="space-y-4">
@@ -129,18 +177,21 @@ function ToolPreviewFrame({ href }: { href: string }) {
         aria-hidden
         className="days-gone-app overflow-hidden rounded-xl border border-claude-border bg-claude-bg"
       >
-        <div className="days-gone-band relative overflow-hidden border-b border-claude-border px-5 pb-5 pt-5 sm:px-6">
+        <div className="days-gone-band relative overflow-hidden border-b border-claude-border px-5 pt-5 pb-5 sm:px-6">
           <DaysGoneBackdrop />
-          <p className="relative z-10 font-mono text-[11px] uppercase tracking-[0.12em] text-claude-accent">
+          <p className="relative z-10 font-mono text-[11px] tracking-[0.12em] text-claude-accent uppercase">
             Free · Private · Browser-only
           </p>
-          <p className="relative z-10 mt-2 font-sans text-xl font-bold uppercase tracking-[0.12em] text-claude-text">
+          <p className="relative z-10 mt-2 font-sans text-xl font-bold tracking-[0.12em] text-claude-text uppercase">
             Days Gone
           </p>
 
           <ol className="mt-5 flex items-center">
             {steps.map((label, i) => (
-              <li key={label} className="flex flex-1 items-center last:flex-none">
+              <li
+                key={label}
+                className="flex flex-1 items-center last:flex-none"
+              >
                 <div className="flex flex-col items-center gap-1.5">
                   <div
                     className={`flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-semibold ${
@@ -153,7 +204,9 @@ function ToolPreviewFrame({ href }: { href: string }) {
                   </div>
                   <span
                     className={`hidden text-[10px] sm:block ${
-                      i === 0 ? "font-medium text-claude-text" : "text-claude-muted"
+                      i === 0
+                        ? "font-medium text-claude-text"
+                        : "text-claude-muted"
                     }`}
                   >
                     {label}
@@ -169,20 +222,26 @@ function ToolPreviewFrame({ href }: { href: string }) {
 
         <div className="px-5 py-5 sm:px-6">
           <div className="mb-3 rounded-xl border border-[rgba(245,243,240,0.14)] bg-[var(--dg-panel)] px-4 py-3">
-            <p className="text-xs font-semibold text-[var(--dg-panel-text)]">Your data stays in this session</p>
+            <p className="text-xs font-semibold text-[var(--dg-panel-text)]">
+              Your data stays in this session
+            </p>
             <p className="mt-1 text-xs leading-relaxed text-[var(--dg-panel-muted)]">
               No account. No server. Local only.
             </p>
           </div>
           <div className="space-y-2.5">
             <div className="rounded-xl border border-claude-border bg-claude-surface p-4">
-              <p className="text-sm font-medium text-claude-text">Check my eligibility</p>
+              <p className="text-sm font-medium text-claude-text">
+                Check my eligibility
+              </p>
               <p className="mt-1 text-xs leading-relaxed text-claude-muted">
                 Dates, absences, and 1,095-day math
               </p>
             </div>
             <div className="rounded-xl border border-claude-border bg-claude-surface p-4">
-              <p className="text-sm font-medium text-claude-text">Parse travel dates only</p>
+              <p className="text-sm font-medium text-claude-text">
+                Parse travel dates only
+              </p>
               <p className="mt-1 text-xs leading-relaxed text-claude-muted">
                 Paste messy history, extract trips with on-device WebLLM
               </p>
@@ -198,33 +257,32 @@ function ToolPreviewFrame({ href }: { href: string }) {
         Open tool
       </InternalPathLink>
     </div>
-  );
+  )
 }
 
 function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
-  const { caseStudy } = project;
-  if (!caseStudy) return null;
+  const { caseStudy } = project
+  if (!caseStudy) return null
 
-  const storyParagraphs = (caseStudy.story ?? "").split("\n\n").filter(Boolean);
+  const storyParagraphs = (caseStudy.story ?? "").split("\n\n").filter(Boolean)
 
   return (
     <article>
-      <Link
-        to="/projects"
-        className="mb-8 inline-block text-sm text-muted-foreground transition hover:text-primary"
-      >
-        ← Projects
-      </Link>
+      <PageTrail items={caseStudyTrail} />
 
       {caseStudy.metaLine ? (
-        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{caseStudy.metaLine}</p>
+        <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+          {caseStudy.metaLine}
+        </p>
       ) : null}
 
       <header className="mt-3 max-w-3xl">
-        <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] font-semibold leading-tight tracking-tight text-foreground">
+        <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] leading-tight font-semibold tracking-tight text-foreground">
           {project.title}
         </h1>
-        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{caseStudy.overview}</p>
+        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+          {caseStudy.overview}
+        </p>
         <div className="mt-5 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
@@ -247,11 +305,16 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         <h2 className="font-serif text-2xl font-semibold text-foreground">
           {caseStudy.contextTitle ?? "Why I built this"}
         </h2>
-        <p className="mt-4 text-base leading-[1.75] text-foreground">{caseStudy.problem}</p>
+        <p className="mt-4 text-base leading-[1.75] text-foreground">
+          {caseStudy.problem}
+        </p>
         {storyParagraphs.length > 0 ? (
           <div className="mt-6 space-y-4">
             {storyParagraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 48)} className="text-base leading-[1.75] text-muted-foreground">
+              <p
+                key={paragraph.slice(0, 48)}
+                className="text-base leading-[1.75] text-muted-foreground"
+              >
                 {paragraph}
               </p>
             ))}
@@ -261,10 +324,15 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.sections?.map((section) => (
         <section key={section.title} className="mt-16 max-w-3xl">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">{section.title}</h2>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">
+            {section.title}
+          </h2>
           <div className="mt-6 space-y-4">
             {section.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 48)} className="text-base leading-[1.75] text-muted-foreground">
+              <p
+                key={paragraph.slice(0, 48)}
+                className="text-base leading-[1.75] text-muted-foreground"
+              >
                 {paragraph}
               </p>
             ))}
@@ -295,8 +363,12 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
                 <p className="font-mono text-xs font-semibold text-primary">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-2 font-medium text-foreground">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+                <h3 className="mt-2 font-medium text-foreground">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {step.description}
+                </p>
               </li>
             ))}
           </ol>
@@ -305,7 +377,9 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.featureItems && caseStudy.featureItems.length > 0 ? (
         <section className="mt-16">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">Key features</h2>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">
+            Key features
+          </h2>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
             {caseStudy.featureItems.map((feature) => (
               <li
@@ -313,7 +387,9 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
                 className="rounded-xl border border-border bg-card p-5"
               >
                 <h3 className="font-medium text-foreground">{feature.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {feature.description}
+                </p>
               </li>
             ))}
           </ul>
@@ -322,11 +398,13 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.techStack && caseStudy.techStack.length > 0 ? (
         <section className="mt-16">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">Tech stack</h2>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">
+            Tech stack
+          </h2>
           <div className="mt-8 space-y-6">
             {caseStudy.techStack.map((group) => (
               <div key={group.category}>
-                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
                   {group.category}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -347,18 +425,30 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {caseStudy.underTheHood ? (
         <section className="mt-16 max-w-3xl">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">Under the hood</h2>
-          <p className="mt-4 text-base leading-[1.75] text-muted-foreground">{caseStudy.underTheHood}</p>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">
+            Under the hood
+          </h2>
+          <p className="mt-4 text-base leading-[1.75] text-muted-foreground">
+            {caseStudy.underTheHood}
+          </p>
         </section>
       ) : null}
 
       {caseStudy.learnings && caseStudy.learnings.length > 0 ? (
         <section className="mt-16 max-w-3xl">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">What I learned</h2>
+          <h2 className="font-serif text-2xl font-semibold text-foreground">
+            What I learned
+          </h2>
           <ul className="mt-6 space-y-4">
             {caseStudy.learnings.map((item) => (
-              <li key={item.slice(0, 40)} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
-                <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" />
+              <li
+                key={item.slice(0, 40)}
+                className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
+              >
+                <span
+                  aria-hidden
+                  className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary"
+                />
                 {item}
               </li>
             ))}
@@ -368,10 +458,12 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
 
       {project.toolUrl ? (
         <section className="mt-16 rounded-xl border border-border bg-muted px-6 py-8 sm:px-8">
-          <h2 className="font-serif text-xl font-semibold text-foreground">Try it yourself</h2>
+          <h2 className="font-serif text-xl font-semibold text-foreground">
+            Try it yourself
+          </h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Free and local-only. Optional WebLLM parsing runs in your browser over WebGPU; nothing
-            uploads.
+            Free and local-only. Optional WebLLM parsing runs in your browser
+            over WebGPU; nothing uploads.
           </p>
           <InternalPathLink
             url={project.toolUrl}
@@ -382,13 +474,17 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         </section>
       ) : null}
 
-      <footer className="mt-12 border-t border-border pt-8">
-        <Link to="/projects" className="text-sm text-muted-foreground transition hover:text-primary">
+      <footer className="mt-12 space-y-8">
+        <NextProjectPreview currentSlug={project.slug} />
+        <Link
+          to="/projects"
+          className="text-sm text-muted-foreground transition hover:text-primary"
+        >
           ← All projects
         </Link>
       </footer>
     </article>
-  );
+  )
 }
 
 function CaseStudyFigure({ figure }: { figure: ProjectCaseStudyFigure }) {
@@ -455,188 +551,213 @@ function CaseStudyFigure({ figure }: { figure: ProjectCaseStudyFigure }) {
         </figcaption>
       ) : null}
     </figure>
-  );
+  )
 }
 
 function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
-  const { caseStudy } = project;
-  if (!caseStudy) return null;
+  const { caseStudy } = project
+  if (!caseStudy) return null
 
   return (
-    <article className="space-y-10">
-      <header>
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">
-          {project.category}
-        </p>
-        <h1 className="font-serif text-[clamp(1.8rem,4vw,2.5rem)] font-semibold tracking-tight">
-          {project.title}
-        </h1>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          {caseStudy.overview}
-        </p>
-        <div className="mt-5 flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-secondary px-3 py-1 text-xs text-primary"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </header>
-
-      {caseStudy.figure ? (
-        <section className="max-w-2xl">
-          <CaseStudyFigure figure={caseStudy.figure} />
-        </section>
-      ) : null}
-
-      {caseStudy.stats && caseStudy.stats.length > 0 ? (
-        <section>
-          <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            By the numbers
-          </h2>
-          <dl className="mt-4 border-t border-border">
-            {caseStudy.stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="flex flex-col gap-1 border-b border-border py-4 sm:flex-row sm:items-baseline sm:gap-6"
+    <article>
+      <PageTrail items={caseStudyTrail} />
+      <div className="space-y-10">
+        <header>
+          <p className="mb-2 font-mono text-xs tracking-widest text-primary uppercase">
+            {project.category}
+          </p>
+          <h1 className="font-serif text-[clamp(1.8rem,4vw,2.5rem)] font-semibold tracking-tight">
+            {project.title}
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+            {caseStudy.overview}
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-secondary px-3 py-1 text-xs text-primary"
               >
-                <dt className="shrink-0 font-serif text-3xl font-semibold leading-none tracking-tight text-primary sm:w-32">
-                  {stat.value}
-                </dt>
-                <dd className="text-sm leading-relaxed text-muted-foreground">{stat.label}</dd>
-              </div>
+                {tag}
+              </span>
             ))}
-          </dl>
-        </section>
-      ) : null}
+          </div>
+        </header>
 
-      <section className="relative">
-        <span
-          aria-hidden
-          className="absolute left-[18px] top-3 bottom-3 w-px bg-border sm:left-[22px]"
-        />
-        <div className="space-y-8">
-          <Step number="01" title={caseStudy.problemTitle ?? "The problem"}>
-            <p className="text-sm leading-relaxed text-muted-foreground">{caseStudy.problem}</p>
-          </Step>
+        {caseStudy.figure ? (
+          <section className="max-w-2xl">
+            <CaseStudyFigure figure={caseStudy.figure} />
+          </section>
+        ) : null}
 
-          {caseStudy.approach ? (
-            <Step number="02" title={caseStudy.approachTitle ?? "Approach"}>
-              <p className="text-sm leading-relaxed text-muted-foreground">{caseStudy.approach}</p>
+        {caseStudy.stats && caseStudy.stats.length > 0 ? (
+          <section>
+            <h2 className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+              By the numbers
+            </h2>
+            <dl className="mt-4 border-t border-border">
+              {caseStudy.stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="flex flex-col gap-1 border-b border-border py-4 sm:flex-row sm:items-baseline sm:gap-6"
+                >
+                  <dt className="shrink-0 font-serif text-3xl leading-none font-semibold tracking-tight text-primary sm:w-32">
+                    {stat.value}
+                  </dt>
+                  <dd className="text-sm leading-relaxed text-muted-foreground">
+                    {stat.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        ) : null}
+
+        <section className="relative">
+          <span
+            aria-hidden
+            className="absolute top-3 bottom-3 left-[18px] w-px bg-border sm:left-[22px]"
+          />
+          <div className="space-y-8">
+            <Step number="01" title={caseStudy.problemTitle ?? "The problem"}>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {caseStudy.problem}
+              </p>
             </Step>
-          ) : null}
 
-          {caseStudy.myContribution ? (
-            <Step number="03" title={caseStudy.contributionTitle ?? "My contribution"} highlight>
-              <div className="rounded-2xl border-l-4 border-primary bg-secondary/50 p-5 sm:p-6">
-                <p className="max-w-2xl leading-relaxed text-foreground">
-                  {caseStudy.myContribution.intro}
+            {caseStudy.approach ? (
+              <Step number="02" title={caseStudy.approachTitle ?? "Approach"}>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {caseStudy.approach}
                 </p>
-                <ul className="mt-6 space-y-4">
-                  {caseStudy.myContribution.items.map((item) => (
-                    <li
-                      key={item.title}
-                      className="rounded-xl border border-border/80 bg-card px-4 py-4 shadow-sm"
-                    >
-                      <h3 className="font-serif text-base font-semibold">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        {item.description}
-                      </p>
-                      {item.link ? (
-                        <a
-                          href={item.link.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="mt-3 inline-block text-sm text-primary underline-offset-4 hover:underline"
-                        >
-                          {item.link.label} ↗
-                        </a>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
+              </Step>
+            ) : null}
 
-                {caseStudy.myContribution.media && caseStudy.myContribution.media.length > 0 ? (
-                  <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                    {caseStudy.myContribution.media.map((placeholder) => (
-                      <figure
-                        key={placeholder.id}
-                        className="overflow-hidden rounded-xl border border-dashed border-border bg-card"
+            {caseStudy.myContribution ? (
+              <Step
+                number="03"
+                title={caseStudy.contributionTitle ?? "My contribution"}
+                highlight
+              >
+                <div className="rounded-2xl border-l-4 border-primary bg-secondary/50 p-5 sm:p-6">
+                  <p className="max-w-2xl leading-relaxed text-foreground">
+                    {caseStudy.myContribution.intro}
+                  </p>
+                  <ul className="mt-6 space-y-4">
+                    {caseStudy.myContribution.items.map((item) => (
+                      <li
+                        key={item.title}
+                        className="rounded-xl border border-border/80 bg-card px-4 py-4 shadow-sm"
                       >
-                        <div className="flex aspect-[16/10] items-center justify-center bg-muted px-4">
-                          <p className="text-center text-xs text-muted-foreground">Screenshot coming soon</p>
-                        </div>
-                        <figcaption className="border-t border-border px-4 py-3 text-sm text-muted-foreground">
-                          {placeholder.caption}
-                        </figcaption>
-                      </figure>
+                        <h3 className="font-serif text-base font-semibold">
+                          {item.title}
+                        </h3>
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                          {item.description}
+                        </p>
+                        {item.link ? (
+                          <a
+                            href={item.link.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="mt-3 inline-block text-sm text-primary underline-offset-4 hover:underline"
+                          >
+                            {item.link.label} ↗
+                          </a>
+                        ) : null}
+                      </li>
                     ))}
-                  </div>
-                ) : null}
-              </div>
-            </Step>
-          ) : null}
+                  </ul>
 
-          {caseStudy.features && caseStudy.features.length > 0 ? (
-            <Step number="04" title={caseStudy.featuresTitle ?? "What we built"}>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {caseStudy.features.map((feature) => (
-                  <div
-                    key={feature}
-                    className="flex gap-3 rounded-xl border border-border bg-card px-4 py-4"
-                  >
-                    <span
-                      aria-hidden
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
-                    />
-                    <p className="text-sm leading-relaxed text-muted-foreground">{feature}</p>
-                  </div>
-                ))}
-              </div>
-            </Step>
-          ) : null}
-        </div>
-      </section>
+                  {caseStudy.myContribution.media &&
+                  caseStudy.myContribution.media.length > 0 ? (
+                    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                      {caseStudy.myContribution.media.map((placeholder) => (
+                        <figure
+                          key={placeholder.id}
+                          className="overflow-hidden rounded-xl border border-dashed border-border bg-card"
+                        >
+                          <div className="flex aspect-[16/10] items-center justify-center bg-muted px-4">
+                            <p className="text-center text-xs text-muted-foreground">
+                              Screenshot coming soon
+                            </p>
+                          </div>
+                          <figcaption className="border-t border-border px-4 py-3 text-sm text-muted-foreground">
+                            {placeholder.caption}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </Step>
+            ) : null}
 
-      <CaseStudyActions project={project} />
+            {caseStudy.features && caseStudy.features.length > 0 ? (
+              <Step
+                number="04"
+                title={caseStudy.featuresTitle ?? "What we built"}
+              >
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {caseStudy.features.map((feature) => (
+                    <div
+                      key={feature}
+                      className="flex gap-3 rounded-xl border border-border bg-card px-4 py-4"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                      />
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        {feature}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </Step>
+            ) : null}
+          </div>
+        </section>
 
-      <Link
-        to="/projects"
-        className="inline-block text-sm text-primary transition hover:underline"
-      >
-        ← All projects
-      </Link>
+        <CaseStudyActions project={project} />
+
+        <NextProjectPreview currentSlug={project.slug} />
+
+        <Link
+          to="/projects"
+          className="inline-block text-sm text-primary transition hover:underline"
+        >
+          ← All projects
+        </Link>
+      </div>
     </article>
-  );
+  )
 }
 
 export function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
   if (project.type === "personal") {
-    return <PersonalProjectCaseStudy project={project} />;
+    return <PersonalProjectCaseStudy project={project} />
   }
-  return <WorkProjectCaseStudy project={project} />;
+  return <WorkProjectCaseStudy project={project} />
 }
 
 export function generateProjectStaticParams() {
-  return projects.filter((p) => p.caseStudy).map((p) => ({ slug: p.slug }));
+  return projects.filter((p) => p.caseStudy).map((p) => ({ slug: p.slug }))
 }
 
 export function getProjectPageMetadata(slug: string) {
-  const project = getProjectBySlug(slug);
-  if (!project?.caseStudy) return { title: "Project" };
+  const project = getProjectBySlug(slug)
+  if (!project?.caseStudy) return { title: "Project" }
   return {
     title: project.title,
     description: project.description,
-  };
+  }
 }
 
 export function resolveProjectPage(slug: string) {
-  const project = getProjectBySlug(slug);
+  const project = getProjectBySlug(slug)
   if (!project?.caseStudy) {
-    throw notFound();
+    throw notFound()
   }
-  return project;
+  return project
 }

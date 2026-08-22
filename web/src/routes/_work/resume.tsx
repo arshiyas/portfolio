@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Download } from "lucide-react"
+import { PageTrail } from "@/components/PageTrail"
 import { ResumeDocument } from "@/components/ResumeDocument"
 import { Button } from "@/components/ui/button"
 import { downloadResumePdf } from "@/lib/resume-pdf"
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/_work/resume")({
 function ResumePage() {
   return (
     <main className="mx-auto w-full max-w-[920px] flex-1 px-6 py-14">
+      <PageTrail items={[{ label: "Home", to: "/" }]} />
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="font-serif text-[clamp(1.8rem,4vw,2.4rem)] font-semibold tracking-tight">
