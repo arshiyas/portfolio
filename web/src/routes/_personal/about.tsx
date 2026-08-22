@@ -34,10 +34,13 @@ export function AboutPage() {
       <PageTrail items={[{ label: "Home", to: "/" }]} />
       <div className="mb-8 max-w-xl">
         <h1 className="font-serif text-3xl font-semibold">
-          Hey, I&apos;m Arshiya
+          Hi, I&apos;m Arshiya 👋
         </h1>
         {noteOpen ? (
           <div id="contact" className="mt-6">
+            <p className="mb-6 text-muted-foreground">
+              Send a note. I actually read these, and I&apos;ll write back.
+            </p>
             <ContactForm />
           </div>
         ) : (

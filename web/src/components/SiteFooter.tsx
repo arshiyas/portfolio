@@ -3,7 +3,6 @@ import { Mail } from "lucide-react"
 import { site } from "@/lib/content"
 
 const links = [
-  { label: "Projects", href: "/projects" },
   { label: "Resume", href: "/resume" },
   { label: "About", href: "/about" },
 ] as const
@@ -27,40 +26,32 @@ const iconLinkClass =
 export function SiteFooter() {
   return (
     <footer className="site-content-safe site-footer-safe border-t border-border px-6 py-10 text-sm text-muted-foreground">
-      <div className="mx-auto flex w-full max-w-[920px] flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-        <Link
-          to="/"
-          className="font-serif text-base font-semibold tracking-tight text-foreground transition hover:text-primary"
+      <div className="mx-auto flex w-full max-w-[920px] flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs sm:justify-end">
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            to={link.href}
+            className="transition hover:text-primary"
+          >
+            {link.label}
+          </Link>
+        ))}
+        <a
+          href={`mailto:${site.links.email}`}
+          aria-label="Email"
+          className={iconLinkClass}
         >
-          {site.name}
-        </Link>
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className="transition hover:text-primary"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <a
-            href={`mailto:${site.links.email}`}
-            aria-label="Email"
-            className={iconLinkClass}
-          >
-            <Mail className="size-4" aria-hidden />
-          </a>
-          <a
-            href={site.links.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-            className={iconLinkClass}
-          >
-            <LinkedInIcon className="size-4" />
-          </a>
-        </div>
+          <Mail className="size-4" aria-hidden />
+        </a>
+        <a
+          href={site.links.linkedin}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="LinkedIn"
+          className={iconLinkClass}
+        >
+          <LinkedInIcon className="size-4" />
+        </a>
       </div>
     </footer>
   )

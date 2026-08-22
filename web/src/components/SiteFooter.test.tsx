@@ -12,15 +12,11 @@ vi.mock("@tanstack/react-router", () => ({
   ),
 }))
 
-test("footer is name, Projects, Resume, About, and social icons", () => {
+test("footer is Resume, About, and social icons without Projects or a name", () => {
   render(<SiteFooter />)
 
-  expect(
-    screen.getByRole("link", { name: site.name }).getAttribute("href")
-  ).toBe("/")
-  expect(
-    screen.getByRole("link", { name: "Projects" }).getAttribute("href")
-  ).toBe("/projects")
+  expect(screen.queryByRole("link", { name: site.name })).toBeNull()
+  expect(screen.queryByRole("link", { name: "Projects" })).toBeNull()
   expect(
     screen.getByRole("link", { name: "Resume" }).getAttribute("href")
   ).toBe("/resume")

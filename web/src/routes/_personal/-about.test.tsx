@@ -19,7 +19,7 @@ vi.mock("@tanstack/react-router", async (importOriginal) => {
 test("combines about copy with Calendly and a note form that opens on click", () => {
   render(<AboutPage />)
 
-  expect(screen.getByRole("heading", { name: "Hey, I'm Arshiya" })).toBeTruthy()
+  expect(screen.getByRole("heading", { name: "Hi, I'm Arshiya 👋" })).toBeTruthy()
   expect(screen.getByText(/Would like to chat/)).toBeTruthy()
   expect(screen.queryByText(/Penn State/)).toBeNull()
   expect(
@@ -38,6 +38,9 @@ test("combines about copy with Calendly and a note form that opens on click", ()
   expect(
     screen.queryByRole("heading", { name: "Beyond the resume" })
   ).toBeNull()
+  expect(
+    screen.getByText("Send a note. I actually read these, and I'll write back.")
+  ).toBeTruthy()
   expect(screen.getByLabelText("Name")).toBeTruthy()
   expect(screen.getByLabelText("Email")).toBeTruthy()
   expect(screen.getByLabelText("Message")).toBeTruthy()
