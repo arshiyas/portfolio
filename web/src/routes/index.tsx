@@ -1,15 +1,10 @@
 import { Link, createFileRoute } from "@tanstack/react-router"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { FeaturedProjectCard } from "@/components/FeaturedProjectCard"
 import { HomeHero } from "@/components/HomeHero"
 import { SiteFooter } from "@/components/SiteFooter"
+import { Button } from "@/components/ui/button"
 import { getFeaturedProjects } from "@/lib/content"
+import { cn } from "@/lib/utils"
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,7 +13,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 })
 
-function HomePage() {
+export function HomePage() {
   const featuredProjects = getFeaturedProjects()
 
   return (
@@ -30,7 +25,10 @@ function HomePage() {
           <section className="relative z-[1] mt-8 sm:mt-14">
             <div className="mb-5 flex items-end justify-between gap-4">
               <div>
-                <h2 className="font-serif text-2xl font-semibold tracking-tight">
+                <h2
+                  id="selected-work-heading"
+                  className="font-serif text-2xl font-semibold tracking-tight"
+                >
                   Selected work
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
@@ -46,71 +44,25 @@ function HomePage() {
                 <Link to="/projects">All projects →</Link>
               </Button>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {featuredProjects.map((project) => {
-                const card = (
-                  <Card className="h-full border-border shadow-none transition hover:border-primary">
-                    <CardHeader>
-                      <p className="text-xs font-semibold tracking-wider text-primary uppercase">
-                        {project.category}
-                      </p>
-                      <CardTitle className="font-serif text-base group-hover:text-primary">
-                        {project.title}
-                      </CardTitle>
-                      <CardDescription className="leading-relaxed">
-                        {project.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      {project.caseStudy ? (
-                        <p className="text-xs font-medium text-primary">
-                          Read case study →
-                        </p>
-                      ) : project.toolUrl ? (
-                        <p className="text-xs font-medium text-primary">
-                          Open tool →
-                        </p>
-                      ) : null}
-                    </CardContent>
-                  </Card>
-                )
-
-                if (project.caseStudy) {
-                  return (
-                    <Link
-                      key={project.slug}
-                      to="/projects/$slug"
-                      params={{ slug: project.slug }}
-                      className="group block"
-                    >
-                      {card}
-                    </Link>
-                  )
-                }
-
-                if (project.toolUrl === "/days-gone") {
-                  return (
-                    <Link
-                      key={project.slug}
-                      to="/days-gone"
-                      className="group block"
-                    >
-                      {card}
-                    </Link>
-                  )
-                }
-
-                return (
-                  <Link
-                    key={project.slug}
-                    to="/projects"
-                    className="group block"
-                  >
-                    {card}
-                  </Link>
-                )
-              })}
-            </div>
+            <ul
+              aria-labelledby="selected-work-heading"
+              className={cn(
+                "relative left-1/2 flex w-screen -translate-x-1/2 snap-x snap-mandatory items-stretch gap-4 overflow-x-auto",
+                "scroll-pr-[max(1.5rem,env(safe-area-inset-right))] scroll-pl-[max(1.5rem,env(safe-area-inset-left))]",
+                "pr-[max(1.5rem,env(safe-area-inset-right))] pl-[max(1.5rem,env(safe-area-inset-left))]",
+                "motion-safe:scroll-smooth",
+                "sm:static sm:left-auto sm:grid sm:w-auto sm:translate-x-0 sm:snap-none sm:scroll-pr-0 sm:scroll-pl-0 sm:grid-cols-2 sm:overflow-visible sm:pr-0 sm:pl-0"
+              )}
+            >
+              {featuredProjects.map((project) => (
+                <li
+                  key={project.slug}
+                  className="flex w-[calc(100vw-4.75rem)] shrink-0 snap-start sm:w-auto sm:min-w-0 sm:shrink"
+                >
+                  <FeaturedProjectCard project={project} />
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
       </main>

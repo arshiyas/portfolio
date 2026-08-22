@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ProjectGridCard } from "@/components/ProjectGridCard"
+import { FeaturedProjectCard } from "@/components/FeaturedProjectCard"
 import { projects, type ProjectType } from "@/lib/content"
 
 type Filter = "all" | ProjectType
@@ -32,7 +32,7 @@ export function ProjectGrid() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         {filtered.map((project) => (
-          <ProjectGridCard key={project.slug} project={project} />
+          <FeaturedProjectCard key={project.slug} project={project} />
         ))}
       </div>
     </>

@@ -97,6 +97,8 @@ export type Project = {
   category: string
   title: string
   description: string
+  /** Short homepage-card hook, one or two lines. */
+  cardLine?: string
   tags: string[]
   toolUrl?: string
   caseStudy?: ProjectCaseStudy
@@ -140,6 +142,8 @@ export const projects: Project[] = [
     title: "Lyft Silver",
     description:
       "Growth and support backend for Lyft's senior rider product: invites, gift cards, trusted contacts, and a CMS-backed help API.",
+    cardLine:
+      "Invites, gift cards, and trusted contacts that get older riders onto Silver.",
     tags: ["Python", "TypeScript", "AWS", "Mobility"],
     caseStudy: {
       overview:
@@ -224,6 +228,8 @@ export const projects: Project[] = [
     title: "Lyft Teen",
     description:
       "Access-control foundation for teen rides: defining what a teen account is, and closing the flows that shouldn't be open to minors.",
+    cardLine:
+      "What a teen account is, and which rider flows stay closed to minors.",
     tags: ["Python", "GraphQL", "gRPC", "Access control"],
     caseStudy: {
       overview:
@@ -295,6 +301,8 @@ export const projects: Project[] = [
     title: "International Expansion",
     description:
       "Roaming backend letting a Lyft rider request, pay for, and track a ride on the FREENOW network in Europe.",
+    cardLine:
+      "A Lyft rider lands in Europe and takes a FREENOW ride in the same app.",
     tags: ["Go", "Python", "gRPC", "Payments"],
     caseStudy: {
       overview:
@@ -372,6 +380,8 @@ export const projects: Project[] = [
     title: "AI-Assisted Engineering",
     description:
       "Changing how a backend org works with coding agents: shared context standards, an evaluation to prove they help, and tooling other teams picked up.",
+    cardLine:
+      "Shared agent context, then an eval that proved it to the rest of the org.",
     tags: ["AI tooling", "Claude Code", "Developer experience", "Analytics"],
     caseStudy: {
       overview:
@@ -435,6 +445,8 @@ export const projects: Project[] = [
     title: "Search Optimization @ SkyWatch",
     description:
       "Streamed multi-provider search results over WebSocket so users saw imagery as soon as the fastest provider responded.",
+    cardLine:
+      "Imagery as soon as the fastest provider responds, not the slowest.",
     tags: ["Python", "PostgreSQL", "WebSocket", "Lambda"],
     caseStudy: {
       overview:
@@ -495,6 +507,7 @@ export const projects: Project[] = [
     category: "Work · SkyWatch",
     title: "Enterprise Org Platform @ SkyWatch",
     description: "Multi-tenant org management APIs driving 40% sales increase.",
+    cardLine: "Multi-tenant org APIs that helped drive a 40% sales increase.",
     tags: ["REST API", "DynamoDB", "OAuth/SAML"],
   },
   {
@@ -504,6 +517,8 @@ export const projects: Project[] = [
     title: "Healthcare Microservices @ GE",
     description:
       "Python and Java services on AWS: system design, microservice extensions, and pytest/JUnit test coverage.",
+    cardLine:
+      "Python and Java healthcare services on AWS, with the tests to match.",
     tags: ["Python", "Java", "AWS", "Microservices"],
   },
   {
@@ -513,6 +528,7 @@ export const projects: Project[] = [
     title: "Analytics Pipelines @ GE",
     description:
       "Designed and shipped new and existing data pipelines; contributed to TDRs and architecture reviews.",
+    cardLine: "Analytics pipelines, plus the architecture reviews behind them.",
     tags: ["Python", "AWS", "Pipelines"],
   },
   {
@@ -522,6 +538,8 @@ export const projects: Project[] = [
     title: "Days Gone",
     description:
       "Reconstruct citizenship travel dates from messy records, with on-device WebLLM parsing when rules fall short.",
+    cardLine:
+      "Citizenship travel dates from messy records, parsed on-device in the browser.",
     tags: ["WebLLM", "WebGPU", "Next.js", "TypeScript"],
     toolUrl: "/days-gone",
     cardTheme: "days-gone",
