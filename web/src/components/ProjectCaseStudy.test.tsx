@@ -56,6 +56,43 @@ test("work case study trail is Home / Projects above the title", () => {
   expect(screen.queryByText("Work · Lyft")).toBeNull()
 })
 
+test("work case study heading is the title only, with no company logo", () => {
+  const project = getProjectBySlug("lyft-international")
+  if (!project) throw new Error("missing lyft-international fixture")
+
+  render(<ProjectCaseStudy project={project} />)
+
+  expect(
+    screen.getByRole("heading", { level: 1, name: "International Expansion" })
+  ).toBeTruthy()
+  expect(screen.queryByRole("img", { name: "Lyft" })).toBeNull()
+})
+
+test("case study heading drops the @ company suffix", () => {
+  const project = getProjectBySlug("search-skywatch")
+  if (!project) throw new Error("missing search-skywatch fixture")
+
+  render(<ProjectCaseStudy project={project} />)
+
+  expect(
+    screen.getByRole("heading", { level: 1, name: "Search Optimization" })
+  ).toBeTruthy()
+  expect(screen.queryByText(/@ SkyWatch/)).toBeNull()
+  expect(screen.queryByRole("img", { name: "SkyWatch" })).toBeNull()
+})
+
+test("personal case study heading is the title only", () => {
+  const project = getProjectBySlug("days-gone")
+  if (!project) throw new Error("missing days-gone fixture")
+
+  render(<ProjectCaseStudy project={project} />)
+
+  expect(
+    screen.getByRole("heading", { level: 1, name: "Days Gone" })
+  ).toBeTruthy()
+  expect(screen.queryByText("| Personal project")).toBeNull()
+})
+
 test("work case study ends with a readable preview of the next project", () => {
   const project = getProjectBySlug("lyft-international")
   if (!project) throw new Error("missing lyft-international fixture")
@@ -64,7 +101,7 @@ test("work case study ends with a readable preview of the next project", () => {
 
   expect(screen.getByText("Next")).toBeTruthy()
   expect(
-    screen.getByRole("heading", { name: /AI-Assisted Engineering/ })
+    screen.getByRole("heading", { name: "AI-Assisted Engineering" })
   ).toBeTruthy()
   expect(
     screen.getByText(/Changing how a backend org works with coding agents/)
@@ -80,7 +117,7 @@ test("personal case study wraps to the first case study as next", () => {
 
   render(<ProjectCaseStudy project={project} />)
 
-  expect(screen.getByRole("heading", { name: /Lyft Silver/ })).toBeTruthy()
+  expect(screen.getByRole("heading", { name: "Lyft Silver" })).toBeTruthy()
   expect(
     screen.getByRole("link", { name: /Learn more/ }).getAttribute("href")
   ).toBe("/projects/lyft-silver")

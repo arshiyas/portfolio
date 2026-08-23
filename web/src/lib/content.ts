@@ -127,6 +127,7 @@ export const site = {
   stack: ["Python", "Go", "TypeScript", "gRPC", "AWS", "PostgreSQL"],
   featuredProjectSlugs: [
     "lyft-international",
+    "ai-engineering",
     "lyft-teens",
     "lyft-silver",
     "days-gone",

@@ -21,5 +21,5 @@ test("projects page is titled Projects, not Work", () => {
 
   expect(screen.getByRole("heading", { name: "Projects" })).toBeTruthy()
   expect(screen.queryByRole("heading", { name: "Work" })).toBeNull()
-  expect(screen.queryByText("Selected work")).toBeNull()
+  expect(screen.queryByText("Highlighted projects")).toBeNull()
 })

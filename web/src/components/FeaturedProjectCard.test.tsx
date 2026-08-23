@@ -84,6 +84,8 @@ test("SkyWatch card uses the SkyWatch logo asset", () => {
 
   const logo = screen.getByRole("img", { name: "SkyWatch" })
   expect(logo.getAttribute("src")).toBe("/logos/skywatch.svg")
+  expect(logo.parentElement?.className).toMatch(/overflow-hidden/)
+  expect(logo.parentElement?.className).toMatch(/bg-\[#212b35\]/)
 })
 
 test("GE card uses the GE logo asset", () => {

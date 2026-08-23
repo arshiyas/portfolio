@@ -26,14 +26,14 @@ export function HomePage() {
             <div className="mb-5 flex items-end justify-between gap-4">
               <div>
                 <h2
-                  id="selected-work-heading"
+                  id="highlighted-projects-heading"
                   className="font-serif text-2xl font-semibold tracking-tight"
                 >
-                  Selected work
+                  Highlighted projects
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Lyft backend work across mobility products, plus Days Gone, a
-                  personal citizenship tool.
+                  Lyft backend work across mobility products and AI-assisted
+                  engineering, plus Days Gone, a personal citizenship tool.
                 </p>
               </div>
               <Button
@@ -45,7 +45,7 @@ export function HomePage() {
               </Button>
             </div>
             <ul
-              aria-labelledby="selected-work-heading"
+              aria-labelledby="highlighted-projects-heading"
               className={cn(
                 "relative left-1/2 flex w-screen -translate-x-1/2 snap-x snap-mandatory items-stretch gap-4 overflow-x-auto",
                 "scroll-pr-[max(1.5rem,env(safe-area-inset-right))] scroll-pl-[max(1.5rem,env(safe-area-inset-left))]",

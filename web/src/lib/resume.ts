@@ -36,6 +36,7 @@ export const resume = {
     "Data and storage: PostgreSQL (Amazon RDS), DynamoDB, OpenSearch",
     "Distributed systems: AWS Lambda, API Gateway, SQS, SNS, ECS, EKS and Kubernetes, microservices, gRPC",
     "Practices: REST API design, system design and design reviews, data consistency and idempotency, multi-tenancy and entitlements, on-call, SLOs and alerting, incident response and postmortems, pytest, JUnit, GitHub Actions CI/CD",
+    "AI and tooling: Cursor, Claude, AGENTS.md, evals, agent skills, WebLLM",
   ],
   experience: [
     {
@@ -48,7 +49,7 @@ export const resume = {
         "Build the roaming backend behind Lyft's European expansion: ride creation, payment authorization, and scheduled rides across the FREENOW network",
         "Owned the access-control foundation for Lyft Teen ahead of launch in 200+ US markets",
         "Shipped growth and support surfaces for Lyft Silver: invites, gift cards, trusted contacts, and a CMS-backed contextual help API",
-        "Rolled out agent coding standards across ten backend repos with a published before/after eval, and co-built the operational-health dashboard",
+        "Rolled out AGENTS.md across ten backend repos and published a before/after eval: three repos failed without it, and one dropped from 30-plus turns to a single-turn answer. Shipped a Cursor/Claude dashboard-migration skill the platform team adopted, and co-built the operational-health dashboard",
       ],
     },
     {

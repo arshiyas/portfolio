@@ -70,15 +70,12 @@ function writeBullet(doc: JsPDFDoc, text: string, y: number) {
   return y + 1
 }
 
-export async function downloadResumePdf() {
-  const { jsPDF } = await import("jspdf")
-  const doc = new jsPDF({ unit: "pt", format: "letter", compress: true })
-
+export function fillResumePdf(doc: JsPDFDoc) {
   doc.setProperties({
     title: `${resume.name} - Resume`,
     subject: "Resume",
     author: resume.name,
-    keywords: "backend engineer, software engineer, python, go, aws, lyft",
+    keywords: "backend engineer, software engineer, python, go, aws, lyft, cursor, claude",
   })
 
   let y = MARGIN
@@ -136,6 +133,11 @@ export async function downloadResumePdf() {
     y = writeWrapped(doc, `${item.degree} - ${item.school}`, MARGIN, y, CONTENT_WIDTH)
     y += 1
   }
+}
 
+export async function downloadResumePdf() {
+  const { jsPDF } = await import("jspdf")
+  const doc = new jsPDF({ unit: "pt", format: "letter", compress: true })
+  fillResumePdf(doc)
   doc.save("Arshiya-Sayyed-Resume.pdf")
 }

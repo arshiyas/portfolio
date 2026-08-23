@@ -17,8 +17,7 @@ export function WorkPage() {
         Projects
       </h1>
       <p className="mt-3 mb-10 max-w-lg text-muted-foreground">
-        Backend case studies from production systems, plus space for personal
-        experiments.
+        Work case studies, plus personal projects.
       </p>
       <ProjectGrid />
     </main>

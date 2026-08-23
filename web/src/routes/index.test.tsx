@@ -37,16 +37,26 @@ vi.mock("@tanstack/react-router", async (importOriginal) => {
   }
 })
 
-test("selected work is a snap scroller of the four featured projects", () => {
+test("highlighted projects is a snap scroller of the five featured projects", () => {
   render(<HomePage />)
 
-  const scroller = screen.getByRole("list", { name: "Selected work" })
+  const scroller = screen.getByRole("list", { name: "Highlighted projects" })
   expect(scroller.className).toMatch(/snap-x/)
   expect(scroller.className).toMatch(/sm:grid/)
   expect(scroller.className).toMatch(/motion-safe:scroll-smooth/)
   expect(scroller.className.split(/\s+/).includes("scroll-smooth")).toBe(false)
 
-  for (const project of getFeaturedProjects()) {
+  const featured = getFeaturedProjects()
+  expect(featured.map((project) => project.slug)).toEqual([
+    "lyft-international",
+    "ai-engineering",
+    "lyft-teens",
+    "lyft-silver",
+    "days-gone",
+  ])
+  expect(featured).toHaveLength(5)
+
+  for (const project of featured) {
     expect(screen.getByRole("heading", { name: project.title })).toBeTruthy()
   }
 

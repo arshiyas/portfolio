@@ -8,12 +8,15 @@ import {
 } from "@/lib/content"
 import { DaysGoneBackdrop } from "@/components/days-in-canada/DaysGoneBackdrop"
 import { PageTrail } from "@/components/PageTrail"
-import { ProjectTitleAddon } from "@/components/ProjectCompanyLogo"
 
 const caseStudyTrail = [
   { label: "Home", to: "/" as const },
   { label: "Projects", to: "/projects" as const },
 ]
+
+function pageTitle(title: string): string {
+  return title.split(" @ ")[0] ?? title
+}
 
 function InternalPathLink({
   url,
@@ -104,9 +107,8 @@ function NextProjectPreview({ currentSlug }: { currentSlug: string }) {
         params={{ slug: next.slug }}
         className="group mt-4 block max-w-2xl rounded-xl border border-border bg-card p-5 transition hover:border-primary sm:p-6"
       >
-        <h2 className="flex flex-wrap items-center gap-x-1.5 font-serif text-xl font-semibold tracking-tight group-hover:text-primary">
-          <span>{next.title}</span>
-          <ProjectTitleAddon project={next} />
+        <h2 className="font-serif text-xl font-semibold tracking-tight group-hover:text-primary">
+          {pageTitle(next.title)}
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           {next.description}
@@ -276,9 +278,8 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       ) : null}
 
       <header className="mt-3 max-w-3xl">
-        <h1 className="flex flex-wrap items-center gap-x-2 font-serif text-[clamp(2rem,4vw,2.75rem)] leading-tight font-semibold tracking-tight text-foreground">
-          <span>{project.title}</span>
-          <ProjectTitleAddon project={project} className="h-5 w-auto" />
+        <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] leading-tight font-semibold tracking-tight text-foreground">
+          {pageTitle(project.title)}
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
           {caseStudy.overview}
@@ -563,9 +564,8 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       <PageTrail items={caseStudyTrail} />
       <div className="space-y-10">
         <header>
-          <h1 className="flex flex-wrap items-center gap-x-2 font-serif text-[clamp(1.8rem,4vw,2.5rem)] font-semibold tracking-tight">
-            <span>{project.title}</span>
-            <ProjectTitleAddon project={project} className="h-5 w-auto" />
+          <h1 className="font-serif text-[clamp(1.8rem,4vw,2.5rem)] font-semibold tracking-tight">
+            {pageTitle(project.title)}
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             {caseStudy.overview}
@@ -747,7 +747,7 @@ export function getProjectPageMetadata(slug: string) {
   const project = getProjectBySlug(slug)
   if (!project?.caseStudy) return { title: "Project" }
   return {
-    title: project.title,
+    title: pageTitle(project.title),
     description: project.description,
   }
 }

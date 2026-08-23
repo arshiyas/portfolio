@@ -45,13 +45,15 @@ function ProjectMark({ project }: { project: Project }) {
     project.slug.includes("skywatch")
   ) {
     return (
-      <img
-        src="/logos/skywatch.svg"
-        alt="SkyWatch"
-        width={64}
-        height={64}
-        className="size-16 rounded-xl object-cover"
-      />
+      <div className="size-16 overflow-hidden rounded-xl bg-[#212b35]">
+        <img
+          src="/logos/skywatch.svg"
+          alt="SkyWatch"
+          width={64}
+          height={64}
+          className="size-full object-cover"
+        />
+      </div>
     )
   }
 

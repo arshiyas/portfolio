@@ -21,6 +21,16 @@ test("hero CTA is resume", () => {
   ])
 })
 
+test("featured projects put AI-Assisted Engineering after International Expansion", () => {
+  expect(site.featuredProjectSlugs).toEqual([
+    "lyft-international",
+    "ai-engineering",
+    "lyft-teens",
+    "lyft-silver",
+    "days-gone",
+  ])
+})
+
 test("next case study follows listing order and wraps", () => {
   const caseStudies = getProjectsWithCaseStudies()
   expect(caseStudies.length).toBeGreaterThan(1)
