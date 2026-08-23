@@ -31,7 +31,7 @@ export function HomePage() {
                 >
                   Highlighted projects
                 </h2>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
                   Lyft backend work across mobility products and AI-assisted
                   engineering, plus Days Gone, a personal citizenship tool.
                 </p>

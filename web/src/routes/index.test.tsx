@@ -63,4 +63,10 @@ test("highlighted projects is a snap scroller of the five featured projects", ()
   expect(
     screen.getByRole("link", { name: "All projects →" }).getAttribute("href")
   ).toBe("/projects")
+
+  const intro = screen.getByText(
+    /Lyft backend work across mobility products and AI-assisted engineering/
+  )
+  expect(intro.className).toMatch(/hidden/)
+  expect(intro.className).toMatch(/sm:block/)
 })
