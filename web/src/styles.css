@@ -168,6 +168,41 @@
   position: relative;
 }
 
+.hero-memoji {
+  position: relative;
+  display: inline-block;
+  height: 1.35em;
+  width: 1.35em;
+  flex-shrink: 0;
+  isolation: isolate;
+}
+
+.hero-memoji img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  user-select: none;
+  filter: grayscale(1) contrast(1.08);
+}
+
+.hero-memoji::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--primary);
+  mix-blend-mode: color;
+  mask-image: var(--hero-memoji);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--hero-memoji);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
 .site-page {
   margin-inline: auto;
   width: 100%;

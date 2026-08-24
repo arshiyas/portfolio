@@ -1,6 +1,13 @@
 import { Link } from "@tanstack/react-router"
+import type { CSSProperties } from "react"
 import { Mail } from "lucide-react"
 import { site } from "@/lib/content"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -28,26 +35,54 @@ export function HomeHero() {
   return (
     <div className="home-hero pt-14 pb-0 sm:pt-16">
       <section>
-        <div className="flex items-center text-sm font-medium text-muted-foreground">
-          <a
-            href={`mailto:${site.links.email}`}
-            aria-label="Email"
-            className={socialLinkClass}
-          >
-            <Mail className="size-4" aria-hidden />
-          </a>
-          <a
-            href={site.links.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-            className={`${socialLinkClass} ml-2 hover:opacity-80`}
-          >
-            <LinkedInIcon className="size-4" />
-          </a>
-        </div>
-        <h1 className="mt-3 font-serif text-[clamp(2.2rem,5vw,3.2rem)] leading-[1.15] font-semibold tracking-tight sm:mt-4">
+        <TooltipProvider>
+          <div className="flex items-center text-sm font-medium text-muted-foreground">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href={`mailto:${site.links.email}`}
+                  aria-label="Email"
+                  className={socialLinkClass}
+                >
+                  <Mail className="size-4" aria-hidden />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" sideOffset={6}>
+                Email
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href={site.links.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn"
+                  className={`${socialLinkClass} ml-2 hover:opacity-80`}
+                >
+                  <LinkedInIcon className="size-4" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" sideOffset={6}>
+                LinkedIn
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </TooltipProvider>
+        <h1 className="mt-3 flex items-center gap-2 font-serif text-[clamp(2.2rem,5vw,3.2rem)] leading-[1.15] font-semibold tracking-tight sm:mt-4">
           {site.heroHeading}
+          <span
+            className="hero-memoji"
+            style={{ "--hero-memoji": `url(${site.heroMemoji})` } as CSSProperties}
+            aria-hidden
+          >
+            <img
+              src={site.heroMemoji}
+              alt=""
+              width={80}
+              height={80}
+            />
+          </span>
         </h1>
         {site.lede.map((paragraph, index) => (
           <p

@@ -1,8 +1,16 @@
 import type { ReactNode } from "react"
-import { render, within } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
 import { expect, test, vi } from "vitest"
 import { HomeHero } from "@/components/HomeHero"
 import { site } from "@/lib/content"
+
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+vi.stubGlobal("ResizeObserver", ResizeObserverMock)
 
 vi.mock("@tanstack/react-router", () => ({
   Link: ({
@@ -28,7 +36,15 @@ test("shows greeting with compact social icons, intro, and resume", () => {
   expect(hero).toBeTruthy()
   const scope = within(hero as HTMLElement)
 
-  expect(scope.getByRole("heading", { name: site.heroHeading })).toBeTruthy()
+  const heading = scope.getByRole("heading", { name: site.heroHeading })
+  expect(heading).toBeTruthy()
+  expect(heading.textContent).not.toMatch(/👋/)
+  const tint = heading.querySelector(".hero-memoji")
+  expect(tint).toBeTruthy()
+  expect(tint?.getAttribute("style") ?? "").toContain(`url(${site.heroMemoji})`)
+  const memoji = tint?.querySelector("img")
+  expect(memoji?.getAttribute("src")).toBe(site.heroMemoji)
+  expect(memoji?.getAttribute("alt")).toBe("")
   expect(scope.queryByText(site.tagline)).toBeNull()
   expect(scope.queryByText(site.location)).toBeNull()
   expect(scope.queryByRole("img", { name: "Lyft" })).toBeNull()
@@ -49,7 +65,6 @@ test("shows greeting with compact social icons, intro, and resume", () => {
   const linkedin = scope.getByRole("link", { name: "LinkedIn" })
   expect(linkedin.getAttribute("href")).toBe(site.links.linkedin)
 
-  const heading = scope.getByRole("heading", { name: site.heroHeading })
   expect(
     heading.compareDocumentPosition(email) & Node.DOCUMENT_POSITION_PRECEDING
   ).toBeTruthy()
@@ -67,4 +82,14 @@ test("shows greeting with compact social icons, intro, and resume", () => {
   for (const item of site.stack) {
     expect(scope.queryByText(item)).toBeNull()
   }
+})
+
+test("shows email and LinkedIn tooltips on focus", async () => {
+  render(<HomeHero />)
+
+  screen.getByRole("link", { name: "Email" }).focus()
+  expect(await screen.findByRole("tooltip", { name: "Email" })).toBeTruthy()
+
+  screen.getByRole("link", { name: "LinkedIn" }).focus()
+  expect(await screen.findByRole("tooltip", { name: "LinkedIn" })).toBeTruthy()
 })
