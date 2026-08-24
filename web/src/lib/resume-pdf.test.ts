@@ -2,7 +2,7 @@ import { expect, test } from "vitest"
 import { jsPDF } from "jspdf"
 import { fillResumePdf } from "@/lib/resume-pdf"
 
-test("downloadable PDF includes the agent-eval bullet and AI skills line", () => {
+test("downloadable PDF includes the AI initiatives bullet and AI skills line", () => {
   const doc = new jsPDF({ unit: "pt", format: "letter" })
   const chunks: string[] = []
   const original = doc.text.bind(doc)
@@ -15,8 +15,7 @@ test("downloadable PDF includes the agent-eval bullet and AI skills line", () =>
   fillResumePdf(doc)
 
   const body = chunks.join(" ")
-  expect(body).toContain("AGENTS.md")
-  expect(body).toContain("Cursor/Claude")
+  expect(body).toContain("Worked on AI initiatives across the org")
   expect(body).toContain("AI and tooling")
   expect(doc.getNumberOfPages()).toBe(1)
 })

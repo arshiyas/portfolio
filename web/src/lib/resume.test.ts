@@ -3,10 +3,10 @@ import { resume } from "@/lib/resume"
 
 const lyft = resume.experience.find((role) => role.company === "Lyft")
 
-test("Lyft bullets include a measured agent-eval and adopted skill", () => {
+test("Lyft bullets include AI-enabled OE, org AI initiatives, and Cursor/Claude", () => {
   expect(lyft).toBeDefined()
   expect(lyft?.bullets).toContain(
-    "Rolled out AGENTS.md across ten backend repos and published a before/after eval: three repos failed without it, and one dropped from 30-plus turns to a single-turn answer. Shipped a Cursor/Claude dashboard-migration skill the platform team adopted, and co-built the operational-health dashboard",
+    "Built an AI-enabled operational-excellence dashboard so teams can track tech debt and cut operational burden. Worked on AI initiatives across the org, and write day-to-day code in Cursor and Claude",
   )
 })
 

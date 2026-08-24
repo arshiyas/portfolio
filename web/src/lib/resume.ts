@@ -49,7 +49,7 @@ export const resume = {
         "Build the roaming backend behind Lyft's European expansion: ride creation, payment authorization, and scheduled rides across the FREENOW network",
         "Owned the access-control foundation for Lyft Teen ahead of launch in 200+ US markets",
         "Shipped growth and support surfaces for Lyft Silver: invites, gift cards, trusted contacts, and a CMS-backed contextual help API",
-        "Rolled out AGENTS.md across ten backend repos and published a before/after eval: three repos failed without it, and one dropped from 30-plus turns to a single-turn answer. Shipped a Cursor/Claude dashboard-migration skill the platform team adopted, and co-built the operational-health dashboard",
+        "Built an AI-enabled operational-excellence dashboard so teams can track tech debt and cut operational burden. Worked on AI initiatives across the org, and write day-to-day code in Cursor and Claude",
       ],
     },
     {
