@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { resume } from "@/lib/resume"
+import { cn } from "@/lib/utils"
 
 const linkClass = "text-primary underline-offset-4 hover:underline"
 
@@ -47,7 +48,7 @@ function linkifyResumeText(text: string): ReactNode {
 export function ResumeDocument() {
   return (
     <article className="rounded-xl border border-border bg-card px-6 py-8 shadow-none sm:px-10 sm:py-10">
-      <header className="border-b border-border pb-6">
+      <header>
         <h2 className="font-serif text-[1.65rem] font-semibold tracking-tight text-foreground">
           {resume.name}
         </h2>
@@ -70,7 +71,7 @@ export function ResumeDocument() {
         </p>
       </header>
 
-      <ResumeSection title="Summary">
+      <ResumeSection title="Summary" className="mt-4">
         <p className="text-sm leading-relaxed text-muted-foreground">
           {linkifyResumeText(resume.summary)}
         </p>
@@ -143,9 +144,17 @@ function SkillLine({ skill }: { skill: string }) {
   )
 }
 
-function ResumeSection({ title, children }: { title: string; children: ReactNode }) {
+function ResumeSection({
+  title,
+  children,
+  className,
+}: {
+  title: string
+  children: ReactNode
+  className?: string
+}) {
   return (
-    <section className="mt-8">
+    <section className={cn("mt-8", className)}>
       <h3 className="border-b border-border pb-2 font-mono text-xs font-semibold uppercase tracking-widest text-foreground">
         {title}
       </h3>
