@@ -112,7 +112,6 @@ export const site = {
   eyebrow: "Software engineer · Toronto",
   tagline: "Software Engineer",
   heroHeading: "Hi, I'm Arshiya",
-  heroMemoji: "/images/waving-memoji.png",
   lede: [
     "I build backend features with Lyft Toronto. I shipped products for older and teen riders, and now I work on taking the app to Europe.",
     "I care about making the system reliable and scalable, and giving coding agents enough context so they stop recommending libraries that don't exist.",

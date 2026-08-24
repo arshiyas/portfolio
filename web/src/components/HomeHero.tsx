@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router"
-import type { CSSProperties } from "react"
 import { Mail } from "lucide-react"
 import { site } from "@/lib/content"
 import {
@@ -71,18 +70,14 @@ export function HomeHero() {
         </TooltipProvider>
         <h1 className="mt-3 flex items-center gap-2 font-serif text-[clamp(2.2rem,5vw,3.2rem)] leading-[1.15] font-semibold tracking-tight sm:mt-4">
           {site.heroHeading}
-          <span
-            className="hero-memoji"
-            style={{ "--hero-memoji": `url(${site.heroMemoji})` } as CSSProperties}
+          <img
+            src="/images/hijab-octocat.png?v=2"
+            alt=""
+            width={256}
+            height={242}
+            className="h-[1em] w-auto shrink-0"
             aria-hidden
-          >
-            <img
-              src={site.heroMemoji}
-              alt=""
-              width={80}
-              height={80}
-            />
-          </span>
+          />
         </h1>
         {site.lede.map((paragraph, index) => (
           <p

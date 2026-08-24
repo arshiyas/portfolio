@@ -39,12 +39,11 @@ test("shows greeting with compact social icons, intro, and resume", () => {
   const heading = scope.getByRole("heading", { name: site.heroHeading })
   expect(heading).toBeTruthy()
   expect(heading.textContent).not.toMatch(/👋/)
-  const tint = heading.querySelector(".hero-memoji")
-  expect(tint).toBeTruthy()
-  expect(tint?.getAttribute("style") ?? "").toContain(`url(${site.heroMemoji})`)
-  const memoji = tint?.querySelector("img")
-  expect(memoji?.getAttribute("src")).toBe(site.heroMemoji)
-  expect(memoji?.getAttribute("alt")).toBe("")
+  expect(heading.querySelector("svg")).toBeNull()
+  const octocat = heading.querySelector("img")
+  expect(octocat?.getAttribute("src")).toBe("/images/hijab-octocat.png?v=2")
+  expect(octocat?.getAttribute("alt")).toBe("")
+  expect(octocat?.className).toMatch(/h-\[1em\]/)
   expect(scope.queryByText(site.tagline)).toBeNull()
   expect(scope.queryByText(site.location)).toBeNull()
   expect(scope.queryByRole("img", { name: "Lyft" })).toBeNull()
@@ -64,6 +63,7 @@ test("shows greeting with compact social icons, intro, and resume", () => {
 
   const linkedin = scope.getByRole("link", { name: "LinkedIn" })
   expect(linkedin.getAttribute("href")).toBe(site.links.linkedin)
+  expect(linkedin.querySelector("rect")?.getAttribute("fill")).toBe("#0A66C2")
 
   expect(
     heading.compareDocumentPosition(email) & Node.DOCUMENT_POSITION_PRECEDING
