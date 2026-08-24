@@ -30,9 +30,9 @@ export function AboutPage() {
   }, [])
 
   return (
-    <main className="mx-auto w-full max-w-[920px] flex-1 px-6 py-14">
+    <main className="site-page flex-1 py-14">
       <PageTrail items={[{ label: "Home", to: "/" }]} />
-      <div className="mb-8 max-w-xl">
+      <div className="mb-8 max-w-2xl">
         <h1 className="font-serif text-3xl font-semibold">
           Hi, I&apos;m Arshiya 👋
         </h1>
@@ -68,7 +68,7 @@ export function AboutPage() {
       </div>
 
       {noteOpen ? null : (
-        <Card className="max-w-xl border-border shadow-none">
+        <Card className="max-w-2xl shadow-none">
           <CardHeader>
             <h2 className="font-serif text-lg font-medium">
               Beyond the resume

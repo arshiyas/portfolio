@@ -9,7 +9,7 @@ import { site } from "@/lib/content"
 
 export function CalendlyBookingCard() {
   return (
-    <Card className="max-w-xl border-border shadow-none">
+    <Card className="max-w-2xl shadow-none">
       <CardHeader>
         <h2 className="font-serif text-lg leading-snug font-medium">
           Prefer to talk live?

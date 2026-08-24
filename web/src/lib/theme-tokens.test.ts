@@ -42,6 +42,36 @@ test("page theme shells follow --background", () => {
   expect(css).toMatch(/\.theme-neutral\s*\{[\s\S]*?var\(--background\)/)
 })
 
+test("site-page is the shared content column", () => {
+  const css = readFileSync(join(srcRoot, "styles.css"), "utf8")
+  expect(css).toMatch(/--site-max-width:\s*920px/)
+  expect(css).toMatch(
+    /\.site-page\s*\{[\s\S]*?max-width:\s*var\(--site-max-width\)/
+  )
+  expect(css).not.toMatch(/\.site-content-safe/)
+})
+
+test("page shells share site-page without extra nested gutters", () => {
+  const files = [
+    "routes/index.tsx",
+    "routes/_work/resume.tsx",
+    "routes/_work/projects/index.tsx",
+    "routes/_work/projects/$slug.tsx",
+    "routes/_personal/about.tsx",
+    "routes/__root.tsx",
+    "components/SiteFooter.tsx",
+  ]
+  for (const relativePath of files) {
+    const source = readFileSync(join(srcRoot, relativePath), "utf8")
+    expect(source, relativePath).toMatch(/site-page/)
+    expect(source, relativePath).not.toMatch(/site-content-safe/)
+    expect(source, relativePath).not.toMatch(/max-w-\[920px\]/)
+  }
+
+  const home = readFileSync(join(srcRoot, "routes/index.tsx"), "utf8")
+  expect(home.match(/site-page/g)).toHaveLength(1)
+})
+
 test("Days Gone keeps custom claude tokens", () => {
   const source = readFileSync(
     join(srcRoot, "components/days-in-canada/DaysInCanadaApp.tsx"),

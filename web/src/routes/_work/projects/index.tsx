@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_work/projects/")({
 
 export function WorkPage() {
   return (
-    <main className="mx-auto w-full max-w-[920px] flex-1 px-6 py-14">
+    <main className="site-page flex-1 py-14">
       <PageTrail items={[{ label: "Home", to: "/" }]} />
       <h1 className="font-serif text-[clamp(1.8rem,4vw,2.4rem)] font-semibold tracking-tight">
         Projects

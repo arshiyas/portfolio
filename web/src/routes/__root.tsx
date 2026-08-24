@@ -1,4 +1,9 @@
-import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router"
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRoute,
+} from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { TanStackDevtools } from "@tanstack/react-devtools"
 
@@ -63,7 +68,7 @@ export const Route = createRootRoute({
       : [],
   }),
   notFoundComponent: () => (
-    <main className="mx-auto max-w-[920px] px-6 py-16">
+    <main className="site-page py-16">
       <h1 className="font-serif text-2xl font-semibold">404</h1>
       <p className="mt-2 text-muted-foreground">
         The requested page could not be found.

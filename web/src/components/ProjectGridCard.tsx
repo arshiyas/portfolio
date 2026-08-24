@@ -14,10 +14,10 @@ function DaysGoneCardSurface() {
         <DaysGoneBackdrop />
         <div className="relative z-10 flex h-full items-center justify-between gap-3 px-3.5 sm:px-4">
           <div className="min-w-0">
-            <p className="truncate font-mono text-[8px] uppercase tracking-[0.1em] text-claude-accent sm:text-[9px]">
+            <p className="truncate font-mono text-[8px] tracking-[0.1em] text-claude-accent uppercase sm:text-[9px]">
               Free · Private · Browser-only
             </p>
-            <p className="truncate font-sans text-xs font-bold uppercase tracking-[0.1em] text-claude-text sm:text-sm">
+            <p className="truncate font-sans text-xs font-bold tracking-[0.1em] text-claude-text uppercase sm:text-sm">
               Days Gone
             </p>
           </div>
@@ -48,7 +48,7 @@ export function ProjectGridCard({ project }: { project: Project }) {
 
   const baseClass = "border-border bg-card hover:border-primary"
 
-  const className = `group relative block overflow-hidden rounded-[18px] border transition-[border-color] duration-300 ${
+  const className = `group relative block overflow-hidden rounded-xl border transition-[border-color] duration-300 ${
     hasTheme ? "project-card-days-gone border-border" : baseClass
   }`
 
@@ -66,10 +66,12 @@ export function ProjectGridCard({ project }: { project: Project }) {
 
       <div
         className={`project-card-content relative z-10 flex flex-col p-4 transition-[padding] duration-300 sm:p-5 ${
-          hasTheme ? "group-hover:pt-[5.25rem] group-focus-visible:pt-[5.25rem]" : ""
+          hasTheme
+            ? "group-hover:pt-[5.25rem] group-focus-visible:pt-[5.25rem]"
+            : ""
         }`}
       >
-        <p className="project-card-category truncate text-xs font-semibold uppercase tracking-wider text-primary">
+        <p className="project-card-category truncate text-xs font-semibold tracking-wider text-primary uppercase">
           {project.category}
         </p>
         <h3
@@ -95,7 +97,9 @@ export function ProjectGridCard({ project }: { project: Project }) {
           ))}
         </div>
         {project.caseStudy ? (
-          <p className="mt-4 text-xs font-medium text-primary">Read case study →</p>
+          <p className="mt-4 text-xs font-medium text-primary">
+            Read case study →
+          </p>
         ) : project.toolUrl ? (
           <p className="mt-4 text-xs font-medium text-primary">Open tool →</p>
         ) : null}
@@ -105,7 +109,11 @@ export function ProjectGridCard({ project }: { project: Project }) {
 
   if (project.caseStudy) {
     return (
-      <Link to="/projects/$slug" params={{ slug: project.slug }} className={className}>
+      <Link
+        to="/projects/$slug"
+        params={{ slug: project.slug }}
+        className={className}
+      >
         {inner}
       </Link>
     )

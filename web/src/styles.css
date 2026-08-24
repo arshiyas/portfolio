@@ -59,6 +59,9 @@
   --sidebar-accent-foreground: #c96442;
   --sidebar-border: #e8e4dc;
   --sidebar-ring: #c96442;
+  --site-max-width: 920px;
+  --site-pad-left: max(1.5rem, env(safe-area-inset-left));
+  --site-pad-right: max(1.5rem, env(safe-area-inset-right));
 }
 
 @theme inline {
@@ -165,9 +168,12 @@
   position: relative;
 }
 
-.site-content-safe {
-  padding-left: max(1.5rem, env(safe-area-inset-left));
-  padding-right: max(1.5rem, env(safe-area-inset-right));
+.site-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--site-max-width);
+  padding-left: var(--site-pad-left);
+  padding-right: var(--site-pad-right);
 }
 
 .theme-work {
@@ -208,7 +214,10 @@
   --dg-danger: #9b3d2e;
   background-color: var(--claude-bg);
   color: var(--claude-text);
-  background-image: radial-gradient(rgba(19, 19, 17, 0.03) 0.4px, transparent 0.4px);
+  background-image: radial-gradient(
+    rgba(19, 19, 17, 0.03) 0.4px,
+    transparent 0.4px
+  );
   background-size: 3px 3px;
 }
 
@@ -299,7 +308,9 @@
 }
 
 .project-card-days-gone:hover .project-card-content .project-card-title,
-.project-card-days-gone:focus-visible .project-card-content .project-card-title {
+.project-card-days-gone:focus-visible
+  .project-card-content
+  .project-card-title {
   display: none;
 }
 

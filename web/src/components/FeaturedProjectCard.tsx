@@ -81,7 +81,7 @@ export function FeaturedProjectCard({
 }) {
   const isPersonal = project.type === "personal"
   const cardClass = cn(
-    "group flex h-full w-full items-center gap-3 rounded-[18px] border border-border bg-card px-4 py-5 transition-[border-color] duration-300 hover:border-primary",
+    "group flex h-full w-full items-center gap-3 rounded-xl border border-border bg-card p-5 transition-[border-color] duration-300 hover:border-primary",
     className
   )
 

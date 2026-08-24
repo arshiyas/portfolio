@@ -31,6 +31,15 @@ test("footer is Resume, About, and social icons without Projects or a name", () 
   expect(linkedin.getAttribute("href")).toBe(site.links.linkedin)
 })
 
+test("footer content uses the shared page column", () => {
+  render(<SiteFooter />)
+
+  const footer = document.querySelector("footer")
+  expect(footer?.className.split(/\s+/).includes("site-page")).toBe(false)
+  expect(footer?.className.split(/\s+/).includes("px-6")).toBe(false)
+  expect(footer?.querySelector(".site-page")).toBeTruthy()
+})
+
 test("footer has no page aside", () => {
   render(<SiteFooter />)
 

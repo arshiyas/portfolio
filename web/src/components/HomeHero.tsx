@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { LyftLogo } from "@/components/LyftLogo"
 import { site } from "@/lib/content"
 
 function LinkedInIcon({ className }: { className?: string }) {
@@ -20,14 +19,6 @@ function LinkedInIcon({ className }: { className?: string }) {
   )
 }
 
-function MetaDot() {
-  return (
-    <span aria-hidden className="mx-2">
-      ·
-    </span>
-  )
-}
-
 const chatLinkClass =
   "font-medium text-primary underline underline-offset-4 hover:opacity-80"
 
@@ -39,34 +30,25 @@ export function HomeHero() {
     <div className="home-hero pt-14 pb-0 sm:pt-16">
       <section>
         <h1 className="font-serif text-[clamp(2.2rem,5vw,3.2rem)] leading-[1.15] font-semibold tracking-tight">
-          {site.name}
+          {site.heroHeading}
         </h1>
-        <div className="mt-3 flex flex-wrap items-center gap-y-2 text-sm font-medium text-muted-foreground sm:mt-4">
-          <div className="flex items-center whitespace-nowrap">
-            <LyftLogo className="h-[22px] w-auto" />
-            <span className="ml-2">{site.tagline}</span>
-            <MetaDot />
-            <span>{site.location}</span>
-            <MetaDot />
-          </div>
-          <div className="flex items-center whitespace-nowrap">
-            <a
-              href={`mailto:${site.links.email}`}
-              aria-label="Email"
-              className={socialLinkClass}
-            >
-              <Mail className="size-4" aria-hidden />
-            </a>
-            <a
-              href={site.links.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className={`${socialLinkClass} ml-2 hover:opacity-80`}
-            >
-              <LinkedInIcon className="size-4" />
-            </a>
-          </div>
+        <div className="mt-3 flex items-center text-sm font-medium text-muted-foreground sm:mt-4">
+          <a
+            href={`mailto:${site.links.email}`}
+            aria-label="Email"
+            className={socialLinkClass}
+          >
+            <Mail className="size-4" aria-hidden />
+          </a>
+          <a
+            href={site.links.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+            className={`${socialLinkClass} ml-2 hover:opacity-80`}
+          >
+            <LinkedInIcon className="size-4" />
+          </a>
         </div>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg">
           {site.lede}

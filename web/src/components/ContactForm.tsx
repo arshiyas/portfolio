@@ -18,9 +18,7 @@ export function ContactForm() {
 
     if (!accessKey) {
       setStatus("error")
-      setErrorMessage(
-        "Form is not configured yet. Email me directly for now.",
-      )
+      setErrorMessage("Form is not configured yet. Email me directly for now.")
       return
     }
 
@@ -44,7 +42,9 @@ export function ContactForm() {
       }
 
       if (!response.ok || !data.success) {
-        throw new Error(data.message ?? "Something went wrong. Please try again.")
+        throw new Error(
+          data.message ?? "Something went wrong. Please try again."
+        )
       }
 
       form.reset()
@@ -54,13 +54,13 @@ export function ContactForm() {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "Something went wrong. Please try again.",
+          : "Something went wrong. Please try again."
       )
     }
   }
 
   return (
-    <div className="max-w-xl">
+    <>
       {!accessKey ? (
         <p className="mb-6 rounded-xl border border-border bg-card px-4 py-3 text-sm leading-relaxed text-muted-foreground">
           Form delivery is not wired up in this environment yet. You can still
@@ -152,6 +152,6 @@ export function ContactForm() {
           </p>
         ) : null}
       </form>
-    </div>
+    </>
   )
 }

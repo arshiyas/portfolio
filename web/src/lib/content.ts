@@ -111,7 +111,8 @@ export const site = {
   location: "Toronto",
   eyebrow: "Software engineer · Toronto",
   tagline: "Software Engineer",
-  lede: "I shipped rider products for older adults and teens and now work on bringing the app to Europe, with earlier backend work in geospatial and healthcare.",
+  heroHeading: "Hi, I'm Arshiya 👋",
+  lede: "I build features at Lyft Toronto. I shipped products for older and teen riders, and now I work on taking the app to Europe. I care about making the system reliable and scalable, and giving coding agents enough context to stop recommending libraries that don't exist.",
   links: {
     linkedin: "https://www.linkedin.com/in/arshiyasayyed/",
     email: "arshiyasayyed8@gmail.com",

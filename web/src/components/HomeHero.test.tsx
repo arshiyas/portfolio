@@ -21,17 +21,17 @@ vi.mock("@tanstack/react-router", () => ({
   ),
 }))
 
-test("shows name with compact social icons, intro, and resume", () => {
+test("shows greeting with compact social icons, intro, and resume", () => {
   render(<HomeHero />)
 
   const hero = document.querySelector(".home-hero")
   expect(hero).toBeTruthy()
   const scope = within(hero as HTMLElement)
 
-  expect(scope.getByRole("heading", { name: site.name })).toBeTruthy()
-  expect(scope.getByText(site.tagline)).toBeTruthy()
-  expect(scope.getByText(site.location)).toBeTruthy()
-  expect(scope.getByRole("img", { name: "Lyft" })).toBeTruthy()
+  expect(scope.getByRole("heading", { name: site.heroHeading })).toBeTruthy()
+  expect(scope.queryByText(site.tagline)).toBeNull()
+  expect(scope.queryByText(site.location)).toBeNull()
+  expect(scope.queryByRole("img", { name: "Lyft" })).toBeNull()
   expect(scope.getByText(site.lede)).toBeTruthy()
 
   const booking = scope.getByRole("link", { name: "Book a time" })
@@ -46,16 +46,12 @@ test("shows name with compact social icons, intro, and resume", () => {
   const linkedin = scope.getByRole("link", { name: "LinkedIn" })
   expect(linkedin.getAttribute("href")).toBe(site.links.linkedin)
 
-  const heading = scope.getByRole("heading", { name: site.name })
-  const location = scope.getByText(site.location)
+  const heading = scope.getByRole("heading", { name: site.heroHeading })
   expect(
     heading.compareDocumentPosition(email) & Node.DOCUMENT_POSITION_FOLLOWING
   ).toBeTruthy()
   expect(
-    location.compareDocumentPosition(email) & Node.DOCUMENT_POSITION_FOLLOWING
-  ).toBeTruthy()
-  expect(
-    location.compareDocumentPosition(linkedin) & Node.DOCUMENT_POSITION_FOLLOWING
+    heading.compareDocumentPosition(linkedin) & Node.DOCUMENT_POSITION_FOLLOWING
   ).toBeTruthy()
 
   const resume = scope.getByRole("link", { name: "Resume" })

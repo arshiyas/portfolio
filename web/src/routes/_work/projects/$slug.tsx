@@ -28,7 +28,7 @@ function ProjectDetailPage() {
   const project = Route.useLoaderData()
 
   return (
-    <main className="mx-auto w-full max-w-[920px] flex-1 px-6 py-14">
+    <main className="site-page flex-1 py-14">
       <ProjectCaseStudy project={project} />
     </main>
   )

@@ -15,6 +15,13 @@ test("hero role is Software Engineer without a level", () => {
   expect(site.tagline).toBe("Software Engineer")
 })
 
+test("hero intro is conversational", () => {
+  expect(site.heroHeading).toBe("Hi, I'm Arshiya 👋")
+  expect(site.lede).toBe(
+    "I build features at Lyft Toronto. I shipped products for older and teen riders, and now I work on taking the app to Europe. I care about making the system reliable and scalable, and giving coding agents enough context to stop recommending libraries that don't exist."
+  )
+})
+
 test("hero CTA is resume", () => {
   expect(site.heroButtons).toEqual([
     { label: "Resume", href: "/resume", primary: true },

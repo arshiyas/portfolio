@@ -25,8 +25,8 @@ const iconLinkClass =
 
 export function SiteFooter() {
   return (
-    <footer className="site-content-safe site-footer-safe border-t border-border px-6 py-10 text-sm text-muted-foreground">
-      <div className="mx-auto flex w-full max-w-[920px] flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs sm:justify-end">
+    <footer className="site-footer-safe border-t border-border py-10 text-sm text-muted-foreground">
+      <div className="site-page flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs sm:justify-end">
         {links.map((link) => (
           <Link
             key={link.href}

@@ -105,7 +105,7 @@ function NextProjectPreview({ currentSlug }: { currentSlug: string }) {
       <Link
         to="/projects/$slug"
         params={{ slug: next.slug }}
-        className="group mt-4 block max-w-2xl rounded-xl border border-border bg-card p-5 transition hover:border-primary sm:p-6"
+        className="group mt-4 block rounded-xl border border-border bg-card p-5 transition hover:border-primary"
       >
         <h2 className="font-serif text-xl font-semibold tracking-tight group-hover:text-primary">
           {pageTitle(next.title)}
@@ -113,9 +113,7 @@ function NextProjectPreview({ currentSlug }: { currentSlug: string }) {
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           {next.description}
         </p>
-        <p className="mt-4 text-sm font-medium text-primary">
-          Learn more →
-        </p>
+        <p className="mt-4 text-sm font-medium text-primary">Learn more →</p>
       </Link>
     </section>
   )
@@ -277,18 +275,18 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         </p>
       ) : null}
 
-      <header className="mt-3 max-w-3xl">
+      <header className="mt-3">
         <h1 className="font-serif text-[clamp(2rem,4vw,2.75rem)] leading-tight font-semibold tracking-tight text-foreground">
           {pageTitle(project.title)}
         </h1>
-        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
           {caseStudy.overview}
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-md border border-border bg-card px-2.5 py-1 font-mono text-xs text-muted-foreground"
+              className="rounded-full bg-secondary px-3 py-1 text-xs text-primary"
             >
               {tag}
             </span>
@@ -302,7 +300,7 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
         </div>
       ) : null}
 
-      <section className="mt-16 max-w-3xl">
+      <section className="mt-16 max-w-2xl">
         <h2 className="font-serif text-2xl font-semibold text-foreground">
           {caseStudy.contextTitle ?? "Why I built this"}
         </h2>
@@ -324,7 +322,7 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       </section>
 
       {caseStudy.sections?.map((section) => (
-        <section key={section.title} className="mt-16 max-w-3xl">
+        <section key={section.title} className="mt-16 max-w-2xl">
           <h2 className="font-serif text-2xl font-semibold text-foreground">
             {section.title}
           </h2>
@@ -425,7 +423,7 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       ) : null}
 
       {caseStudy.underTheHood ? (
-        <section className="mt-16 max-w-3xl">
+        <section className="mt-16 max-w-2xl">
           <h2 className="font-serif text-2xl font-semibold text-foreground">
             Under the hood
           </h2>
@@ -436,7 +434,7 @@ function PersonalProjectCaseStudy({ project }: ProjectCaseStudyProps) {
       ) : null}
 
       {caseStudy.learnings && caseStudy.learnings.length > 0 ? (
-        <section className="mt-16 max-w-3xl">
+        <section className="mt-16 max-w-2xl">
           <h2 className="font-serif text-2xl font-semibold text-foreground">
             What I learned
           </h2>
@@ -645,7 +643,7 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
                     {caseStudy.myContribution.items.map((item) => (
                       <li
                         key={item.title}
-                        className="rounded-xl border border-border/80 bg-card px-4 py-4 shadow-sm"
+                        className="rounded-xl border border-border bg-card px-5 py-5"
                       >
                         <h3 className="font-serif text-base font-semibold">
                           {item.title}
@@ -700,7 +698,7 @@ function WorkProjectCaseStudy({ project }: ProjectCaseStudyProps) {
                   {caseStudy.features.map((feature) => (
                     <div
                       key={feature}
-                      className="flex gap-3 rounded-xl border border-border bg-card px-4 py-4"
+                      className="flex gap-3 rounded-xl border border-border bg-card px-5 py-5"
                     >
                       <span
                         aria-hidden

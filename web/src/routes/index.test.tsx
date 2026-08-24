@@ -70,3 +70,17 @@ test("highlighted projects is a snap scroller of the five featured projects", ()
   expect(intro.className).toMatch(/hidden/)
   expect(intro.className).toMatch(/sm:block/)
 })
+
+test("highlighted projects sit in the same page column as the hero", () => {
+  render(<HomePage />)
+
+  const main = document.querySelector("main")
+  expect(main?.className.split(/\s+/)).toContain("site-page")
+  expect(main?.querySelector(".site-page")).toBeNull()
+  expect(main?.querySelector(".site-content-safe")).toBeNull()
+  expect(
+    main?.contains(
+      screen.getByRole("heading", { name: "Highlighted projects" })
+    )
+  ).toBe(true)
+})

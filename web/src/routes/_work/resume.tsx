@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_work/resume")({
 
 function ResumePage() {
   return (
-    <main className="mx-auto w-full max-w-[920px] flex-1 px-6 py-14">
+    <main className="site-page flex-1 py-14">
       <PageTrail items={[{ label: "Home", to: "/" }]} />
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
