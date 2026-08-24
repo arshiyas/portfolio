@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router"
 import { Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { site } from "@/lib/content"
 
 function LinkedInIcon({ className }: { className?: string }) {
@@ -29,10 +28,7 @@ export function HomeHero() {
   return (
     <div className="home-hero pt-14 pb-0 sm:pt-16">
       <section>
-        <h1 className="font-serif text-[clamp(2.2rem,5vw,3.2rem)] leading-[1.15] font-semibold tracking-tight">
-          {site.heroHeading}
-        </h1>
-        <div className="mt-3 flex items-center text-sm font-medium text-muted-foreground sm:mt-4">
+        <div className="flex items-center text-sm font-medium text-muted-foreground">
           <a
             href={`mailto:${site.links.email}`}
             aria-label="Email"
@@ -50,46 +46,37 @@ export function HomeHero() {
             <LinkedInIcon className="size-4" />
           </a>
         </div>
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg">
-          {site.lede}
-        </p>
+        <h1 className="mt-3 font-serif text-[clamp(2.2rem,5vw,3.2rem)] leading-[1.15] font-semibold tracking-tight sm:mt-4">
+          {site.heroHeading}
+        </h1>
+        {site.lede.map((paragraph, index) => (
+          <p
+            key={paragraph}
+            className={
+              index === 0
+                ? "mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:mt-4 sm:text-lg"
+                : "mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+            }
+          >
+            {paragraph}
+          </p>
+        ))}
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          Want to learn more?{" "}
+          Want to learn more? Here's my{" "}
+          <Link to="/resume" className={chatLinkClass}>
+            resume
+          </Link>
+          , or{" "}
           <a
             href={site.links.calendly}
             target="_blank"
             rel="noreferrer"
             className={chatLinkClass}
           >
-            Book a time
-          </a>{" "}
-          or{" "}
-          <Link to="/about" hash="contact" className={chatLinkClass}>
-            send a note
-          </Link>
+            book a time to chat
+          </a>
           .
         </p>
-
-        <div className="mt-5">
-          {site.heroButtons.map((button) => {
-            const action = button.href.startsWith("mailto:") ? (
-              <a href={button.href}>{button.label}</a>
-            ) : (
-              <Link to={button.href}>{button.label}</Link>
-            )
-
-            return (
-              <Button
-                key={button.href}
-                asChild
-                variant={button.primary ? "default" : "outline"}
-                className="h-11 w-full px-4 sm:h-8 sm:w-auto sm:px-2.5"
-              >
-                {action}
-              </Button>
-            )
-          })}
-        </div>
       </section>
     </div>
   )

@@ -14,6 +14,8 @@ test("header above summary has no horizontal rule", () => {
   expect(summarySection?.className).toMatch(/\bmt-4\b/)
   expect(summarySection?.className).not.toMatch(/\bmt-8\b/)
   expect(summary.className).toMatch(/border-b/)
+  expect(container.querySelector("article")?.className).toMatch(/overflow-hidden/)
+  expect(summary.className).toMatch(/-mx-6/)
 })
 
 test("shows the Lyft AI-enabled OE bullet on the resume page", () => {

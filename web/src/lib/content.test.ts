@@ -17,9 +17,10 @@ test("hero role is Software Engineer without a level", () => {
 
 test("hero intro is conversational", () => {
   expect(site.heroHeading).toBe("Hi, I'm Arshiya 👋")
-  expect(site.lede).toBe(
-    "I build features at Lyft Toronto. I shipped products for older and teen riders, and now I work on taking the app to Europe. I care about making the system reliable and scalable, and giving coding agents enough context to stop recommending libraries that don't exist."
-  )
+  expect(site.lede).toEqual([
+    "I build backend features with Lyft Toronto. I shipped products for older and teen riders, and now I work on taking the app to Europe.",
+    "I care about making the system reliable and scalable, and giving coding agents enough context so they stop recommending libraries that don't exist.",
+  ])
 })
 
 test("hero CTA is resume", () => {

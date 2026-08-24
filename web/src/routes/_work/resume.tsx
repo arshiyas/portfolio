@@ -1,9 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { Link, createFileRoute } from "@tanstack/react-router"
 import { Download } from "lucide-react"
 import { PageTrail } from "@/components/PageTrail"
 import { ResumeDocument } from "@/components/ResumeDocument"
 import { Button } from "@/components/ui/button"
+import { site } from "@/lib/content"
 import { downloadResumePdf } from "@/lib/resume-pdf"
+
+const chatLinkClass =
+  "font-medium text-primary underline underline-offset-4 hover:opacity-80"
 
 export const Route = createFileRoute("/_work/resume")({
   head: () => ({
@@ -12,7 +16,7 @@ export const Route = createFileRoute("/_work/resume")({
   component: ResumePage,
 })
 
-function ResumePage() {
+export function ResumePage() {
   return (
     <main className="site-page flex-1 py-14">
       <PageTrail items={[{ label: "Home", to: "/" }]} />
@@ -22,7 +26,20 @@ function ResumePage() {
             Resume
           </h1>
           <p className="mt-3 max-w-lg text-muted-foreground">
-            Software engineering across mobility, geospatial, and healthcare.
+            Interested?{" "}
+            <a
+              href={site.links.calendly}
+              target="_blank"
+              rel="noreferrer"
+              className={chatLinkClass}
+            >
+              book a time
+            </a>{" "}
+            or{" "}
+            <Link to="/about" hash="contact" className={chatLinkClass}>
+              send a note
+            </Link>
+            .
           </p>
         </div>
         <Button

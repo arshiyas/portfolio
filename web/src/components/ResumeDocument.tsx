@@ -47,7 +47,7 @@ function linkifyResumeText(text: string): ReactNode {
 
 export function ResumeDocument() {
   return (
-    <article className="rounded-xl border border-border bg-card px-6 py-8 shadow-none sm:px-10 sm:py-10">
+    <article className="overflow-hidden rounded-xl border border-border bg-card px-6 py-8 shadow-none sm:px-10 sm:py-10">
       <header>
         <h2 className="font-serif text-[1.65rem] font-semibold tracking-tight text-foreground">
           {resume.name}
@@ -155,7 +155,7 @@ function ResumeSection({
 }) {
   return (
     <section className={cn("mt-8", className)}>
-      <h3 className="border-b border-border pb-2 font-mono text-xs font-semibold uppercase tracking-widest text-foreground">
+      <h3 className="-mx-6 border-b border-border px-6 pb-2 font-mono text-xs font-semibold uppercase tracking-widest text-foreground sm:-mx-10 sm:px-10">
         {title}
       </h3>
       <div className="mt-4">{children}</div>

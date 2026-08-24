@@ -1,11 +1,6 @@
-import { Link } from "@tanstack/react-router"
+import { Link, useRouterState } from "@tanstack/react-router"
 import { Mail } from "lucide-react"
 import { site } from "@/lib/content"
-
-const links = [
-  { label: "Resume", href: "/resume" },
-  { label: "About", href: "/about" },
-] as const
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -24,13 +19,32 @@ const iconLinkClass =
   "inline-flex min-h-11 min-w-11 items-center justify-center text-muted-foreground transition hover:text-primary sm:min-h-0 sm:min-w-0"
 
 export function SiteFooter() {
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  })
+  const links = [
+    ...(pathname === "/" || pathname === "/resume"
+      ? []
+      : [{ label: "Resume", to: "/resume" as const }]),
+    ...(pathname === "/about" || pathname === "/resume"
+      ? []
+      : [
+          {
+            label: "Send a note",
+            to: "/about" as const,
+            hash: "contact" as const,
+          },
+        ]),
+  ]
+
   return (
     <footer className="site-footer-safe border-t border-border py-10 text-sm text-muted-foreground">
       <div className="site-page flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs sm:justify-end">
         {links.map((link) => (
           <Link
-            key={link.href}
-            to={link.href}
+            key={link.label}
+            to={link.to}
+            hash={"hash" in link ? link.hash : undefined}
             className="transition hover:text-primary"
           >
             {link.label}

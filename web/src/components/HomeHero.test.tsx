@@ -32,13 +32,16 @@ test("shows greeting with compact social icons, intro, and resume", () => {
   expect(scope.queryByText(site.tagline)).toBeNull()
   expect(scope.queryByText(site.location)).toBeNull()
   expect(scope.queryByRole("img", { name: "Lyft" })).toBeNull()
-  expect(scope.getByText(site.lede)).toBeTruthy()
+  expect(scope.getByText(site.lede[0])).toBeTruthy()
+  expect(scope.getByText(site.lede[1])).toBeTruthy()
 
-  const booking = scope.getByRole("link", { name: "Book a time" })
+  const booking = scope.getByRole("link", { name: "book a time to chat" })
   expect(booking.getAttribute("href")).toBe(site.links.calendly)
 
-  const note = scope.getByRole("link", { name: "send a note" })
-  expect(note.getAttribute("href")).toBe("/about#contact")
+  expect(scope.queryByRole("link", { name: "send a note" })).toBeNull()
+
+  expect(scope.getByText(/Want to learn more\?/)).toBeTruthy()
+  expect(scope.getByText(/Here's my/)).toBeTruthy()
 
   const email = scope.getByRole("link", { name: "Email" })
   expect(email.getAttribute("href")).toBe(`mailto:${site.links.email}`)
@@ -48,14 +51,15 @@ test("shows greeting with compact social icons, intro, and resume", () => {
 
   const heading = scope.getByRole("heading", { name: site.heroHeading })
   expect(
-    heading.compareDocumentPosition(email) & Node.DOCUMENT_POSITION_FOLLOWING
+    heading.compareDocumentPosition(email) & Node.DOCUMENT_POSITION_PRECEDING
   ).toBeTruthy()
   expect(
-    heading.compareDocumentPosition(linkedin) & Node.DOCUMENT_POSITION_FOLLOWING
+    heading.compareDocumentPosition(linkedin) & Node.DOCUMENT_POSITION_PRECEDING
   ).toBeTruthy()
 
-  const resume = scope.getByRole("link", { name: "Resume" })
+  const resume = scope.getByRole("link", { name: "resume" })
   expect(resume.getAttribute("href")).toBe("/resume")
+  expect(scope.queryByRole("button")).toBeNull()
   expect(scope.queryByRole("link", { name: "View projects" })).toBeNull()
 
   expect(scope.queryByText(site.eyebrow)).toBeNull()
