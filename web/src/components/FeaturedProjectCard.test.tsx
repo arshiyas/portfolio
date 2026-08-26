@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { expect, test, vi } from "vitest"
 import { FeaturedProjectCard } from "@/components/FeaturedProjectCard"
-import { getProjectBySlug } from "@/lib/content"
+import { getProjectBySlug, PROJECT_LIST_ID } from "@/lib/content"
 
 vi.mock("@tanstack/react-router", () => ({
   Link: ({
@@ -96,4 +96,67 @@ test("GE card uses the GE logo asset", () => {
 
   const logo = screen.getByRole("img", { name: "GE" })
   expect(logo.getAttribute("src")).toBe("/logos/ge.png")
+})
+
+test("GE card with no write-up shows a toast only after click", () => {
+  const project = getProjectBySlug("ge-microservices")
+  if (!project) throw new Error("missing ge-microservices fixture")
+
+  render(<FeaturedProjectCard project={project} />)
+
+  expect(screen.queryByText("This was a while ago.")).toBeNull()
+
+  fireEvent.click(
+    screen.getByRole("button", { name: /Healthcare Microservices @ GE/ })
+  )
+
+  expect(screen.getByText("This was a while ago.")).toBeTruthy()
+  expect(
+    screen.getByText(
+      "The newer work at the top of this page is a better look at what I do now."
+    )
+  ).toBeTruthy()
+  expect(screen.queryByText(/No write-up here/)).toBeNull()
+  expect(screen.getByRole("button", { name: "See recent work" })).toBeTruthy()
+})
+
+test("SkyWatch card with no write-up uses a different opener", () => {
+  const project = getProjectBySlug("enterprise-skywatch")
+  if (!project) throw new Error("missing enterprise-skywatch fixture")
+
+  render(<FeaturedProjectCard project={project} />)
+
+  fireEvent.click(
+    screen.getByRole("button", { name: /Enterprise Org Platform @ SkyWatch/ })
+  )
+
+  expect(screen.getByText("No write-up for this one yet.")).toBeTruthy()
+  expect(
+    screen.getByText(
+      "The newer work at the top of this page is a better look at what I do now."
+    )
+  ).toBeTruthy()
+  expect(screen.queryByText("This was a while ago.")).toBeNull()
+})
+
+test("See recent work scrolls to the project list and closes the toast", () => {
+  const project = getProjectBySlug("ge-microservices")
+  if (!project) throw new Error("missing ge-microservices fixture")
+
+  const target = document.createElement("div")
+  target.id = PROJECT_LIST_ID
+  const scrollIntoView = vi.fn()
+  target.scrollIntoView = scrollIntoView
+  document.body.appendChild(target)
+
+  render(<FeaturedProjectCard project={project} />)
+  fireEvent.click(
+    screen.getByRole("button", { name: /Healthcare Microservices @ GE/ })
+  )
+  fireEvent.click(screen.getByRole("button", { name: "See recent work" }))
+
+  expect(scrollIntoView).toHaveBeenCalled()
+  expect(screen.queryByText("This was a while ago.")).toBeNull()
+
+  target.remove()
 })

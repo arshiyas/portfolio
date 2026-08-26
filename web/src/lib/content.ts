@@ -125,9 +125,7 @@ export const site = {
   social: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/arshiyasayyed/" },
   ],
-  heroButtons: [
-    { label: "Resume", href: "/resume", primary: true },
-  ],
+  heroButtons: [{ label: "Resume", href: "/resume", primary: true }],
   stack: ["Python", "Go", "TypeScript", "gRPC", "AWS", "PostgreSQL"],
   featuredProjectSlugs: [
     "lyft-international",
@@ -653,6 +651,24 @@ export function getListedProjects(): Project[] {
   const seen = new Set(lead.map((project) => project.slug))
   const rest = projects.filter((project) => !seen.has(project.slug))
   return [...lead, ...rest]
+}
+
+export const PROJECT_LIST_ID = "project-list"
+
+const unavailableWriteupBody =
+  "The newer work at the top of this page is a better look at what I do now."
+
+export function getUnavailableWriteupCopy(
+  project: Project
+): { title: string; body: string } | undefined {
+  if (project.caseStudy || project.toolUrl) return undefined
+  if (project.slug.startsWith("ge-") || project.title.includes("@ GE")) {
+    return { title: "This was a while ago.", body: unavailableWriteupBody }
+  }
+  return {
+    title: "No write-up for this one yet.",
+    body: unavailableWriteupBody,
+  }
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {

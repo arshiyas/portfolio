@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { expect, test, vi } from "vitest"
 import { ProjectGrid } from "@/components/ProjectGrid"
 
@@ -32,15 +32,17 @@ test("lists projects with the same square-mark cards as the homepage", () => {
   expect(
     screen.getByRole("heading", { name: "Search Optimization @ SkyWatch" })
   ).toBeTruthy()
-  expect(screen.getAllByRole("img", { name: "SkyWatch" }).length).toBeGreaterThan(
-    0
-  )
+  expect(
+    screen.getAllByRole("img", { name: "SkyWatch" }).length
+  ).toBeGreaterThan(0)
   expect(
     screen.getByRole("heading", { name: "Healthcare Microservices @ GE" })
   ).toBeTruthy()
   expect(screen.getAllByRole("img", { name: "GE" }).length).toBeGreaterThan(0)
   expect(
-    screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent)
+    screen
+      .getAllByRole("heading", { level: 3 })
+      .map((heading) => heading.textContent)
   ).toEqual([
     "International Expansion",
     "AI-Assisted Engineering",
@@ -55,4 +57,19 @@ test("lists projects with the same square-mark cards as the homepage", () => {
   expect(screen.queryByRole("button", { name: "All" })).toBeNull()
   expect(screen.queryByRole("button", { name: "Work" })).toBeNull()
   expect(screen.queryByRole("button", { name: "Personal" })).toBeNull()
+})
+
+test("clicking a second no-write-up card replaces the toast", () => {
+  render(<ProjectGrid />)
+
+  fireEvent.click(
+    screen.getByRole("button", { name: /Healthcare Microservices @ GE/ })
+  )
+  fireEvent.click(
+    screen.getByRole("button", { name: /Enterprise Org Platform @ SkyWatch/ })
+  )
+
+  expect(screen.getAllByRole("status")).toHaveLength(1)
+  expect(screen.getByText("No write-up for this one yet.")).toBeTruthy()
+  expect(screen.queryByText("This was a while ago.")).toBeNull()
 })

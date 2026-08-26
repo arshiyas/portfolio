@@ -1,6 +1,13 @@
+import { useState, type ReactNode } from "react"
+import { createPortal } from "react-dom"
 import { Link } from "@tanstack/react-router"
 import { LyftLogo } from "@/components/LyftLogo"
-import type { Project } from "@/lib/content"
+import { Button } from "@/components/ui/button"
+import {
+  getUnavailableWriteupCopy,
+  PROJECT_LIST_ID,
+  type Project,
+} from "@/lib/content"
 import { cn } from "@/lib/utils"
 
 function LetterMark({ label, letters }: { label: string; letters: string }) {
@@ -72,12 +79,45 @@ function ProjectMark({ project }: { project: Project }) {
   return <LetterMark label={project.title} letters="P" />
 }
 
+function UnavailableWriteupToast({
+  title,
+  body,
+  onSeeRecent,
+}: {
+  title: string
+  body: string
+  onSeeRecent: () => void
+}) {
+  return (
+    <div
+      role="status"
+      className="fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 sm:inset-x-0 sm:mx-auto sm:max-w-md"
+    >
+      <div className="rounded-2xl border border-border bg-card p-4 shadow-lg sm:p-5">
+        <p className="font-serif text-lg font-semibold">{title}</p>
+        <p className="mt-2 text-sm leading-relaxed text-pretty text-muted-foreground">
+          {body}
+        </p>
+        <Button className="mt-4 h-11 w-full text-base" onClick={onSeeRecent}>
+          See recent work
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 export function FeaturedProjectCard({
   project,
   className,
+  onSelectUnavailable,
+  unavailableOpen,
+  onSeeRecentWork,
 }: {
   project: Project
   className?: string
+  onSelectUnavailable?: () => void
+  unavailableOpen?: boolean
+  onSeeRecentWork?: () => void
 }) {
   const isPersonal = project.type === "personal"
   const cardClass = cn(
@@ -135,9 +175,78 @@ export function FeaturedProjectCard({
     )
   }
 
+  const copy = getUnavailableWriteupCopy(project)
+  if (!copy) {
+    return <div className={cardClass}>{inner}</div>
+  }
+
   return (
-    <Link to="/projects" className={cardClass}>
+    <UnavailableWriteupCard
+      copy={copy}
+      className={cardClass}
+      onSelect={onSelectUnavailable}
+      open={unavailableOpen}
+      onSeeRecent={onSeeRecentWork}
+    >
       {inner}
-    </Link>
+    </UnavailableWriteupCard>
+  )
+}
+
+function UnavailableWriteupCard({
+  copy,
+  className,
+  children,
+  onSelect,
+  open: openProp,
+  onSeeRecent: onSeeRecentProp,
+}: {
+  copy: { title: string; body: string }
+  className: string
+  children: ReactNode
+  onSelect?: () => void
+  open?: boolean
+  onSeeRecent?: () => void
+}) {
+  const [internalOpen, setInternalOpen] = useState(false)
+  const isControlled = onSelect !== undefined
+  const open = isControlled ? Boolean(openProp) : internalOpen
+
+  function handleOpen() {
+    if (isControlled) onSelect()
+    else setInternalOpen(true)
+  }
+
+  function seeRecentWork() {
+    if (onSeeRecentProp) {
+      onSeeRecentProp()
+      return
+    }
+    setInternalOpen(false)
+    document
+      .getElementById(PROJECT_LIST_ID)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        className={cn(className, "cursor-pointer text-left")}
+        onClick={handleOpen}
+      >
+        {children}
+      </button>
+      {open
+        ? createPortal(
+            <UnavailableWriteupToast
+              title={copy.title}
+              body={copy.body}
+              onSeeRecent={seeRecentWork}
+            />,
+            document.body
+          )
+        : null}
+    </>
   )
 }
