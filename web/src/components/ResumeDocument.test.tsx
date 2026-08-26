@@ -27,6 +27,10 @@ test("shows the Lyft AI-enabled OE bullet on the resume page", () => {
   expect(
     screen.getByText(/Worked on AI initiatives across the org/i),
   ).toBeTruthy()
+  expect(
+    screen.getByText(/proof of concepts for conversational agents/i),
+  ).toBeTruthy()
+  expect(screen.getByText(/Silver is Gold/i)).toBeTruthy()
   expect(screen.getByText(/day-to-day code in Cursor and Claude/i)).toBeTruthy()
   expect(screen.getByText(/AI and tooling:/i)).toBeTruthy()
 })

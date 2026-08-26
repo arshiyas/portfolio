@@ -50,8 +50,8 @@ test("highlighted projects is a snap scroller of the five featured projects", ()
   expect(featured.map((project) => project.slug)).toEqual([
     "lyft-international",
     "ai-engineering",
-    "lyft-teens",
     "lyft-silver",
+    "lyft-teens",
     "days-gone",
   ])
   expect(featured).toHaveLength(5)

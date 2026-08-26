@@ -1,6 +1,8 @@
 import { expect, test } from "vitest"
 import {
+  getListedProjects,
   getNextCaseStudy,
+  getProjectBySlug,
   getProjectsWithCaseStudies,
   site,
 } from "@/lib/content"
@@ -29,14 +31,55 @@ test("hero CTA is resume", () => {
   ])
 })
 
-test("featured projects put AI-Assisted Engineering after International Expansion", () => {
+test("featured projects put Silver before Teen after International and AI", () => {
   expect(site.featuredProjectSlugs).toEqual([
     "lyft-international",
     "ai-engineering",
-    "lyft-teens",
     "lyft-silver",
+    "lyft-teens",
     "days-gone",
   ])
+})
+
+test("projects page lists International, AI, Silver, Teen, then the rest", () => {
+  expect(getListedProjects().map((project) => project.slug)).toEqual([
+    "lyft-international",
+    "ai-engineering",
+    "lyft-silver",
+    "lyft-teens",
+    "search-skywatch",
+    "enterprise-skywatch",
+    "ge-microservices",
+    "ge-data-pipelines",
+    "days-gone",
+  ])
+})
+
+test("Silver contributions include Silver is Gold with the public campaign post", () => {
+  const silver = getProjectBySlug("lyft-silver")
+  const item = silver?.caseStudy?.myContribution?.items.find(
+    (entry) => entry.title === "Silver is Gold"
+  )
+
+  expect(item?.description).toContain("Grandparents Day")
+  expect(item?.description).toContain("Billie Jean King")
+  expect(item?.link).toEqual({
+    label: "Silver is Gold, Lyft Blog",
+    url: "https://www.lyft.com/blog/posts/lyft-silver-grandparents-day",
+  })
+  expect(item?.description).not.toMatch(/Shark Tank/i)
+})
+
+test("AI contributions include conversational agents without company-only framing", () => {
+  const ai = getProjectBySlug("ai-engineering")
+  const item = ai?.caseStudy?.myContribution?.items.find(
+    (entry) => entry.title === "Conversational agents for riders"
+  )
+
+  expect(item?.description).toContain("proof of concepts")
+  expect(item?.description).toContain("ride confirmations")
+  expect(item?.description).toContain("Silver")
+  expect(item?.description).not.toMatch(/Shark Tank/i)
 })
 
 test("next case study follows listing order and wraps", () => {

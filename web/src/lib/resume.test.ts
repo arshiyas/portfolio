@@ -3,10 +3,16 @@ import { resume } from "@/lib/resume"
 
 const lyft = resume.experience.find((role) => role.company === "Lyft")
 
-test("Lyft bullets include AI-enabled OE, org AI initiatives, and Cursor/Claude", () => {
+test("Lyft bullets include AI-enabled OE, org AI initiatives, conversational agents, and Cursor/Claude", () => {
   expect(lyft).toBeDefined()
   expect(lyft?.bullets).toContain(
-    "Built an AI-enabled operational-excellence dashboard so teams can track tech debt and cut operational burden. Worked on AI initiatives across the org, and write day-to-day code in Cursor and Claude",
+    "Built an AI-enabled operational-excellence dashboard so teams can track tech debt and cut operational burden. Worked on AI initiatives across the org, including proof of concepts for conversational agents for ride confirmations and Silver support, and write day-to-day code in Cursor and Claude",
+  )
+})
+
+test("Lyft Silver bullet names Silver is Gold", () => {
+  expect(lyft?.bullets).toContain(
+    "Shipped growth and support surfaces for Lyft Silver: invites, gift cards, trusted contacts, a CMS-backed help API, and the Silver is Gold Grandparents Day campaign",
   )
 })
 

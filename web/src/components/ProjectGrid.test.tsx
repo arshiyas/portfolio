@@ -39,6 +39,19 @@ test("lists projects with the same square-mark cards as the homepage", () => {
     screen.getByRole("heading", { name: "Healthcare Microservices @ GE" })
   ).toBeTruthy()
   expect(screen.getAllByRole("img", { name: "GE" }).length).toBeGreaterThan(0)
+  expect(
+    screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent)
+  ).toEqual([
+    "International Expansion",
+    "AI-Assisted Engineering",
+    "Lyft Silver",
+    "Lyft Teen",
+    "Search Optimization @ SkyWatch",
+    "Enterprise Org Platform @ SkyWatch",
+    "Healthcare Microservices @ GE",
+    "Analytics Pipelines @ GE",
+    "Days Gone",
+  ])
   expect(screen.queryByRole("button", { name: "All" })).toBeNull()
   expect(screen.queryByRole("button", { name: "Work" })).toBeNull()
   expect(screen.queryByRole("button", { name: "Personal" })).toBeNull()

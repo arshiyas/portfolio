@@ -132,8 +132,8 @@ export const site = {
   featuredProjectSlugs: [
     "lyft-international",
     "ai-engineering",
-    "lyft-teens",
     "lyft-silver",
+    "lyft-teens",
     "days-gone",
   ],
 }
@@ -195,7 +195,7 @@ export const projects: Project[] = [
       ],
       myContribution: {
         intro:
-          "I worked on the growth and support side of Silver: how an older rider gets invited onto the product, how their family stays connected to them, and how they get help when something goes wrong.",
+          "I worked on the growth and support side of Silver: how an older rider gets invited onto the product, how their family stays connected to them, how they get help, and the campaign that put Silver in front of new riders.",
         items: [
           {
             title: "Invites and onboarding",
@@ -213,9 +213,13 @@ export const projects: Project[] = [
               "Built the endpoints serving in-app help content and the path to a live agent, backed by a CMS so the content team can change what a rider sees without an app release. I pushed for the CMS over the static-file approach originally proposed, and added alerting so content changes are visible to the team.",
           },
           {
-            title: "First-ride discount campaign",
+            title: "Silver is Gold",
             description:
-              "Built the coupon eligibility handling and the placement behind a Grandparents Day promotion that ran as part of Lyft's Silver marketing push, plus the dashboard tracking taps through to redemption. Built it to be reused for later campaigns rather than as one-off code.",
+              "Built coupon eligibility and the in-app card for Lyft's Grandparents Day campaign, part of the Silver is Gold launch with Billie Jean King. Added a dashboard from taps through to redemption, and designed it so later campaigns could reuse the same path.",
+            link: {
+              label: "Silver is Gold, Lyft Blog",
+              url: "https://www.lyft.com/blog/posts/lyft-silver-grandparents-day",
+            },
           },
         ],
       },
@@ -398,7 +402,7 @@ export const projects: Project[] = [
         "I wasn't interested in evangelizing tools, I wanted to move the default. That meant writing repo context down so every engineer inherits it instead of rebuilding it, then proving the value with a controlled evaluation rather than a demo, and publishing the results including the repos where it changed nothing. Once real numbers existed, adoption stopped being a matter of opinion.",
       contributionTitle: "What I changed",
       myContribution: {
-        intro: "Three changes to how the work gets done day to day.",
+        intro: "A few changes to how the work gets done day to day.",
         items: [
           {
             title: "Made repo context the default instead of a personal habit",
@@ -415,6 +419,11 @@ export const projects: Project[] = [
               "Turned specialist migration work into something anyone can run",
             description:
               "Engineers were hand-converting dashboards out of our legacy analytics tool, query by query. I built a coding-agent skill that does the conversion, which took the work out of the specialist-knowledge category entirely. The platform team running the company-wide migration adopted it as the recommended interim path and assigned a pilot team to stress-test it on harder dashboards.",
+          },
+          {
+            title: "Conversational agents for riders",
+            description:
+              "Built proof of concepts for a voice agent for ride confirmations and a GPT-4o FAQ chatbot for Silver support.",
           },
           {
             title: "Made the case outside my own team",
@@ -632,6 +641,18 @@ export function getFeaturedProjects(): Project[] {
   return site.featuredProjectSlugs
     .map((slug) => projects.find((p) => p.slug === slug))
     .filter((p): p is Project => p !== undefined)
+}
+
+export function getListedProjects(): Project[] {
+  const leadSlugs = site.featuredProjectSlugs.filter(
+    (slug) => slug !== "days-gone"
+  )
+  const lead = leadSlugs
+    .map((slug) => projects.find((p) => p.slug === slug))
+    .filter((p): p is Project => p !== undefined)
+  const seen = new Set(lead.map((project) => project.slug))
+  const rest = projects.filter((project) => !seen.has(project.slug))
+  return [...lead, ...rest]
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {

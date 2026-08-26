@@ -16,6 +16,8 @@ test("downloadable PDF includes the AI initiatives bullet and AI skills line", (
 
   const body = chunks.join(" ")
   expect(body).toContain("Worked on AI initiatives across the org")
+  expect(body).toContain("proof of concepts for conversational agents")
+  expect(body).toContain("Silver is Gold")
   expect(body).toContain("AI and tooling")
   expect(doc.getNumberOfPages()).toBe(1)
 })
